@@ -9,5 +9,9 @@ export {
 export {
   default as TeleportalGameElement,
 } from './TeleportalGameElement/TeleportalGameElement';
+export { default as RockGameElement } from './RockGameElement/RockGameElement';
+export {
+  default as PressurePadGameElement,
+} from './PressurePadGameElement/PressurePadGameElement';
 export { default as generateGrid } from './generateGrid/generateGrid';
 export { default as polyfills } from './polyfills/polyfills';
