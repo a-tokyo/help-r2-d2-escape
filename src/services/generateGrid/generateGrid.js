@@ -1,6 +1,14 @@
 /* @flow */
 import _ from 'lodash';
 
+import {
+  PlayerGameElement,
+  TeleportalGameElement,
+  ObstacleGameElement,
+  RockGameElement,
+  PressurePadGameElement,
+} from '../';
+
 const MIN_GRID_ROWS: number = 1;
 const MIN_GRID_COLS: number = 2;
 const MAX_GRID_ROWS: number = 3;
@@ -48,8 +56,8 @@ const genGrid = () => {
   const basicDefaultGrid: Array<Array<any>> = generateMatrix(matrixM, matrixN);
 
   /** Initialize Game Elements */
-  const player = 'player';
-  const teleportal = 'teleporter';
+  const player = new PlayerGameElement();
+  const teleportal = new TeleportalGameElement();
 
   // const obstaclesCount = 0;
   const obstacles = ['obs1'];
