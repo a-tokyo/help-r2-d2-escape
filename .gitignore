@@ -1,5 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# development
+src/**/*.css
+
 # dependencies
 /node_modules
 
@@ -19,3 +22,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# editors
+.vscode
+
+# graphql
+**/__generated__
