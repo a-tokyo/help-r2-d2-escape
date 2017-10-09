@@ -5,7 +5,8 @@ import { generateGrid } from '../../services';
 
 export default class Game extends Component {
   componentDidMount() {
-    generateGrid();
+    const gameGrid = generateGrid();
+    console.log('gameGrid =>', gameGrid);
   }
 
   render() {
