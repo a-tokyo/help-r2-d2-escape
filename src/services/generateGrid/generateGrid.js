@@ -45,7 +45,7 @@ const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
 
   /** get the random count for the rocks and pressure pads */
   if (availableCellsCount >= 2) {
-    let rocksAndPressurePadsTogetherCount = _.random(0, availableCellsCount);
+    const rocksAndPressurePadsTogetherCount = _.random(0, availableCellsCount);
     rocksPressurePadsCount = rocksAndPressurePadsTogetherCount / 2;
     /** the multipliation here is not redundant, it is to defend against if an odd number was excluded */
     availableCellsCount -= rocksPressurePadsCount * 2;
