@@ -11,9 +11,6 @@ const App = () => (
       <img src={logo} className="App-logo" alt="logo" />
       <h1 className="App-title">Help R2-D2 Escape!</h1>
     </header>
-    <p className="App-intro">
-      To get started, edit <code>src/App.js</code> and save to reload.
-    </p>
     <Game />
   </div>
 );

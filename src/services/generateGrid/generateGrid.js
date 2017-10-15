@@ -40,20 +40,22 @@ const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
   availableCellsCount -= 2;
 
   /** get random counts for other game elements */
-  let rocksAndPressurePadsTogetherCount: number = 0;
   let rocksPressurePadsCount: number = 0;
   let obstaclesCount: number = 0;
 
   /** get the random count for the rocks and pressure pads */
   if (availableCellsCount >= 2) {
-    rocksAndPressurePadsTogetherCount = _.random(0, availableCellsCount);
-    availableCellsCount -= rocksAndPressurePadsTogetherCount;
+    let rocksAndPressurePadsTogetherCount = _.random(0, availableCellsCount);
     rocksPressurePadsCount = rocksAndPressurePadsTogetherCount / 2;
+    /** the multipliation here is not redundant, it is to defend against if an odd number was excluded */
+    availableCellsCount -= rocksPressurePadsCount * 2;
   }
 
+  /** add an /2 factor not to have lots of obstacles */
   /** get the random count for the obstacles */
   if (availableCellsCount > 0) {
-    obstaclesCount = _.random(0, availableCellsCount);
+    /** add an /2 factor not to have lots of obstacles */
+    obstaclesCount = _.random(0, availableCellsCount / 2);
     availableCellsCount -= obstaclesCount;
   }
 
