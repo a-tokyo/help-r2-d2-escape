@@ -26,5 +26,13 @@ export const uniformCostQueuingFunc: QueuingFunction = (
   newNodes: Array<Node>
 ): Array<Node> => [];
 
+/**
+ * @TODO Iterative deepening search Queuing function enques ...
+ */
+export const iterativeDeepeningQueuingFunc: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> => [];
+
 /** @TODO Greedy, 2 heuristics */
 /** @TODO A*, 2 heuristics */
