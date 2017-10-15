@@ -30,3 +30,8 @@ export type Problem = {
 export type QueuingFunction = (Array<Node>, Array<Node>) => Array<Node>;
 
 export type MakeNodeFucntion = State => Array<Node>;
+
+export type GridItemPosition = {
+  row: number,
+  col: number,
+};

@@ -9,22 +9,18 @@ import {
   PressurePadGameElement,
 } from '../';
 
-import addElementsToGridRandomPosition from './addElementsToGridRandomPosition';
+import {
+  addElementsToGridRandomPosition,
+  generateMatrix,
+  getGridConfig,
+} from './generateGridHelpers';
 
 const MIN_GRID_ROWS: number = 1;
 const MIN_GRID_COLS: number = 2;
 const MAX_GRID_ROWS: number = 100;
 const MAX_GRID_COLS: number = 100;
 
-/** generates a 2D Array with nulls as defaults */
-const generateMatrix = (
-  rows: number = MIN_GRID_ROWS,
-  columns: number = MIN_GRID_COLS,
-  defaultValue: any = null
-): Array<Array<any>> =>
-  new Array(rows).fill().map(() => new Array(columns).fill(defaultValue));
-
-const genGrid = () => {
+const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
   /** Grid dimenstions */
   const matrixRowsCount: number = _.random(MIN_GRID_ROWS, MAX_GRID_ROWS);
   const matrixColsCount: number = _.random(MIN_GRID_COLS, MAX_GRID_COLS);
@@ -66,6 +62,7 @@ const genGrid = () => {
   let rocks = [];
   let obstacles = [];
 
+  /** concat a new rock, pressurepad instance to the rocks, pressurePads arrays */
   for (let i = 0; i < rocksPressurePadsCount; i += 1) {
     pressurePads = pressurePads.concat(
       new PressurePadGameElement(`pressurepad_${i}`)
@@ -73,12 +70,13 @@ const genGrid = () => {
     rocks = rocks.concat(new RockGameElement(`rock_${i}`));
   }
 
+  /** concat a new obstacle instance to the obstacles array */
   for (let i = 0; i < obstaclesCount; i += 1) {
     obstacles = obstacles.concat(new ObstacleGameElement(`obstacle_${i}`));
   }
 
   /** Inject All the Game Elements into the grid */
-  const gridWithElms = addElementsToGridRandomPosition(basicDefaultGrid, [
+  const grid = addElementsToGridRandomPosition(basicDefaultGrid, [
     player,
     teleportal,
     ...obstacles,
@@ -86,7 +84,13 @@ const genGrid = () => {
     ...rocks,
   ]);
 
-  return gridWithElms;
+  /** get the config information of the grid */
+  const config = getGridConfig(grid);
+
+  return {
+    grid,
+    config,
+  };
 };
 
 export default genGrid;
