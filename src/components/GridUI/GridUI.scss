@@ -21,3 +21,10 @@
   justify-content: center;
   align-items: center;
 }
+
+.grid-cell--pressure-pad{
+  background-color: wheat;
+}
+.grid-cell--pressure-pad--active{
+  background-color: lightgreen;
+}
