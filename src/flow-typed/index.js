@@ -31,10 +31,6 @@ export type MakeNodeFucntion = State => Array<Node>;
 
 export type QueuingFunction = (Array<Node>, Array<Node>) => Array<Node>;
 
-// export type GridItemPos = {
-//   [string]: number,
-// };
-
 export type GridItemPos = { row: number, col: number };
 
 export type GridConfigObject = {
