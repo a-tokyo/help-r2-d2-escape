@@ -1,9 +1,11 @@
 [ignore]
 /node_modules
+.*/node_modules/fbjs
 
 [include]
 
 [libs]
+./src/flow-typed/
 
 [options]
 
