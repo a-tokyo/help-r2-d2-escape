@@ -31,7 +31,22 @@ export type MakeNodeFucntion = State => Array<Node>;
 
 export type QueuingFunction = (Array<Node>, Array<Node>) => Array<Node>;
 
-export type GridItemPosition = {
-  row: number,
-  col: number,
+// export type GridItemPos = {
+//   [string]: number,
+// };
+
+export type GridItemPos = { row: number, col: number };
+
+export type GridConfigObject = {
+  rows: number,
+  cols: number,
+  availableCellsCount: number,
+  playerPosition: GridItemPos | null,
+  teleportalPosition: GridItemPos | null,
+  obstaclesPositions: Array<GridItemPos>,
+  pressurePadsPositions: Array<GridItemPos>,
+  rocksPositions: Array<GridItemPos>,
+  obstaclesCount: number,
+  pressurePadsCount: number,
+  rocksCount: number,
 };
