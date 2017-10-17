@@ -25,7 +25,7 @@
     "build": "npm run build-css && react-scripts build",
     "test": "npm run build-css && react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "precommit": "lint-staged"
+    "precommit": "yarn flow && lint-staged"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
