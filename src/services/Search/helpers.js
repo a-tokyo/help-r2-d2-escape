@@ -82,7 +82,7 @@ const applyOperator = (operator: Operator, node: Node) => {
           })
         )
       ) {
-        // @TODO valid pos up move
+        // @TODO valid pos up move row -1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
@@ -103,7 +103,7 @@ const applyOperator = (operator: Operator, node: Node) => {
           })
         )
       ) {
-        // @TODO valid pos down move
+        // @TODO valid pos down move row +1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
@@ -124,7 +124,7 @@ const applyOperator = (operator: Operator, node: Node) => {
           })
         )
       ) {
-        // @TODO valid pos left move
+        // @TODO valid pos left move col -1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
@@ -145,7 +145,7 @@ const applyOperator = (operator: Operator, node: Node) => {
           })
         )
       ) {
-        // @TODO valid pos right move
+        // @TODO valid pos right move col +1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
