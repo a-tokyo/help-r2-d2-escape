@@ -3,7 +3,13 @@ import _ from 'lodash';
 
 /** R2D2 state space logic */
 
-const arrayHasObstacle = items => _.find(items, { type: 'obstacle' });
+/**
+ * Checks if the grid has an obstacle at a position.
+ */
+const gridHasObstacleAtPos = (
+  position: GridItemPos,
+  gridToCheck: any
+): boolean => Boolean(_.find(gridToCheck.config.obstaclesPositions, position));
 
 /**
  * Checks if the state has a rock at a position.
@@ -79,13 +85,14 @@ const getNewState = (
 };
 
 /**
- * Checks the current state for the possibility of moving easr.
+ * Checks the current state for the possibility of moving east
+ * takes into consideration the strength of moving rocks.
  */
 const canMoveEast = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
   return (
     currPos.col < grid.config.cols - 1 &&
-    !arrayHasObstacle(grid.grid[currPos.row][currPos.col + 1].items) &&
+    !gridHasObstacleAtPos({ row: currPos.row, col: currPos.col + 1 }, grid) &&
     !stateHasRockAndPadAtPos(
       currState,
       { row: currPos.row, col: currPos.col + 1 },
@@ -112,13 +119,14 @@ const canMoveEast = (currState: State, grid: any): boolean => {
 };
 
 /**
- * Checks the current state for the possibility of moving west.
+ * Checks the current state for the possibility of moving west
+ * takes into consideration the strength of moving rocks.
  */
 const canMoveWest = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
   return (
     currPos.col > 0 &&
-    !arrayHasObstacle(grid.grid[currPos.row][currPos.col - 1].items) &&
+    !gridHasObstacleAtPos({ row: currPos.row, col: currPos.col - 1 }, grid) &&
     !stateHasRockAndPadAtPos(
       currState,
       { row: currPos.row, col: currPos.col - 1 },
@@ -145,13 +153,14 @@ const canMoveWest = (currState: State, grid: any): boolean => {
 };
 
 /**
- * Checks the current state for the possibility of moving north.
+ * Checks the current state for the possibility of moving north
+ * takes into consideration the strength of moving rocks.
  */
 const canMoveNorth = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
   return (
     currPos.row > 0 &&
-    !arrayHasObstacle(grid.grid[currPos.row - 1][currPos.col].items) &&
+    !gridHasObstacleAtPos({ row: currPos.row - 1, col: currPos.col }, grid) &&
     !stateHasRockAndPadAtPos(
       currState,
       { row: currPos.row - 1, col: currPos.col },
@@ -178,13 +187,14 @@ const canMoveNorth = (currState: State, grid: any): boolean => {
 };
 
 /**
- * Checks the current state for the possibility of moving south.
+ * Checks the current state for the possibility of moving south
+ * takes into consideration the strength of moving rocks.
  */
 const canMoveSouth = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
   return (
     currPos.row < grid.config.rows - 1 &&
-    !arrayHasObstacle(grid.grid[currPos.row + 1][currPos.col].items) &&
+    !gridHasObstacleAtPos({ row: currPos.row + 1, col: currPos.col }, grid) &&
     !stateHasRockAndPadAtPos(
       currState,
       { row: currPos.row + 1, col: currPos.col },
