@@ -38,6 +38,7 @@ export const generalSearch = (
  * if the node has no parent -> it is the root => return a [];
  * if the node has a parent -> backtrackOperators and and get the list of operators to the previous node
  * => return the list of operators to the prev node concatinated with the current node's operator
+ * $FlowFixMe
  */
 export const backTrackOperators = (node: Node): Array<Operator> =>
   node.parent ? backTrackOperators(node.parent).concat(node.operator) : [];
