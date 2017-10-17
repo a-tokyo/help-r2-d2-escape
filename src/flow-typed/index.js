@@ -39,8 +39,8 @@ export type Node = {
 export type GoalTestFunc = State => boolean;
 
 export type StateConfg = {
-  state: State,
-  operators: Array<operator>,
+  state: State | null,
+  operators: Array<Operator>,
 };
 
 export type Problem = {

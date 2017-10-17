@@ -15,7 +15,7 @@ const Search = (
   visualize: boolean
 ) => {
   /** keep track of the previous state */
-  // let previousStates = [];
+  let previousStates: Array<State> = [];
   /** create the search problem */
   const problem: Problem = {
     operators: ['move_north', 'move_south', 'move_east', 'move_west'],
@@ -27,7 +27,18 @@ const Search = (
     stateSpace: (
       state: State,
       operators: Array<Operator>
-    ): Array<StateConfg> => {},
+    ): Array<StateConfg> => {
+      const newState: State | null = applyOperator(
+        operators[0],
+        state,
+        grid,
+        previousStates
+      );
+      return {
+        state: newState,
+        // operator,
+      };
+    },
     goalTest: (state: State) =>
       state.unPushedPads === 0 &&
       _.isEqual(state.cell, grid.config.playerPosition),
@@ -59,10 +70,7 @@ const Search = (
 
 /** R2D2 state space logic */
 
-// const arrayHasRock = items => _.find(items, { type: 'rock' });
 const arrayHasObstacle = items => _.find(items, { type: 'obstacle' });
-// const arrayHasRockAndPressurepad = items =>
-//   _.find(items, { type: 'rock' }) && _.find(items, { type: 'pressurepad' });
 
 const stateHasRockAtPos = (
   stateToCheck: State,
@@ -257,8 +265,10 @@ const applyOperator = (
   switch (operator) {
     case 'move_north':
       if (canMoveNorth(currState, grid)) {
-        // @TODO valid pos up move row -1
-        // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
+        /**
+         * valid position to the north, move (row - 1)
+         * if the new position has rock, move rock -> check if rock moved to a pressure pad
+         */
         const rockPosStateItem: GridItemPos | null = getStateRockPosAtPos(
           currState,
           {
@@ -290,8 +300,10 @@ const applyOperator = (
       break;
     case 'move_south':
       if (canMoveSouth(currState, grid)) {
-        // @TODO valid pos down move row +1
-        // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
+        /**
+         * valid position to the south, move (row + 1)
+         * if the new position has rock, move rock -> check if rock moved to a pressure pad
+         */
         const rockPosStateItem: GridItemPos | null = getStateRockPosAtPos(
           currState,
           {
@@ -323,8 +335,10 @@ const applyOperator = (
       break;
     case 'move_west':
       if (canMoveWest(currState, grid)) {
-        // @TODO valid pos left move col -1
-        // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
+        /**
+         * valid position to the west, move (col - 1)
+         * if the new position has rock, move rock -> check if rock moved to a pressure pad
+         */
         const rockPosStateItem: GridItemPos | null = getStateRockPosAtPos(
           currState,
           {
