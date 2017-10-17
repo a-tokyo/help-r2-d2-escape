@@ -105,3 +105,8 @@ export const getGridConfig = (grid: Array<Array<any>>): GridConfigObject => {
   }
   return config;
 };
+
+export const createGameElement = (
+  type: GameElementType,
+  name?: string = 'GameElement'
+): GameElement => ({ type, name });

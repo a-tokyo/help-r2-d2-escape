@@ -2,17 +2,10 @@
 import _ from 'lodash';
 
 import {
-  PlayerGameElement,
-  TeleportalGameElement,
-  ObstacleGameElement,
-  RockGameElement,
-  PressurePadGameElement,
-} from '../';
-
-import {
   addElementsToGridRandomPosition,
   generateMatrix,
   getGridConfig,
+  createGameElement,
 } from './generateGridHelpers';
 
 const MIN_GRID_ROWS: number = 1;
@@ -35,8 +28,8 @@ const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
   let availableCellsCount = matrixRowsCount * matrixColsCount - 2;
 
   /** Initialize Game Elements */
-  const player = new PlayerGameElement();
-  const teleportal = new TeleportalGameElement();
+  const player = createGameElement('player', 'player');
+  const teleportal = createGameElement('teleportal', 'teleportal');
   availableCellsCount -= 2;
 
   /** get random counts for other game elements */
@@ -67,14 +60,16 @@ const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
   /** concat a new rock, pressurepad instance to the rocks, pressurePads arrays */
   for (let i = 0; i < rocksPressurePadsCount; i += 1) {
     pressurePads = pressurePads.concat(
-      new PressurePadGameElement(`pressurepad_${i}`)
+      createGameElement('pressurepad', `pressurepad_${i}`)
     );
-    rocks = rocks.concat(new RockGameElement(`rock_${i}`));
+    rocks = rocks.concat(createGameElement('rock', `rock_${i}`));
   }
 
   /** concat a new obstacle instance to the obstacles array */
   for (let i = 0; i < obstaclesCount; i += 1) {
-    obstacles = obstacles.concat(new ObstacleGameElement(`obstacle_${i}`));
+    obstacles = obstacles.concat(
+      createGameElement('obstacle', `obstacle_${i}`)
+    );
   }
 
   /** Inject All the Game Elements into the grid */

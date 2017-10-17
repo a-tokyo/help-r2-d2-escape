@@ -1,8 +1,16 @@
 /* @flow */
 /* eslint no-undef: 1 */
 
+export type GameElementType =
+  | 'player'
+  | 'teleportal'
+  | 'rock'
+  | 'pressurepad'
+  | 'obstacle';
+
 export type GameElement = {
-  type: 'player' | 'teleportal' | 'rock' | 'pressurepad' | 'obstacle',
+  type: GameElementType,
+  name?: string,
 };
 
 export type Operator =
