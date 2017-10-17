@@ -40,7 +40,7 @@ export type GoalTestFunc = State => boolean;
 
 export type StateConfg = {
   state: State | null,
-  operators: Array<Operator>,
+  operator: Operator,
 };
 
 export type Problem = {
