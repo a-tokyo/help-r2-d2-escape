@@ -26,10 +26,15 @@ export type Node = {
 
 export type GoalTestFunc = State => boolean;
 
+export type StateConfg = {
+  state: State,
+  operators: Array<operator>,
+};
+
 export type Problem = {
   operators: Array<Operator>,
   initialState: State,
-  stateSpace: (State, Array<Operator>) => Array<State>,
+  stateSpace: (State, Array<Operator>) => Array<StateConfg>,
   goalTest: GoalTestFunc,
   pathCost: (Array<Operator>) => number,
 };

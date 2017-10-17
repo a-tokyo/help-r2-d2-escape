@@ -44,7 +44,8 @@ export const state = (node: Node): State => node.state;
 const gridConfigObject: GridConfigObject = {};
 
 export const expand = (node: Node, problem: Problem): Array<Node> => {
-  problem.operators.forEach(operator => {});
+  // problem.operators.forEach(operator => {});
+  // const newStateConfigs = problem.stateSpace(node.state ,problem.operators);
 };
 
 const grid = [[]];
