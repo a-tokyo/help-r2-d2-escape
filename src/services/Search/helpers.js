@@ -187,12 +187,64 @@ const applyOperator = (operator: Operator, currState: State): State | null => {
       if (canMoveNorth(currState, grid)) {
         // @TODO valid pos up move row -1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
+        const rockPosStateItem: GridItemPos | null = getStateRockPosAtPos(
+          currState,
+          {
+            row: currPos.row - 1,
+            col: currPos.col,
+          }
+        );
+        let newRockPosItem = null;
+        if (rockPosStateItem) {
+          newRockPosItem = {
+            row: currPos.row - 2,
+            col: currPos.col,
+          };
+        }
+        const newCell: GridItemPos = {
+          row: currPos.row - 1,
+          col: currPos.col,
+        };
+        return getNewState(
+          grid,
+          newCell,
+          currRocksPositions,
+          currUnPushedPads,
+          rockPosStateItem,
+          newRockPosItem
+        );
       }
       break;
     case 'move_south':
       if (canMoveSouth(currState, grid)) {
         // @TODO valid pos down move row +1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
+        const rockPosStateItem: GridItemPos | null = getStateRockPosAtPos(
+          currState,
+          {
+            row: currPos.row + 1,
+            col: currPos.col,
+          }
+        );
+        let newRockPosItem = null;
+        if (rockPosStateItem) {
+          newRockPosItem = {
+            row: currPos.row + 2,
+            col: currPos.col,
+          };
+        }
+        const newCell: GridItemPos = {
+          row: currPos.row + 1,
+          col: currPos.col,
+        };
+        return getNewState(
+          grid,
+          newCell,
+          currRocksPositions,
+          currUnPushedPads,
+          rockPosStateItem,
+          newRockPosItem
+        );
       }
       break;
     case 'move_west':
