@@ -48,6 +48,11 @@ export const expand = (node: Node, problem: Problem): Array<Node> => {
   // const newStateConfigs = problem.stateSpace(node.state ,problem.operators);
 };
 
+const arrayHasRock = items => _.find(items, { type: 'rock' });
+const arrayHasObstacle = items => _.find(items, { type: 'obstacle' });
+const arrayHasRockAndPressurepad = items =>
+  _.find(items, { type: 'rock' }) && _.find(items, { type: 'pressurepad' });
+
 const grid = [[]];
 const gridConfig = {};
 const applyOperator = (operator: Operator, node: Node) => {
@@ -58,6 +63,7 @@ const applyOperator = (operator: Operator, node: Node) => {
       if (
         currPos.row > 0 &&
         !arrayHasObstacle(grid[currPos.row - 1][currPos.col].items) &&
+        !arrayHasRockAndPressurepad(grid[currPos.row - 1][currPos.col].items) &&
         !(
           currPos.row === 1 &&
           arrayHasRock(grid[currPos.row - 1][currPos.col].items)
@@ -71,6 +77,7 @@ const applyOperator = (operator: Operator, node: Node) => {
       if (
         currPos.row < gridConfig.rows - 1 &&
         !arrayHasObstacle(grid[currPos.row + 1][currPos.col].items) &&
+        !arrayHasRockAndPressurepad(grid[currPos.row + 1][currPos.col].items) &&
         !(
           currPos.row === gridConfig.rows - 2 &&
           arrayHasRock(grid[currPos.row + 1][currPos.col].items)
@@ -84,6 +91,7 @@ const applyOperator = (operator: Operator, node: Node) => {
       if (
         currPos.col > 0 &&
         !arrayHasObstacle(grid[currPos.row][currPos.col - 1].items) &&
+        !arrayHasRockAndPressurepad(grid[currPos.row][currPos.col - 1].items) &&
         !(
           currPos.col === 1 &&
           arrayHasRock(grid[currPos.row][currPos.col - 1].items)
@@ -97,6 +105,7 @@ const applyOperator = (operator: Operator, node: Node) => {
       if (
         currPos.col < gridConfig.cols - 1 &&
         !arrayHasObstacle(grid[currPos.row][currPos.col + 1].items) &&
+        !arrayHasRockAndPressurepad(grid[currPos.row][currPos.col + 1].items) &&
         !(
           currPos.col === gridConfig.cols - 2 &&
           arrayHasRock(grid[currPos.row][currPos.col + 1].items)
@@ -108,9 +117,6 @@ const applyOperator = (operator: Operator, node: Node) => {
       break;
   }
 };
-
-const arrayHasRock = items => _.find(items, { type: 'rock' });
-const arrayHasObstacle = items => _.find(items, { type: 'obstacle' });
 
 const validGridPos = (grid: Array<Array<any>>, i: number, j: number) =>
   !(grid[i] === undefined || grid[i][j] === undefined);
