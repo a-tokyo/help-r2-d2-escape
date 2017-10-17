@@ -25,7 +25,7 @@ export type State = {
 
 export type Node = {
   state: State,
-  parent: Node | null,
+  parent: (Node | null),
   operator: Operator | null,
   depth: number,
   pathCost: number,
