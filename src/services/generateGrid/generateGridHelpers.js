@@ -106,6 +106,9 @@ export const getGridConfig = (grid: Array<Array<any>>): GridConfigObject => {
   return config;
 };
 
+/**
+ * Converts a grid map to a user readable string.
+ */
 export const gridMapToString = (grid: Array<Array<any>>): string => {
   let stringToReturn = ``;
   for (let i = 0; i < grid.length; i += 1) {
@@ -127,6 +130,9 @@ export const gridMapToString = (grid: Array<Array<any>>): string => {
   return stringToReturn;
 };
 
+/**
+ * Creates a game element.
+ */
 export const createGameElement = (
   type: GameElementType,
   name?: string = 'GameElement'

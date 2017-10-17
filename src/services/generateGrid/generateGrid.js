@@ -13,6 +13,9 @@ const MIN_GRID_COLS: number = 2;
 const MAX_GRID_ROWS: number = 100;
 const MAX_GRID_COLS: number = 100;
 
+/**
+ * Generates a a 2D grid of a random game scenario and scans it for the configurations.
+ */
 const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
   /** Grid dimenstions */
   const matrixRowsCount: number = _.random(MIN_GRID_ROWS, MAX_GRID_ROWS);

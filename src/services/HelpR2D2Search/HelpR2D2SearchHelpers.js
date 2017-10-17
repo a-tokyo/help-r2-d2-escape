@@ -369,6 +369,3 @@ export const applyOperator = (
   }
   return null;
 };
-
-export const validGridPos = (grid: Array<Array<any>>, i: number, j: number) =>
-  !(grid[i] === undefined || grid[i][j] === undefined);

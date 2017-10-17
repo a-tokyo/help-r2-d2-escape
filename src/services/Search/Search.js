@@ -21,7 +21,6 @@ export const generalSearch = (
   qingFunc: QueuingFunction
 ): Node | null => {
   let nodes = makeQueue(makeNode(initialState(problem)));
-  // const prevStates: Array<State> = [initialState(problem)];
   while (!_.isEmpty(nodes)) {
     const [node] = _.pullAt(nodes, [0]);
     if (goalTest(problem)(state(node))) {

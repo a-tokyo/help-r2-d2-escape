@@ -1,5 +1,4 @@
 /* @flow */
-import _ from 'lodash';
 
 /** generalSearch helpers */
 /** creates a queue of nodes */
