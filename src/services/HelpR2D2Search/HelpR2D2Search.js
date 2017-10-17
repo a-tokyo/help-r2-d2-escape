@@ -17,11 +17,14 @@ import { applyOperator } from './HelpR2D2SearchHelpers';
  */
 const Search = (
   grid: { grid: Array<Array<any>>, config: Object },
-  strategy: string,
-  visualize: boolean
+  strategy: SearchStrategy,
+  visualize: boolean = false
 ) => {
   /** keep track of the previous state */
+  /** eslint is disabled for this line because the previousStates array is mutated by applyOperator() */
+  /* eslint-disable */
   let previousStates: Array<State> = [];
+  /* eslint-enable */
   /** create the search problem */
   const problem: Problem = {
     operators: ['move_north', 'move_south', 'move_east', 'move_west'],
@@ -54,8 +57,30 @@ const Search = (
     goalTest: (state: State) =>
       state.unPushedPads === 0 &&
       _.isEqual(state.cell, grid.config.playerPosition),
-    pathCost: (state: State, operators: Array<Operator>): number =>
-      operators.length,
+    pathCost: (state: State, operators: Array<Operator>): number => {
+      /**
+       * @TODO implement proper path cost for last 2 search algorithms
+       *
+      // switch (strategy) {
+      //   case 'ID':
+      //     return operators.length;
+      //   case 'UC':
+      //     return operators.length;
+      //   case 'GR1':
+      //     return operators.length;
+      //   case 'GR2':
+      //     return operators.length;
+      //   case 'AS1':
+      //     return operators.length;
+      //   case 'AS2':
+      //     return operators.length;
+      //   default:
+      //     console.error('unknown search strategy: ', strategy);
+      // }
+       *
+       */
+      return operators.length;
+    },
   };
 
   /** set the propper queuing function */

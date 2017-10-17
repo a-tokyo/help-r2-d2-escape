@@ -63,3 +63,13 @@ export type GridConfigObject = {
   pressurePadsCount: number,
   rocksCount: number,
 };
+
+export type SearchStrategy =
+  | 'BF'
+  | 'DF'
+  | 'ID'
+  | 'UC'
+  | 'GR1'
+  | 'GR2'
+  | 'AS1'
+  | 'AS2';
