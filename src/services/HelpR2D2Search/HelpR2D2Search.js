@@ -19,7 +19,11 @@ const Search = (
   grid: { grid: Array<Array<any>>, config: Object },
   strategy: SearchStrategy,
   visualize: boolean = false
-) => {
+): {
+  sequence: Array<Operator>,
+  cost: number | null,
+  expandedNodesCount: number,
+} => {
   /** keep track of the previous state */
   /** eslint is disabled for this line because the previousStates array is mutated by applyOperator() */
   /* eslint-disable */
