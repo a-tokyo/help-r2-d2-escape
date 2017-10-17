@@ -1,4 +1,5 @@
 /* @flow */
+import _ from 'lodash';
 
 /** generalSearch helpers */
 /** creates a queue of nodes */
@@ -62,7 +63,7 @@ const applyOperator = (operator: Operator, node: Node) => {
         )
       ) {
         // @TODO valid pos up move
-        // check if has rock, if so, move rock if possible, otherwise don't move
+        // check if has rock, if so, move rock
       }
       break;
     case 'move_down':
@@ -75,7 +76,7 @@ const applyOperator = (operator: Operator, node: Node) => {
         )
       ) {
         // @TODO valid pos down move
-        // check if has rock, if so, move rock if possible, otherwise don't move
+        // check if has rock, if so, move rock
       }
       break;
     case 'move_left':
@@ -88,7 +89,7 @@ const applyOperator = (operator: Operator, node: Node) => {
         )
       ) {
         // @TODO valid pos left move
-        // check if has rock, if so, move rock if possible, otherwise don't move
+        // check if has rock, if so, move rock
       }
       break;
     case 'move_right':
@@ -101,7 +102,7 @@ const applyOperator = (operator: Operator, node: Node) => {
         )
       ) {
         // @TODO valid pos right move
-        // check if has rock, if so, move rock if possible, otherwise don't move
+        // check if has rock, if so, move rock
       }
       break;
   }
