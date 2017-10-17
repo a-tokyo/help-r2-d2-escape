@@ -38,6 +38,8 @@ export const expand = (node: Node, problem: Problem): Array<Node> => {
   // const newStateConfigs = problem.stateSpace(node.state ,problem.operators);
 };
 
+/** R2D2 state space logic */
+
 // const arrayHasRock = items => _.find(items, { type: 'rock' });
 const arrayHasObstacle = items => _.find(items, { type: 'obstacle' });
 // const arrayHasRockAndPressurepad = items =>
@@ -48,6 +50,12 @@ const stateHasRockAtPos = (
   position: GridItemPos
 ): boolean => Boolean(_.find(stateToCheck.rocksPositions, position));
 
+const getStateRockPosAtPos = (
+  stateToCheck: State,
+  position: GridItemPos
+): GridItemPos | boolean =>
+  _.find(stateToCheck.rocksPositions, position) || false;
+
 const stateHasRockAndPadAtPos = (
   stateToCheck: State,
   position: GridItemPos,
@@ -56,14 +64,20 @@ const stateHasRockAndPadAtPos = (
   Boolean(_.find(stateToCheck.rocksPositions, position)) &&
   Boolean(_.find(gridToCheck.config.pressurePadsPositions, position));
 
-const applyOperator = (operator: Operator, node: Node) => {
+const gridHasPressurepadAtPos = (gridToCheck: any, position: GridItemPos) =>
+  Boolean(_.find(gridToCheck.config.pressurePadsPositions, position));
+
+const applyOperator = (operator: Operator, currState: State) => {
   const grid = {
     grid: [[]],
     config: {},
   };
 
-  const { state: currState } = node;
   const currPos = currState.cell;
+
+  let newRockPositions = _.cloneDeep(currState.rocksPositions);
+  let newUnPushedPads = currState.unPushedPads;
+
   switch (operator) {
     case 'move_north':
       if (
@@ -145,8 +159,36 @@ const applyOperator = (operator: Operator, node: Node) => {
           })
         )
       ) {
-        // @TODO valid pos right move col +1
-        // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
+        /**
+         * valid position to the east, move (col + 1)
+         * if the new position has rock, move rock -> check if rock moved to a pressure pad
+         */
+        const rockPosStateItem = getStateRockPosAtPos(currState, {
+          row: currPos.row,
+          col: currPos.col + 1,
+        });
+        if (rockPosStateItem) {
+          const newRockPosItem = {
+            row: currPos.row,
+            col: currPos.col + 2,
+          };
+          newRockPositions = currState.rocksPositions
+            .filter(item => !_.isEqual(item, rockPosStateItem))
+            .concat(newRockPosItem);
+          if (gridHasPressurepadAtPos(grid, newRockPosItem)) {
+            newUnPushedPads += 1;
+          }
+        }
+        const newCell: GridItemPos = {
+          row: currPos.row,
+          col: currPos.col + 1,
+        };
+        const newState: State = {
+          cell: newCell,
+          rocksPositions: newRockPositions,
+          unPushedPads: newUnPushedPads,
+        };
+        return newState;
       }
       break;
     default:
