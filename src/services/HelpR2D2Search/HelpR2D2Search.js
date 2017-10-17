@@ -17,7 +17,7 @@ import { applyOperator } from './HelpR2D2SearchHelpers';
  */
 const Search = (
   grid: { grid: Array<Array<any>>, config: Object },
-  strategy: SearchStrategy,
+  strategy: SearchStrategy = 'BF',
   visualize: boolean = false
 ): {
   sequence: Array<Operator>,
@@ -56,6 +56,7 @@ const Search = (
           });
         }
       });
+      console.log('previousStates', previousStates);
       return newStateConfigs;
     },
     goalTest: (state: State) =>
@@ -119,6 +120,9 @@ const Search = (
       console.error('unknown search strategy: ', strategy);
   }
 
+  // const searchResNode = null;
+  // const expandedNodesCount = 0;
+
   const { node: searchResNode, expandedNodesCount } = generalSearch(
     problem,
     qingFunc
@@ -133,6 +137,17 @@ const Search = (
     cost,
     expandedNodesCount,
   };
+};
+
+const getGridPosItemHash = (pos: GridItemPos) => `[${pos.row},${pos.col}]`;
+
+const getStateHash = (state: State): string => {
+  let stringToRet = `${getGridPosItemHash(state.cell)}|${state.unPushedPads}|[`;
+  state.rocksPositions.forEach(rockPos => {
+    stringToRet += getGridPosItemHash(rockPos);
+  });
+  stringToRet += ']';
+  return stringToRet;
 };
 
 export default Search;

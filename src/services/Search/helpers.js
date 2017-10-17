@@ -34,6 +34,7 @@ export const getState = (node: Node): State => node.state;
  * expands a node according to a problem's state space into new nodes
 */
 export const expand = (node: Node, problem: Problem): Array<Node> => {
+  console.log('expanding', node);
   const newStateConfigs: Array<StateConfig> = problem.stateSpace(
     node.state,
     problem.operators
