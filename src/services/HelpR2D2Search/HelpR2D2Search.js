@@ -40,8 +40,8 @@ const Search = (
     stateSpace: (
       state: State,
       operators: Array<Operator>
-    ): Array<StateConfg> => {
-      let newStateConfigs: Array<StateConfg> = [];
+    ): Array<StateConfig> => {
+      let newStateConfigs: Array<StateConfig> = [];
       operators.forEach(operator => {
         const newState: State | null = applyOperator(
           operator,

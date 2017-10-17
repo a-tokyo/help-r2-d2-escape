@@ -33,7 +33,10 @@ export const state = (node: Node): State => node.state;
 */
 
 export const expand = (node: Node, problem: Problem): Array<Node> => {
-  const newStateConfigs = problem.stateSpace(node.state, problem.operators);
+  const newStateConfigs: Array<StateConfig> = problem.stateSpace(
+    node.state,
+    problem.operators
+  );
   return newStateConfigs.map(stateConfig =>
     makeNode(
       stateConfig.state,
