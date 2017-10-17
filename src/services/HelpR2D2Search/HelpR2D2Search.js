@@ -30,21 +30,13 @@ const Search = (
       unPushedPads: grid.config.pressurePadsCount,
       rocksPositions: _.cloneDeep(grid.config.rocksPositions),
     },
-    stateSpace: (
-      state: State,
-      operators: Array<Operator>
-    ): Array<StateConfg> => {
-      const newState: State | null = applyOperator(
-        operators[0],
-        state,
-        grid,
-        previousStates
-      );
-      return {
-        state: newState,
-        // operator,
-      };
-    },
+    stateSpace: (state: State, operators: Array<Operator>): Array<StateConfg> =>
+      operators
+        .map(operator => ({
+          operator,
+          state: applyOperator(operator, state, grid, previousStates),
+        }))
+        .filter(item => Boolean(item.state)),
     goalTest: (state: State) =>
       state.unPushedPads === 0 &&
       _.isEqual(state.cell, grid.config.playerPosition),
