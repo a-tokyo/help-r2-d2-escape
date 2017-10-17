@@ -12,6 +12,8 @@ const MIN_GRID_ROWS: number = 3;
 const MIN_GRID_COLS: number = 3;
 const MAX_GRID_ROWS: number = 10;
 const MAX_GRID_COLS: number = 10;
+const MAX_ROCKS_PADS_TOGETHER: number = 6;
+const MAX_OBSTACLES: number = 2;
 
 /**
  * Generates a a 2D grid of a random game scenario and scans it for the configurations.
@@ -41,7 +43,10 @@ const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
 
   /** get the random count for the rocks and pressure pads */
   if (availableCellsCount >= 2) {
-    const rocksAndPressurePadsTogetherCount = _.random(0, availableCellsCount);
+    const rocksAndPressurePadsTogetherCount = Math.min(
+      _.random(0, availableCellsCount),
+      MAX_ROCKS_PADS_TOGETHER
+    );
     rocksPressurePadsCount = rocksAndPressurePadsTogetherCount / 2;
     /** the multipliation here is not redundant, it is to defend against if an odd number was excluded */
     availableCellsCount -= rocksPressurePadsCount * 2;
@@ -51,7 +56,10 @@ const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
   /** get the random count for the obstacles */
   if (availableCellsCount > 0) {
     /** add an /2 factor not to have lots of obstacles */
-    obstaclesCount = _.random(0, availableCellsCount / 2);
+    obstaclesCount = Math.min(
+      _.random(0, availableCellsCount / 2),
+      MAX_OBSTACLES
+    );
     availableCellsCount -= obstaclesCount;
   }
 
