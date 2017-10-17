@@ -54,7 +54,8 @@ const Search = (
     goalTest: (state: State) =>
       state.unPushedPads === 0 &&
       _.isEqual(state.cell, grid.config.playerPosition),
-    pathCost: (operators: Array<Operator>): number => operators.length,
+    pathCost: (currState: State, operators: Array<Operator>): number =>
+      operators.length,
   };
 
   /** set the propper queuing function */
@@ -89,7 +90,10 @@ const Search = (
       console.error('unknown search strategy: ', strategy);
   }
 
-  const searchResNode: Node = generalSearch(problem, qingFunc);
+  const { node: searchResNode, expandedNodesCount } = generalSearch(
+    problem,
+    qingFunc
+  );
   const cost: number | null = searchResNode ? searchResNode.pathCost : null;
   const sequence: Array<Operator> = searchResNode
     ? backTrackOperators(searchResNode)
@@ -98,7 +102,7 @@ const Search = (
   return {
     sequence,
     cost,
-    // @TODO expanded nodes count
+    expandedNodesCount,
   };
 };
 

@@ -19,16 +19,18 @@ import {
 export const generalSearch = (
   problem: Problem,
   qingFunc: QueuingFunction
-): Node | null => {
+): { node: Node | null, expandedNodesCount: number } => {
+  let expandedNodesCount: number = 0;
   let nodes = makeQueue(makeNode(initialState(problem)));
   while (!_.isEmpty(nodes)) {
     const [node] = _.pullAt(nodes, [0]);
     if (goalTest(problem)(state(node))) {
-      return node;
+      return { node, expandedNodesCount };
     }
     nodes = qingFunc(nodes, expand(node, problem));
+    expandedNodesCount += 1;
   }
-  return null;
+  return { node: null, expandedNodesCount };
 };
 
 /** BacktrackOperators from a node and get a list of operators from the root to reach that node.

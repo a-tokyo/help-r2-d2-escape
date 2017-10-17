@@ -40,7 +40,7 @@ export const expand = (node: Node, problem: Problem): Array<Node> => {
       node,
       stateConfig.operator,
       node.depth + 1,
-      problem.pathCost([stateConfig.operator])
+      problem.pathCost(node.state, [stateConfig.operator])
     )
   );
 };
