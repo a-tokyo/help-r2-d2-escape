@@ -7,7 +7,8 @@ import { gridMapToString } from '../../services/generateGrid/generateGridHelpers
 export default class Game extends Component {
   componentDidMount() {
     const gameGrid = generateGrid();
-    console.log('gameGrid =>');
+    console.log('gameGrid =>', gameGrid);
+    console.log('gameGridMap ==>');
     console.log(gridMapToString(gameGrid.grid));
   }
 
