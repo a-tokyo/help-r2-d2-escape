@@ -92,6 +92,86 @@ const getNewState = (
   return newState;
 };
 
+const canMoveEast = (currState: State, grid: any): boolean => {
+  const { cell: currPos } = currState;
+  return (
+    currPos.col < grid.config.cols - 1 &&
+    !arrayHasObstacle(grid.grid[currPos.row][currPos.col + 1].items) &&
+    !stateHasRockAndPadAtPos(
+      currState,
+      { row: currPos.row, col: currPos.col + 1 },
+      grid
+    ) &&
+    !(
+      currPos.col === grid.config.cols - 2 &&
+      stateHasRockAtPos(currState, {
+        row: currPos.row,
+        col: currPos.col + 1,
+      })
+    )
+  );
+};
+
+const canMoveWest = (currState: State, grid: any): boolean => {
+  const { cell: currPos } = currState;
+  return (
+    currPos.col > 0 &&
+    !arrayHasObstacle(grid.grid[currPos.row][currPos.col - 1].items) &&
+    !stateHasRockAndPadAtPos(
+      currState,
+      { row: currPos.row, col: currPos.col - 1 },
+      grid
+    ) &&
+    !(
+      currPos.col === 1 &&
+      stateHasRockAtPos(currState, {
+        row: currPos.row,
+        col: currPos.col - 1,
+      })
+    )
+  );
+};
+
+const canMoveNorth = (currState: State, grid: any): boolean => {
+  const { cell: currPos } = currState;
+  return (
+    currPos.row > 0 &&
+    !arrayHasObstacle(grid.grid[currPos.row - 1][currPos.col].items) &&
+    !stateHasRockAndPadAtPos(
+      currState,
+      { row: currPos.row - 1, col: currPos.col },
+      grid
+    ) &&
+    !(
+      currPos.row === 1 &&
+      stateHasRockAtPos(currState, {
+        row: currPos.row - 1,
+        col: currPos.col,
+      })
+    )
+  );
+};
+
+const canMoveSouth = (currState: State, grid: any): boolean => {
+  const { cell: currPos } = currState;
+  return (
+    currPos.row < grid.config.rows - 1 &&
+    !arrayHasObstacle(grid.grid[currPos.row + 1][currPos.col].items) &&
+    !stateHasRockAndPadAtPos(
+      currState,
+      { row: currPos.row + 1, col: currPos.col },
+      grid
+    ) &&
+    !(
+      currPos.row === grid.config.rows - 2 &&
+      stateHasRockAtPos(currState, {
+        row: currPos.row + 1,
+        col: currPos.col,
+      })
+    )
+  );
+};
+
 const applyOperator = (operator: Operator, currState: State) => {
   const grid = {
     grid: [[]],
@@ -105,85 +185,25 @@ const applyOperator = (operator: Operator, currState: State) => {
 
   switch (operator) {
     case 'move_north':
-      if (
-        currPos.row > 0 &&
-        !arrayHasObstacle(grid.grid[currPos.row - 1][currPos.col].items) &&
-        !stateHasRockAndPadAtPos(
-          currState,
-          { row: currPos.row - 1, col: currPos.col },
-          grid
-        ) &&
-        !(
-          currPos.row === 1 &&
-          stateHasRockAtPos(currState, {
-            row: currPos.row - 1,
-            col: currPos.col,
-          })
-        )
-      ) {
+      if (canMoveNorth(currState, grid)) {
         // @TODO valid pos up move row -1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
     case 'move_south':
-      if (
-        currPos.row < grid.config.rows - 1 &&
-        !arrayHasObstacle(grid.grid[currPos.row + 1][currPos.col].items) &&
-        !stateHasRockAndPadAtPos(
-          currState,
-          { row: currPos.row + 1, col: currPos.col },
-          grid
-        ) &&
-        !(
-          currPos.row === grid.config.rows - 2 &&
-          stateHasRockAtPos(currState, {
-            row: currPos.row + 1,
-            col: currPos.col,
-          })
-        )
-      ) {
+      if (canMoveSouth(currState, grid)) {
         // @TODO valid pos down move row +1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
     case 'move_west':
-      if (
-        currPos.col > 0 &&
-        !arrayHasObstacle(grid.grid[currPos.row][currPos.col - 1].items) &&
-        !stateHasRockAndPadAtPos(
-          currState,
-          { row: currPos.row, col: currPos.col - 1 },
-          grid
-        ) &&
-        !(
-          currPos.col === 1 &&
-          stateHasRockAtPos(currState, {
-            row: currPos.row,
-            col: currPos.col - 1,
-          })
-        )
-      ) {
+      if (canMoveWest(currState, grid)) {
         // @TODO valid pos left move col -1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
     case 'move_east':
-      if (
-        currPos.col < grid.config.cols - 1 &&
-        !arrayHasObstacle(grid.grid[currPos.row][currPos.col + 1].items) &&
-        !stateHasRockAndPadAtPos(
-          currState,
-          { row: currPos.row, col: currPos.col + 1 },
-          grid
-        ) &&
-        !(
-          currPos.col === grid.config.cols - 2 &&
-          stateHasRockAtPos(currState, {
-            row: currPos.row,
-            col: currPos.col + 1,
-          })
-        )
-      ) {
+      if (canMoveEast(currState, grid)) {
         /**
          * valid position to the east, move (col + 1)
          * if the new position has rock, move rock -> check if rock moved to a pressure pad
