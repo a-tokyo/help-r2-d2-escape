@@ -72,7 +72,7 @@ export const getGridConfig = (grid: Array<Array<any>>): GridConfigObject => {
       /** If the element is not null, swith on its type */
       if (element) {
         config.availableCellsCount -= 1;
-        switch (element.type) {
+        switch (element.items[0].type) {
           case 'player':
             config.playerPosition = getGridItemPos(i, j);
             break;
