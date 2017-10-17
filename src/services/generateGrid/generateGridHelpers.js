@@ -106,6 +106,27 @@ export const getGridConfig = (grid: Array<Array<any>>): GridConfigObject => {
   return config;
 };
 
+export const gridMapToString = (grid: Array<Array<any>>): string => {
+  let stringToReturn = ``;
+  for (let i = 0; i < grid.length; i += 1) {
+    for (let j = 0; j < grid[i].length; j += 1) {
+      const element = grid[i][j];
+      if (element) {
+        const itemsString = `[${element.items
+          .map(item => item.type)
+          .toString()}]`;
+        stringToReturn = `${stringToReturn}${j === 0
+          ? ''
+          : ', '}${itemsString}`;
+      } else {
+        stringToReturn = `${stringToReturn}${j === 0 ? '[ ]' : ', [ ]'}`;
+      }
+    }
+    stringToReturn = `${stringToReturn}\n=========================================\n`;
+  }
+  return stringToReturn;
+};
+
 export const createGameElement = (
   type: GameElementType,
   name?: string = 'GameElement'
