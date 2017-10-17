@@ -1,10 +1,17 @@
 /* @flow */
 /* eslint no-undef: 1 */
 
-export type Operator = any;
+export type Operator =
+  | any
+  | 'move_up'
+  | 'move_down'
+  | 'move_right'
+  | 'move_left';
+
+export type GridItemPos = { row: number, col: number };
 
 export type State = {
-  cell: number,
+  cell: GridItemPos,
   direction: string,
   pushedPads: number,
 };
@@ -30,8 +37,6 @@ export type Problem = {
 export type MakeNodeFucntion = State => Array<Node>;
 
 export type QueuingFunction = (Array<Node>, Array<Node>) => Array<Node>;
-
-export type GridItemPos = { row: number, col: number };
 
 export type GridConfigObject = {
   rows: number,
