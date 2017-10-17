@@ -33,8 +33,6 @@ export const state = (node: Node): State => node.state;
  * @TODO implement properly
 */
 
-const gridConfigObject: GridConfigObject = {};
-
 export const expand = (node: Node, problem: Problem): Array<Node> => {
   // problem.operators.forEach(operator => {});
   // const newStateConfigs = problem.stateSpace(node.state ,problem.operators);
@@ -45,11 +43,12 @@ const arrayHasObstacle = items => _.find(items, { type: 'obstacle' });
 const arrayHasRockAndPressurepad = items =>
   _.find(items, { type: 'rock' }) && _.find(items, { type: 'pressurepad' });
 
-const grid = [[]];
-const gridConfig = {};
 const applyOperator = (operator: Operator, node: Node) => {
-  const { state } = node;
-  const currPos = state.cell;
+  const grid = [[]];
+  const gridConfig = {};
+
+  const { state: currState } = node;
+  const currPos = currState.cell;
   switch (operator) {
     case 'move_north':
       if (
@@ -107,6 +106,8 @@ const applyOperator = (operator: Operator, node: Node) => {
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
+    default:
+      console.error('unknown operator: ', operator);
   }
 };
 
