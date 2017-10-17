@@ -11,6 +11,10 @@ import {
 
 import { applyOperator } from './HelpR2D2SearchHelpers';
 
+/**
+ * Creates an R2D2 search problem according to a grid
+ * then runs the general search algorithm according to the strategy and returns the result.
+ */
 const Search = (
   grid: { grid: Array<Array<any>>, config: Object },
   strategy: string,

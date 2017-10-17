@@ -5,16 +5,26 @@ import _ from 'lodash';
 
 const arrayHasObstacle = items => _.find(items, { type: 'obstacle' });
 
+/**
+ * Checks if the state has a rock at a position.
+ */
 const stateHasRockAtPos = (
   stateToCheck: State,
   position: GridItemPos
 ): boolean => Boolean(_.find(stateToCheck.rocksPositions, position));
 
+/**
+ * Gets the rock position if it exists.
+ */
 const getStateRockPosAtPos = (
   stateToCheck: State,
   position: GridItemPos
 ): GridItemPos | null => _.find(stateToCheck.rocksPositions, position) || null;
 
+/**
+ * Checks if a position is both a state rock position and a grid pressurepad position.
+ * ie, at the moment a rock is on a pressurepad.
+ */
 const stateHasRockAndPadAtPos = (
   stateToCheck: State,
   position: GridItemPos,
@@ -26,6 +36,9 @@ const stateHasRockAndPadAtPos = (
 const gridHasPressurepadAtPos = (gridToCheck: any, position: GridItemPos) =>
   Boolean(_.find(gridToCheck.config.pressurePadsPositions, position));
 
+/**
+ * Generates a new NON-REPEATED state from the current information of the environment.
+ */
 const getNewState = (
   previousStates: Array<State>,
   grid: any,
@@ -65,6 +78,9 @@ const getNewState = (
   return newState;
 };
 
+/**
+ * Checks the current state for the possibility of moving easr.
+ */
 const canMoveEast = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
   return (
@@ -95,6 +111,9 @@ const canMoveEast = (currState: State, grid: any): boolean => {
   );
 };
 
+/**
+ * Checks the current state for the possibility of moving west.
+ */
 const canMoveWest = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
   return (
@@ -125,6 +144,9 @@ const canMoveWest = (currState: State, grid: any): boolean => {
   );
 };
 
+/**
+ * Checks the current state for the possibility of moving north.
+ */
 const canMoveNorth = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
   return (
@@ -155,6 +177,9 @@ const canMoveNorth = (currState: State, grid: any): boolean => {
   );
 };
 
+/**
+ * Checks the current state for the possibility of moving south.
+ */
 const canMoveSouth = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
   return (
@@ -185,6 +210,9 @@ const canMoveSouth = (currState: State, grid: any): boolean => {
   );
 };
 
+/**
+ * Applies an operator to a state and returns the new state if possible or null.
+ */
 export const applyOperator = (
   operator: Operator,
   currState: State,
