@@ -10,8 +10,8 @@ import {
 
 const MIN_GRID_ROWS: number = 1;
 const MIN_GRID_COLS: number = 2;
-const MAX_GRID_ROWS: number = 100;
-const MAX_GRID_COLS: number = 100;
+const MAX_GRID_ROWS: number = 10;
+const MAX_GRID_COLS: number = 10;
 
 /**
  * Generates a a 2D grid of a random game scenario and scans it for the configurations.
