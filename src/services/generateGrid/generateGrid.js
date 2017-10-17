@@ -57,7 +57,7 @@ const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
   let rocks = [];
   let obstacles = [];
 
-  /** concat a new rock, pressurepad instance to the rocks, pressurePads arrays */
+  /** concat a new rock, pressurepad object to the rocks, pressurePads arrays */
   for (let i = 0; i < rocksPressurePadsCount; i += 1) {
     pressurePads = pressurePads.concat(
       createGameElement('pressurepad', `pressurepad_${i}`)
@@ -65,7 +65,7 @@ const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
     rocks = rocks.concat(createGameElement('rock', `rock_${i}`));
   }
 
-  /** concat a new obstacle instance to the obstacles array */
+  /** concat a new obstacle object to the obstacles array */
   for (let i = 0; i < obstaclesCount; i += 1) {
     obstacles = obstacles.concat(
       createGameElement('obstacle', `obstacle_${i}`)
