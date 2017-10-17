@@ -108,6 +108,16 @@ const canMoveEast = (currState: State, grid: any): boolean => {
         row: currPos.row,
         col: currPos.col + 1,
       })
+    ) &&
+    !(
+      stateHasRockAtPos(currState, {
+        row: currPos.row,
+        col: currPos.col + 1,
+      }) &&
+      stateHasRockAtPos(currState, {
+        row: currPos.row,
+        col: currPos.col + 2,
+      })
     )
   );
 };
@@ -127,6 +137,16 @@ const canMoveWest = (currState: State, grid: any): boolean => {
       stateHasRockAtPos(currState, {
         row: currPos.row,
         col: currPos.col - 1,
+      })
+    ) &&
+    !(
+      stateHasRockAtPos(currState, {
+        row: currPos.row,
+        col: currPos.col - 1,
+      }) &&
+      stateHasRockAtPos(currState, {
+        row: currPos.row,
+        col: currPos.col - 2,
       })
     )
   );
@@ -148,6 +168,16 @@ const canMoveNorth = (currState: State, grid: any): boolean => {
         row: currPos.row - 1,
         col: currPos.col,
       })
+    ) &&
+    !(
+      stateHasRockAtPos(currState, {
+        row: currPos.row - 1,
+        col: currPos.col,
+      }) &&
+      stateHasRockAtPos(currState, {
+        row: currPos.row - 2,
+        col: currPos.col,
+      })
     )
   );
 };
@@ -166,6 +196,16 @@ const canMoveSouth = (currState: State, grid: any): boolean => {
       currPos.row === grid.config.rows - 2 &&
       stateHasRockAtPos(currState, {
         row: currPos.row + 1,
+        col: currPos.col,
+      })
+    ) &&
+    !(
+      stateHasRockAtPos(currState, {
+        row: currPos.row + 1,
+        col: currPos.col,
+      }) &&
+      stateHasRockAtPos(currState, {
+        row: currPos.row + 2,
         col: currPos.col,
       })
     )
