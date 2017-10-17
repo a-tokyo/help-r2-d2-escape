@@ -28,7 +28,10 @@ export const addElementsToGridRandomPosition = (
 
       /** check for coexisting elements */
       if (!newGrid[randomRowIndex][randomColIndex]) {
-        newGrid[randomRowIndex][randomColIndex] = element;
+        newGrid[randomRowIndex][randomColIndex] = {
+          items: [element],
+          position: { row: randomRowIndex, col: randomColIndex },
+        };
         break;
       }
     }
