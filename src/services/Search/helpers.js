@@ -199,6 +199,32 @@ const applyOperator = (operator: Operator, currState: State): State | null => {
       if (canMoveWest(currState, grid)) {
         // @TODO valid pos left move col -1
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
+        const rockPosStateItem: GridItemPos | null = getStateRockPosAtPos(
+          currState,
+          {
+            row: currPos.row,
+            col: currPos.col - 1,
+          }
+        );
+        let newRockPosItem = null;
+        if (rockPosStateItem) {
+          newRockPosItem = {
+            row: currPos.row,
+            col: currPos.col - 2,
+          };
+        }
+        const newCell: GridItemPos = {
+          row: currPos.row,
+          col: currPos.col - 1,
+        };
+        return getNewState(
+          grid,
+          newCell,
+          currRocksPositions,
+          currUnPushedPads,
+          rockPosStateItem,
+          newRockPosItem
+        );
       }
       break;
     case 'move_east':
