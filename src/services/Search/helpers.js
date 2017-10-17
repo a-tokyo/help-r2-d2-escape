@@ -63,7 +63,7 @@ const applyOperator = (operator: Operator, node: Node) => {
         )
       ) {
         // @TODO valid pos up move
-        // check if has rock, if so, move rock
+        // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
     case 'move_down':
@@ -76,33 +76,33 @@ const applyOperator = (operator: Operator, node: Node) => {
         )
       ) {
         // @TODO valid pos down move
-        // check if has rock, if so, move rock
+        // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
     case 'move_left':
       if (
         currPos.col > 0 &&
-        !arrayHasObstacle(grid[currPos.row][currPos.col].items) &&
+        !arrayHasObstacle(grid[currPos.row][currPos.col - 1].items) &&
         !(
           currPos.col === 1 &&
           arrayHasRock(grid[currPos.row][currPos.col - 1].items)
         )
       ) {
         // @TODO valid pos left move
-        // check if has rock, if so, move rock
+        // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
     case 'move_right':
       if (
         currPos.col < gridConfig.cols - 1 &&
-        !arrayHasObstacle(grid[currPos.row][currPos.col].items) &&
+        !arrayHasObstacle(grid[currPos.row][currPos.col + 1].items) &&
         !(
           currPos.col === gridConfig.cols - 2 &&
           arrayHasRock(grid[currPos.row][currPos.col + 1].items)
         )
       ) {
         // @TODO valid pos right move
-        // check if has rock, if so, move rock
+        // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
   }
