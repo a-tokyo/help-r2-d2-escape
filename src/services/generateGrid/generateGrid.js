@@ -8,8 +8,8 @@ import {
   createGameElement,
 } from './generateGridHelpers';
 
-const MIN_GRID_ROWS: number = 1;
-const MIN_GRID_COLS: number = 2;
+const MIN_GRID_ROWS: number = 3;
+const MIN_GRID_COLS: number = 3;
 const MAX_GRID_ROWS: number = 10;
 const MAX_GRID_COLS: number = 10;
 
