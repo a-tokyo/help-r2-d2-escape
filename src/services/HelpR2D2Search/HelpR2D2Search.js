@@ -2,6 +2,12 @@
 import _ from 'lodash';
 
 import { generalSearch } from '../Search/Search';
+import {
+  breadthFirstQueuingFunc,
+  depthFirstQueuingFunc,
+  uniformCostQueuingFunc,
+  iterativeDeepeningQueuingFunc,
+} from '../Search/queuingFunctions';
 
 const Search = (
   grid: { grid: Array<Array<any>>, config: Object },
@@ -29,17 +35,20 @@ const Search = (
   };
 
   /** set the propper queuing function */
-  let qingFunc: QueuingFunction | null = null;
+  let qingFunc: QueuingFunction = breadthFirstQueuingFunc;
 
   switch (strategy) {
     case 'bfs':
-      // qingFunc = ...
+      qingFunc = breadthFirstQueuingFunc;
       break;
     case 'dfs':
-      // qingFunc = ...
+      qingFunc = depthFirstQueuingFunc;
       break;
     case 'uniform_cost':
-      // qingFunc = ...
+      qingFunc = uniformCostQueuingFunc;
+      break;
+    case 'iterative_deepening':
+      qingFunc = iterativeDeepeningQueuingFunc;
       break;
     default:
       console.error('unknown search strategy: ', strategy);
