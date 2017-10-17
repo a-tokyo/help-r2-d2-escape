@@ -38,14 +38,29 @@ export const expand = (node: Node, problem: Problem): Array<Node> => {
   // const newStateConfigs = problem.stateSpace(node.state ,problem.operators);
 };
 
-const arrayHasRock = items => _.find(items, { type: 'rock' });
+// const arrayHasRock = items => _.find(items, { type: 'rock' });
 const arrayHasObstacle = items => _.find(items, { type: 'obstacle' });
-const arrayHasRockAndPressurepad = items =>
-  _.find(items, { type: 'rock' }) && _.find(items, { type: 'pressurepad' });
+// const arrayHasRockAndPressurepad = items =>
+//   _.find(items, { type: 'rock' }) && _.find(items, { type: 'pressurepad' });
+
+const stateHasRockAtPos = (
+  stateToCheck: State,
+  position: GridItemPos
+): boolean => Boolean(_.find(stateToCheck.rocksPositions, position));
+
+const stateHasRockAndPadAtPos = (
+  stateToCheck: State,
+  position: GridItemPos,
+  gridToCheck: any
+): boolean =>
+  Boolean(_.find(stateToCheck.rocksPositions, position)) &&
+  Boolean(_.find(gridToCheck.config.pressurePadsPositions, position));
 
 const applyOperator = (operator: Operator, node: Node) => {
-  const grid = [[]];
-  const gridConfig = {};
+  const grid = {
+    grid: [[]],
+    config: {},
+  };
 
   const { state: currState } = node;
   const currPos = currState.cell;
@@ -53,11 +68,18 @@ const applyOperator = (operator: Operator, node: Node) => {
     case 'move_north':
       if (
         currPos.row > 0 &&
-        !arrayHasObstacle(grid[currPos.row - 1][currPos.col].items) &&
-        !arrayHasRockAndPressurepad(grid[currPos.row - 1][currPos.col].items) &&
+        !arrayHasObstacle(grid.grid[currPos.row - 1][currPos.col].items) &&
+        !stateHasRockAndPadAtPos(
+          currState,
+          { row: currPos.row - 1, col: currPos.col },
+          grid
+        ) &&
         !(
           currPos.row === 1 &&
-          arrayHasRock(grid[currPos.row - 1][currPos.col].items)
+          stateHasRockAtPos(currState, {
+            row: currPos.row - 1,
+            col: currPos.col,
+          })
         )
       ) {
         // @TODO valid pos up move
@@ -66,12 +88,19 @@ const applyOperator = (operator: Operator, node: Node) => {
       break;
     case 'move_south':
       if (
-        currPos.row < gridConfig.rows - 1 &&
-        !arrayHasObstacle(grid[currPos.row + 1][currPos.col].items) &&
-        !arrayHasRockAndPressurepad(grid[currPos.row + 1][currPos.col].items) &&
+        currPos.row < grid.config.rows - 1 &&
+        !arrayHasObstacle(grid.grid[currPos.row + 1][currPos.col].items) &&
+        !stateHasRockAndPadAtPos(
+          currState,
+          { row: currPos.row + 1, col: currPos.col },
+          grid
+        ) &&
         !(
-          currPos.row === gridConfig.rows - 2 &&
-          arrayHasRock(grid[currPos.row + 1][currPos.col].items)
+          currPos.row === grid.config.rows - 2 &&
+          stateHasRockAtPos(currState, {
+            row: currPos.row + 1,
+            col: currPos.col,
+          })
         )
       ) {
         // @TODO valid pos down move
@@ -81,11 +110,18 @@ const applyOperator = (operator: Operator, node: Node) => {
     case 'move_west':
       if (
         currPos.col > 0 &&
-        !arrayHasObstacle(grid[currPos.row][currPos.col - 1].items) &&
-        !arrayHasRockAndPressurepad(grid[currPos.row][currPos.col - 1].items) &&
+        !arrayHasObstacle(grid.grid[currPos.row][currPos.col - 1].items) &&
+        !stateHasRockAndPadAtPos(
+          currState,
+          { row: currPos.row, col: currPos.col - 1 },
+          grid
+        ) &&
         !(
           currPos.col === 1 &&
-          arrayHasRock(grid[currPos.row][currPos.col - 1].items)
+          stateHasRockAtPos(currState, {
+            row: currPos.row,
+            col: currPos.col - 1,
+          })
         )
       ) {
         // @TODO valid pos left move
@@ -94,12 +130,19 @@ const applyOperator = (operator: Operator, node: Node) => {
       break;
     case 'move_east':
       if (
-        currPos.col < gridConfig.cols - 1 &&
-        !arrayHasObstacle(grid[currPos.row][currPos.col + 1].items) &&
-        !arrayHasRockAndPressurepad(grid[currPos.row][currPos.col + 1].items) &&
+        currPos.col < grid.config.cols - 1 &&
+        !arrayHasObstacle(grid.grid[currPos.row][currPos.col + 1].items) &&
+        !stateHasRockAndPadAtPos(
+          currState,
+          { row: currPos.row, col: currPos.col + 1 },
+          grid
+        ) &&
         !(
-          currPos.col === gridConfig.cols - 2 &&
-          arrayHasRock(grid[currPos.row][currPos.col + 1].items)
+          currPos.col === grid.config.cols - 2 &&
+          stateHasRockAtPos(currState, {
+            row: currPos.row,
+            col: currPos.col + 1,
+          })
         )
       ) {
         // @TODO valid pos right move
