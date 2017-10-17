@@ -1,7 +1,7 @@
 /* @flow */
 import _ from 'lodash';
 
-import { generalSearch } from '../Search/Search';
+import { generalSearch, backTrackOperators } from '../Search/Search';
 import {
   breadthFirstQueuingFunc,
   depthFirstQueuingFunc,
@@ -55,23 +55,45 @@ const Search = (
   let qingFunc: QueuingFunction = breadthFirstQueuingFunc;
 
   switch (strategy) {
-    case 'bfs':
+    case 'BF':
       qingFunc = breadthFirstQueuingFunc;
       break;
-    case 'dfs':
+    case 'DF':
       qingFunc = depthFirstQueuingFunc;
       break;
-    case 'uniform_cost':
-      qingFunc = uniformCostQueuingFunc;
-      break;
-    case 'iterative_deepening':
+    case 'ID':
       qingFunc = iterativeDeepeningQueuingFunc;
       break;
+    case 'UC':
+      qingFunc = uniformCostQueuingFunc;
+      break;
+    // case 'GR1':
+    //   qingFunc = ...;
+    //   break;
+    // case 'GR2':
+    //   qingFunc = ...;
+    //   break;
+    // case 'AS1':
+    //   qingFunc = ...;
+    //   break;
+    // case 'AS2':
+    //   qingFunc = ...;
+    //   break;
     default:
       console.error('unknown search strategy: ', strategy);
   }
 
-  return generalSearch(problem, qingFunc);
+  const searchResNode: Node = generalSearch(problem, qingFunc);
+  const cost: number | null = searchResNode ? searchResNode.pathCost : null;
+  const sequence: Array<Operator> = searchResNode
+    ? backTrackOperators(searchResNode)
+    : [];
+
+  return {
+    sequence,
+    cost,
+    // @TODO expanded nodes count
+  };
 };
 
 export default Search;
