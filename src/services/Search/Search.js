@@ -6,25 +6,25 @@ import {
   makeQueue,
   makeNode,
   /** Problem helpers */
-  initialState,
-  goalTest,
+  getInitialState,
+  getGoalTest,
   /** Node helpers */
-  state,
+  getState,
   expand,
 } from './helpers';
 
 /**
- * General search function
+ * General search algorithm
  */
 export const generalSearch = (
   problem: Problem,
   qingFunc: QueuingFunction
 ): { node: Node | null, expandedNodesCount: number } => {
   let expandedNodesCount: number = 0;
-  let nodes = makeQueue(makeNode(initialState(problem)));
+  let nodes = makeQueue(makeNode(getInitialState(problem)));
   while (!_.isEmpty(nodes)) {
     const [node] = _.pullAt(nodes, [0]);
-    if (goalTest(problem)(state(node))) {
+    if (getGoalTest(problem)(getState(node))) {
       return { node, expandedNodesCount };
     }
     nodes = qingFunc(nodes, expand(node, problem));

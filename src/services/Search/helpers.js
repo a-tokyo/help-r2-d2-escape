@@ -21,17 +21,18 @@ export const makeNode = (
 
 /** Problem helpers */
 /** gets the initial state of a problem */
-export const initialState = (problem: Problem): State => problem.initialState;
+export const getInitialState = (problem: Problem): State =>
+  problem.initialState;
 /** gets the goalTest function of a problem */
-export const goalTest = (problem: Problem): GoalTestFunc => problem.goalTest;
+export const getGoalTest = (problem: Problem): GoalTestFunc => problem.goalTest;
 
 /** Node helpers */
 /** gets the state of a node */
-export const state = (node: Node): State => node.state;
-/** expands a node according to a problem
- * @TODO implement properly
-*/
+export const getState = (node: Node): State => node.state;
 
+/**
+ * expands a node according to a problem's state space into new nodes
+*/
 export const expand = (node: Node, problem: Problem): Array<Node> => {
   const newStateConfigs: Array<StateConfig> = problem.stateSpace(
     node.state,
