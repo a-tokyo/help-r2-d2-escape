@@ -74,7 +74,7 @@ const getNewState = (
   currwRockPositionItem: GridItemPos | null,
   newRockPositionItem: GridItemPos | null
 ): State => {
-  let newRockPositions = rocksPositions;
+  let newRockPositions = _.cloneDeep(rocksPositions);
   let newUnPushedPads = unPushedPads;
   if (newRockPositionItem) {
     newRockPositions = rocksPositions
@@ -172,16 +172,15 @@ const canMoveSouth = (currState: State, grid: any): boolean => {
   );
 };
 
-const applyOperator = (operator: Operator, currState: State) => {
+const applyOperator = (operator: Operator, currState: State): State | null => {
   const grid = {
     grid: [[]],
     config: {},
   };
 
   const currPos = currState.cell;
-
-  let newRockPositions = _.cloneDeep(currState.rocksPositions);
-  let newUnPushedPads = currState.unPushedPads;
+  const currRocksPositions = currState.rocksPositions;
+  const currUnPushedPads = currState.unPushedPads;
 
   switch (operator) {
     case 'move_north':
@@ -229,8 +228,8 @@ const applyOperator = (operator: Operator, currState: State) => {
         return getNewState(
           grid,
           newCell,
-          newRockPositions,
-          newUnPushedPads,
+          currRocksPositions,
+          currUnPushedPads,
           rockPosStateItem,
           newRockPosItem
         );
@@ -239,6 +238,7 @@ const applyOperator = (operator: Operator, currState: State) => {
     default:
       console.error('unknown operator: ', operator);
   }
+  return null;
 };
 
 // const validGridPos = (grid: Array<Array<any>>, i: number, j: number) =>
