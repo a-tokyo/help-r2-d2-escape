@@ -53,8 +53,7 @@ const stateHasRockAtPos = (
 const getStateRockPosAtPos = (
   stateToCheck: State,
   position: GridItemPos
-): GridItemPos | boolean =>
-  _.find(stateToCheck.rocksPositions, position) || false;
+): GridItemPos | null => _.find(stateToCheck.rocksPositions, position) || null;
 
 const stateHasRockAndPadAtPos = (
   stateToCheck: State,
@@ -66,6 +65,32 @@ const stateHasRockAndPadAtPos = (
 
 const gridHasPressurepadAtPos = (gridToCheck: any, position: GridItemPos) =>
   Boolean(_.find(gridToCheck.config.pressurePadsPositions, position));
+
+const getNewState = (
+  grid: any,
+  newPos: GridItemPos,
+  rocksPositions: Array<GridItemPos>,
+  unPushedPads: number,
+  currwRockPositionItem: GridItemPos | null,
+  newRockPositionItem: GridItemPos | null
+): State => {
+  let newRockPositions = rocksPositions;
+  let newUnPushedPads = unPushedPads;
+  if (newRockPositionItem) {
+    newRockPositions = rocksPositions
+      .filter(item => !_.isEqual(item, currwRockPositionItem))
+      .concat(newRockPositionItem);
+    if (gridHasPressurepadAtPos(grid, newRockPositionItem)) {
+      newUnPushedPads += 1;
+    }
+  }
+  const newState: State = {
+    cell: newPos,
+    rocksPositions: newRockPositions,
+    unPushedPads: newUnPushedPads,
+  };
+  return newState;
+};
 
 const applyOperator = (operator: Operator, currState: State) => {
   const grid = {
@@ -163,32 +188,32 @@ const applyOperator = (operator: Operator, currState: State) => {
          * valid position to the east, move (col + 1)
          * if the new position has rock, move rock -> check if rock moved to a pressure pad
          */
-        const rockPosStateItem = getStateRockPosAtPos(currState, {
-          row: currPos.row,
-          col: currPos.col + 1,
-        });
+        const rockPosStateItem: GridItemPos | null = getStateRockPosAtPos(
+          currState,
+          {
+            row: currPos.row,
+            col: currPos.col + 1,
+          }
+        );
+        let newRockPosItem = null;
         if (rockPosStateItem) {
-          const newRockPosItem = {
+          newRockPosItem = {
             row: currPos.row,
             col: currPos.col + 2,
           };
-          newRockPositions = currState.rocksPositions
-            .filter(item => !_.isEqual(item, rockPosStateItem))
-            .concat(newRockPosItem);
-          if (gridHasPressurepadAtPos(grid, newRockPosItem)) {
-            newUnPushedPads += 1;
-          }
         }
         const newCell: GridItemPos = {
           row: currPos.row,
           col: currPos.col + 1,
         };
-        const newState: State = {
-          cell: newCell,
-          rocksPositions: newRockPositions,
-          unPushedPads: newUnPushedPads,
-        };
-        return newState;
+        return getNewState(
+          grid,
+          newCell,
+          newRockPositions,
+          newUnPushedPads,
+          rockPosStateItem,
+          newRockPosItem
+        );
       }
       break;
     default:
