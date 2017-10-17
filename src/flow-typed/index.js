@@ -1,6 +1,10 @@
 /* @flow */
 /* eslint no-undef: 1 */
 
+export type GameElement = {
+  type: 'player' | 'teleportal' | 'rock' | 'pressurepad' | 'obstacle',
+};
+
 export type Operator =
   | any
   | 'move_north'
