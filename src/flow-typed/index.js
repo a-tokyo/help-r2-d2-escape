@@ -12,7 +12,8 @@ export type GridItemPos = { row: number, col: number };
 
 export type State = {
   cell: GridItemPos,
-  pushedPads: number,
+  unPushedPads: number,
+  rocksPositions: Array<GridItemPos>,
 };
 
 export type Node = {
