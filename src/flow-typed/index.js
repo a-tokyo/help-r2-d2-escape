@@ -13,12 +13,7 @@ export type GameElement = {
   name?: string,
 };
 
-export type Operator =
-  | any
-  | 'move_north'
-  | 'move_south'
-  | 'move_east'
-  | 'move_west';
+export type Operator = 'move_north' | 'move_south' | 'move_east' | 'move_west';
 
 export type GridItemPos = { row: number, col: number };
 
@@ -48,7 +43,7 @@ export type Problem = {
   initialState: State,
   stateSpace: (State, Array<Operator>) => Array<StateConfg>,
   goalTest: GoalTestFunc,
-  pathCost: (Array<Operator>) => number,
+  pathCost: (State, Array<Operator>) => number,
 };
 
 export type MakeNodeFucntion = State => Array<Node>;

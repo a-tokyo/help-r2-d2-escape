@@ -54,7 +54,7 @@ const Search = (
     goalTest: (state: State) =>
       state.unPushedPads === 0 &&
       _.isEqual(state.cell, grid.config.playerPosition),
-    pathCost: (currState: State, operators: Array<Operator>): number =>
+    pathCost: (state: State, operators: Array<Operator>): number =>
       operators.length,
   };
 
