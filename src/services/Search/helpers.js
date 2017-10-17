@@ -73,7 +73,7 @@ const getNewState = (
   unPushedPads: number,
   currwRockPositionItem: GridItemPos | null,
   newRockPositionItem: GridItemPos | null
-): State => {
+): State | null => {
   let newRockPositions = _.cloneDeep(rocksPositions);
   let newUnPushedPads = unPushedPads;
   if (newRockPositionItem) {
@@ -89,6 +89,12 @@ const getNewState = (
     rocksPositions: newRockPositions,
     unPushedPads: newUnPushedPads,
   };
+  // /**
+  //  * if the state was generated before, return null and don't generate it again.
+  //  */
+  // if (previousStates.find(previousState => _.isEqual(previousState, newState))) {
+  //   return null;
+  // }
   return newState;
 };
 
