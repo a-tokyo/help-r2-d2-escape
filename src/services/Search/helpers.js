@@ -54,7 +54,7 @@ const applyOperator = (operator: Operator, node: Node) => {
   const { state } = node;
   const currPos = state.cell;
   switch (operator) {
-    case 'move_up':
+    case 'move_north':
       if (
         currPos.row > 0 &&
         !arrayHasObstacle(grid[currPos.row - 1][currPos.col].items) &&
@@ -67,7 +67,7 @@ const applyOperator = (operator: Operator, node: Node) => {
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
-    case 'move_down':
+    case 'move_south':
       if (
         currPos.row < gridConfig.rows - 1 &&
         !arrayHasObstacle(grid[currPos.row + 1][currPos.col].items) &&
@@ -80,7 +80,7 @@ const applyOperator = (operator: Operator, node: Node) => {
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
-    case 'move_left':
+    case 'move_west':
       if (
         currPos.col > 0 &&
         !arrayHasObstacle(grid[currPos.row][currPos.col - 1].items) &&
@@ -93,7 +93,7 @@ const applyOperator = (operator: Operator, node: Node) => {
         // check if has rock, if so, move rock -> check if rock moved to or from pressure pad
       }
       break;
-    case 'move_right':
+    case 'move_east':
       if (
         currPos.col < gridConfig.cols - 1 &&
         !arrayHasObstacle(grid[currPos.row][currPos.col + 1].items) &&

@@ -1,10 +1,9 @@
 /* @flow */
 
 const propblem: Problem = {
-  operators: ['move_up', 'move_down', 'move_right', 'move_left'],
+  operators: ['move_north', 'move_south', 'move_east', 'move_west'],
   initialState: {
     cell: { row: 0, col: 0 },
-    direction: 'east',
     pushedPads: 0,
   },
   stateSpace: (

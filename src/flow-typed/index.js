@@ -3,16 +3,15 @@
 
 export type Operator =
   | any
-  | 'move_up'
-  | 'move_down'
-  | 'move_right'
-  | 'move_left';
+  | 'move_north'
+  | 'move_south'
+  | 'move_east'
+  | 'move_west';
 
 export type GridItemPos = { row: number, col: number };
 
 export type State = {
   cell: GridItemPos,
-  direction: string,
   pushedPads: number,
 };
 
