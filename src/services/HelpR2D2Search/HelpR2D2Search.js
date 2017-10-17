@@ -8,6 +8,8 @@ const Search = (
   strategy: string,
   visualize: boolean
 ) => {
+  /** keep track of the previous state */
+  // let previousStates = [];
   /** create the search problem */
   const problem: Problem = {
     operators: ['move_north', 'move_south', 'move_east', 'move_west'],
@@ -31,10 +33,13 @@ const Search = (
 
   switch (strategy) {
     case 'bfs':
+      // qingFunc = ...
       break;
     case 'dfs':
+      // qingFunc = ...
       break;
     case 'uniform_cost':
+      // qingFunc = ...
       break;
     default:
       console.error('unknown search strategy: ', strategy);
