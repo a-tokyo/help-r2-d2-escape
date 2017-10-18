@@ -126,7 +126,7 @@ const Search = (
     problem,
     qingFunc
   );
-  // const cost: number | null = searchResNode ? searchResNode.pathCost : null;
+
   const cost: number | null = searchResNode
     ? backTrackCost(searchResNode)
     : null;
