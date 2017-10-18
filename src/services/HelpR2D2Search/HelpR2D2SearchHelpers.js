@@ -73,7 +73,7 @@ const getNewState = (
       .filter(item => !_.isEqual(item, currwRockPositionItem))
       .concat(newRockPositionItem);
     if (gridHasPressurepadAtPos(grid, newRockPositionItem)) {
-      newUnPushedPads += 1;
+      newUnPushedPads -= 1;
     }
   }
   const newState: State = {
