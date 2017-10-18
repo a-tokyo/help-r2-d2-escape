@@ -55,7 +55,7 @@ export const iterativeDeepeningQueuingFunc: Function = (
 ): Array<Node> =>
   depthFirstQueuingFunc(
     nodes,
-    newNodes.filter(newNode => newNode.depth >= maxDepth)
+    newNodes.filter(newNode => newNode.depth <= maxDepth)
   );
 
 /** @TODO Greedy, 2 heuristics */

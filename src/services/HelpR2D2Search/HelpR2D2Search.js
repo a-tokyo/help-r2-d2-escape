@@ -18,7 +18,7 @@ import { applyOperator } from './HelpR2D2SearchHelpers';
 /** The max depth ID search ever reaches, pseudo wise would be infinity
  * but the application are bounded by memory.
  */
-const ID_MAX_DEPTH = 1000;
+const ID_MAX_DEPTH = 10000;
 
 /**
  * Creates an R2D2 search problem according to a grid
@@ -28,7 +28,7 @@ const ID_MAX_DEPTH = 1000;
  */
 const Search = (
   grid: { grid: Array<Array<any>>, config: Object },
-  strategy: SearchStrategy = 'ID',
+  strategy: SearchStrategy = 'BF',
   visualize: boolean = false
 ): {
   sequence: Array<Operator> | null,
@@ -37,7 +37,7 @@ const Search = (
 } => {
   /** keep track of the previous state */
   /** The previousStates hashmap is mutated by applyOperator() */
-  const previousStates: StatesHashMap = {};
+  let previousStates: StatesHashMap = {};
   /** create the search problem */
   const problem: Problem = {
     operators: ['move_north', 'move_south', 'move_east', 'move_west'],
@@ -76,10 +76,6 @@ const Search = (
        * @TODO implement proper path cost for last 2 search algorithms
        *
       // switch (strategy) {
-      //   case 'ID':
-      //     return operators.length;
-      //   case 'UC':
-      //     return operators.length;
       //   case 'GR1':
       //     return operators.length;
       //   case 'GR2':
@@ -89,7 +85,6 @@ const Search = (
       //   case 'AS2':
       //     return operators.length;
       //   default:
-      //     console.error('unknown search strategy: ', strategy);
       // }
        *
        */
@@ -136,18 +131,18 @@ const Search = (
   /** Seperating special case from usual case search algorithms and updating the returned variables accordingly. */
   if (strategy === 'ID') {
     /** Special case strategies go here */
-    for (let maxDepth = 0; maxDepth < ID_MAX_DEPTH; maxDepth += 1) {
+    for (let maxDepth = 1; maxDepth < ID_MAX_DEPTH; maxDepth += 1) {
       const genSearchRes = generalSearch(
         problem,
         iterativeDeepeningQueuingFunc(maxDepth)
       );
-      console.log(`ID LEVEL: ${maxDepth}`, genSearchRes);
-      console.log('###################################');
       if (genSearchRes.node) {
         searchResNode = genSearchRes.node;
         expandedNodesCount = genSearchRes.expandedNodesCount;
         break;
       }
+      /** VERY IMPORTANT RESET PREVIOUS STATES */
+      previousStates = {};
     }
   } else {
     /** Usual case strategies go here */
