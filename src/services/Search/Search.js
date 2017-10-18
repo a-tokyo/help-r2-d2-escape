@@ -15,6 +15,10 @@ import {
 
 /**
  * General search algorithm
+ *
+ * Runs the general search algroithm on a given problem using a given queuing function.
+ *
+ * Author: Tokyo
  */
 export const generalSearch = (
   problem: Problem,
@@ -39,6 +43,8 @@ export const generalSearch = (
  * if the node has a parent -> backtrackOperators and and get the list of operators to the previous node
  * => return the list of operators to the prev node concatinated with the current node's operator
  * $FlowFixMe
+ *
+ * Author: Tokyo
  */
 export const backTrackOperators = (node: Node): Array<Operator> =>
   node.parent ? backTrackOperators(node.parent).concat(node.operator) : [];
@@ -48,6 +54,8 @@ export const backTrackOperators = (node: Node): Array<Operator> =>
  * if the node has no parent -> it is the root => return 0;
  * if the node has a parent -> backtrackOperators and and get the list of operators to the previous node
  * => return the sum of the previous costs and the current one.
+ *
+ * Author: Tokyo
  */
 export const backTrackCost = (node: Node): number =>
   node.parent ? node.pathCost + backTrackCost(node.parent) : 0;

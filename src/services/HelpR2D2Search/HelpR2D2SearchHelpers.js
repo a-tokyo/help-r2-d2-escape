@@ -17,6 +17,8 @@ export const getStateHash = (state: State): string => {
 
 /**
  * Checks if the grid has an obstacle at a position.
+ *
+ * Author: Tokyo
  */
 const gridHasObstacleAtPos = (
   position: GridItemPos,
@@ -25,6 +27,8 @@ const gridHasObstacleAtPos = (
 
 /**
  * Checks if the state has a rock at a position.
+ *
+ * Author: Tokyo
  */
 const stateHasRockAtPos = (
   stateToCheck: State,
@@ -33,6 +37,8 @@ const stateHasRockAtPos = (
 
 /**
  * Gets the rock position if it exists.
+ *
+ * Author: Tokyo
  */
 const getStateRockPosAtPos = (
   stateToCheck: State,
@@ -42,6 +48,8 @@ const getStateRockPosAtPos = (
 /**
  * Checks if a position is both a state rock position and a grid pressurepad position.
  * ie, at the moment a rock is on a pressurepad.
+ *
+ * Author: Tokyo
  */
 const stateHasRockAndPadAtPos = (
   stateToCheck: State,
@@ -56,6 +64,8 @@ const gridHasPressurepadAtPos = (gridToCheck: any, position: GridItemPos) =>
 
 /**
  * Generates a new NON-REPEATED state from the current information of the environment.
+ *
+ * Author: Tokyo
  */
 const getNewState = (
   previousStates: StatesHashMap,
@@ -82,8 +92,7 @@ const getNewState = (
     unPushedPads: newUnPushedPads,
   };
   /**
-   * if the state was generated before, return null and don't generate it again.
-   */
+   * if the state was generated before, return null and don't generate it again. */
   const newStateHash = getStateHash(newState);
   if (previousStates[newStateHash]) {
     return null;
@@ -97,6 +106,8 @@ const getNewState = (
 /**
  * Checks the current state for the possibility of moving east
  * takes into consideration the strength of moving rocks.
+ *
+ * Author: Tokyo
  */
 const canMoveEast = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
@@ -131,6 +142,8 @@ const canMoveEast = (currState: State, grid: any): boolean => {
 /**
  * Checks the current state for the possibility of moving west
  * takes into consideration the strength of moving rocks.
+ *
+ * Author: Tokyo
  */
 const canMoveWest = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
@@ -165,6 +178,8 @@ const canMoveWest = (currState: State, grid: any): boolean => {
 /**
  * Checks the current state for the possibility of moving north
  * takes into consideration the strength of moving rocks.
+ *
+ * Author: Tokyo
  */
 const canMoveNorth = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
@@ -199,6 +214,8 @@ const canMoveNorth = (currState: State, grid: any): boolean => {
 /**
  * Checks the current state for the possibility of moving south
  * takes into consideration the strength of moving rocks.
+ *
+ * Author: Tokyo
  */
 const canMoveSouth = (currState: State, grid: any): boolean => {
   const { cell: currPos } = currState;
@@ -232,6 +249,8 @@ const canMoveSouth = (currState: State, grid: any): boolean => {
 
 /**
  * Applies an operator to a state and returns the new state if possible or null.
+ *
+ * Author: Tokyo
  */
 export const applyOperator = (
   operator: Operator,

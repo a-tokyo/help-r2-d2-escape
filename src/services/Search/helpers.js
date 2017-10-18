@@ -20,19 +20,27 @@ export const makeNode = (
 });
 
 /** Problem helpers */
-/** gets the initial state of a problem */
+/** gets the initial state of a problem
+ *
+ * Author: Tokyo
+ */
 export const getInitialState = (problem: Problem): State =>
   problem.initialState;
 /** gets the goalTest function of a problem */
 export const getGoalTest = (problem: Problem): GoalTestFunc => problem.goalTest;
 
 /** Node helpers */
-/** gets the state of a node */
+/** gets the state of a node
+ *
+ * Author: Tokyo
+*/
 export const getState = (node: Node): State => node.state;
 
 /**
  * expands a node according to a problem's state space into new nodes
-*/
+ *
+ * Author: Tokyo
+ */
 export const expand = (node: Node, problem: Problem): Array<Node> => {
   console.log('expanding', node);
   const newStateConfigs: Array<StateConfig> = problem.stateSpace(
