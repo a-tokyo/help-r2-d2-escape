@@ -8,6 +8,15 @@ class Store {
   visualizationStatesInOrder: Array<State> = [];
   visualize: boolean = true;
 
+  gridBasicEnv: { [string]: number } = {
+    MIN_GRID_ROWS: 5,
+    MIN_GRID_COLS: 5,
+    MAX_GRID_ROWS: 5,
+    MAX_GRID_COLS: 5,
+    MAX_ROCKS_PADS_TOGETHER: 2,
+    MAX_OBSTACLES: 1,
+  };
+
   reset(key?: string) {
     switch (key) {
       case 'previousStates':

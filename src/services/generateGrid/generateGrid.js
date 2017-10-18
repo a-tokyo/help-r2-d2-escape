@@ -8,12 +8,16 @@ import {
   createGameElement,
 } from './generateGridHelpers';
 
-const MIN_GRID_ROWS: number = 5;
-const MIN_GRID_COLS: number = 5;
-const MAX_GRID_ROWS: number = 5;
-const MAX_GRID_COLS: number = 5;
-const MAX_ROCKS_PADS_TOGETHER: number = 2;
-const MAX_OBSTACLES: number = 1;
+import { Store } from '../';
+
+const {
+  MIN_GRID_ROWS,
+  MIN_GRID_COLS,
+  MAX_GRID_ROWS,
+  MAX_GRID_COLS,
+  MAX_ROCKS_PADS_TOGETHER,
+  MAX_OBSTACLES,
+} = Store.gridBasicEnv;
 
 /**
  * Generates a a 2D grid of a random game scenario and scans it for the configurations.
