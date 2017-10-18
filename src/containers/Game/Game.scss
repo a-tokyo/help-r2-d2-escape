@@ -25,3 +25,13 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.game__splash-screen{
+  background-image: url('./img/starwars_logo_black_yellow.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 306px;
+  height: 131px;
+  margin: 80px auto;
+}

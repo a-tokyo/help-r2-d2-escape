@@ -202,7 +202,9 @@ export default class Game extends Component {
               <hr />
             </Col>
           </Row>
-        ) : null}
+        ) : (
+          <div className="game__splash-screen" />
+        )}
         <aside>
           <h4>CHECK THE CONSOLE FOR DETAILED STACK TRACES.</h4>
 
