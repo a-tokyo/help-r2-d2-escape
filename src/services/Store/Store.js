@@ -17,6 +17,19 @@ class Store {
     MAX_OBSTACLES: 1,
   };
 
+  searchTypes: Array<string> = [
+    'BF',
+    'DF',
+    'UC',
+    'ID',
+    'GR1',
+    'GR2',
+    'AS1',
+    'AS2',
+  ];
+
+  problemTypes: Array<string> = ['Solvable Long Grid', 'Random Grid'];
+
   reset(key?: string) {
     switch (key) {
       case 'previousStates':

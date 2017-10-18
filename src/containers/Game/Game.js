@@ -13,34 +13,17 @@ import { solvableLongGrid } from '../../services/generateGrid/testGrids';
 
 import './Game.css';
 
-const searchTypes: Array<string> = [
-  'BF',
-  'DF',
-  'UC',
-  'ID',
-  'GR1',
-  'GR2',
-  'AS1',
-  'AS2',
-];
-const problemTypes: Array<string> = ['Solvable Long Grid', 'Random Grid'];
-
 export default class Game extends Component {
   state = {
-    gameGrid: solvableLongGrid,
-    onGoingGameGridGrid: solvableLongGrid.grid,
+    gameGrid: null,
+    onGoingGameGridGrid: null,
     currOnGoingSearchState: null,
     currOnGoingSearchStateIndex: -1,
-    searchTypeInputValue: 'BF',
-    problemTypeInputValue: 'Solvable Long Grid',
     solution: null,
     onGoingIntervalId: null,
+    searchTypeInputValue: Store.searchTypes[0],
+    problemTypeInputValue: Store.problemTypes[0],
   };
-
-  componentDidMount() {
-    /** start a dummy new game */
-    this._newGame();
-  }
 
   componentWillUnmount() {
     /** Clear the bound interval from the dom */
@@ -116,6 +99,7 @@ export default class Game extends Component {
     this.setState({
       gameGrid,
       solution,
+      onGoingGameGridGrid: gameGrid.grid,
       currOnGoingSearchState: null,
       currOnGoingSearchStateIndex: -1,
     });
@@ -155,7 +139,9 @@ export default class Game extends Component {
                   value={problemTypeInputValue}
                   onChange={this._handleChangeProblemTypeInputValue}
                 >
-                  {problemTypes.map(type => <option key={type}>{type}</option>)}
+                  {Store.problemTypes.map(type => (
+                    <option key={type}>{type}</option>
+                  ))}
                 </Input>
               </div>
             </div>
@@ -167,7 +153,9 @@ export default class Game extends Component {
                   value={searchTypeInputValue}
                   onChange={this._handleChangeSearchTypeInputValue}
                 >
-                  {searchTypes.map(type => <option key={type}>{type}</option>)}
+                  {Store.searchTypes.map(type => (
+                    <option key={type}>{type}</option>
+                  ))}
                 </Input>
               </div>
             </div>
@@ -195,21 +183,26 @@ export default class Game extends Component {
             </div>
           ) : null}
         </header>
-        <Row>
-          <Col xs={12} lg={6} className="game__section">
-            <h3>Initial Grid</h3>
-            <GridUI gridInfo={gameGrid} />
-            <hr />
-          </Col>
-          <Col xs={12} lg={6} className="game__section">
-            <h3>Animation of explored states</h3>
-            <GridUI
-              gridInfo={{ grid: onGoingGameGridGrid, config: gameGrid.config }}
-              state={currOnGoingSearchState}
-            />
-            <hr />
-          </Col>
-        </Row>
+        {gameGrid ? (
+          <Row>
+            <Col xs={12} lg={6} className="game__section">
+              <h3>Initial Grid</h3>
+              <GridUI gridInfo={gameGrid} />
+              <hr />
+            </Col>
+            <Col xs={12} lg={6} className="game__section">
+              <h3>Animation of explored states</h3>
+              <GridUI
+                gridInfo={{
+                  grid: onGoingGameGridGrid,
+                  config: gameGrid.config,
+                }}
+                state={currOnGoingSearchState}
+              />
+              <hr />
+            </Col>
+          </Row>
+        ) : null}
         <aside>
           <h4>CHECK THE CONSOLE FOR DETAILED STACK TRACES.</h4>
 
