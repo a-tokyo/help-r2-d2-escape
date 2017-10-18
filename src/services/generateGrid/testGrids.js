@@ -1,15 +1,5 @@
-import React, { Component } from 'react';
-import { Button } from 'reactstrap';
-
-import { GridUI } from '../../components';
-import { generateGrid, HelpR2D2Search } from '../../services';
-import { gridMapToString } from '../../services/generateGrid/generateGridHelpers';
-
-import { solvableLongGrid } from '../../services/generateGrid/testGrids';
-
-import './Game.css';
-
-const dummyWorkingLongGrid = {
+/* @flow */
+export const solvableLongGrid = {
   grid: [
     [
       null,
@@ -131,34 +121,3 @@ const dummyWorkingLongGrid = {
     obstaclesCount: 1,
   },
 };
-
-export default class Game extends Component {
-  componentDidMount() {
-    // this._newGame();
-  }
-
-  _newGame = () => {
-    console.info('############NEW GAME############');
-    // const gameGrid = generateGrid();
-    const gameGrid = solvableLongGrid;
-    console.info('gameGrid =>', gameGrid);
-    console.info('gameGridMap ==>');
-    console.info(gridMapToString(gameGrid.grid));
-
-    console.info('HelpR2D2Search result ==>', HelpR2D2Search(gameGrid));
-  };
-
-  render() {
-    return (
-      <div>
-        <div className="game__controlers">
-          <Button color="primary" onClick={this._newGame}>
-            New Game
-          </Button>
-        </div>
-        <GridUI />
-        <hr />
-      </div>
-    );
-  }
-}
