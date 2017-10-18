@@ -1,7 +1,11 @@
 /* @flow */
 import _ from 'lodash';
 
-import { generalSearch, backTrackOperators } from '../Search/Search';
+import {
+  generalSearch,
+  backTrackOperators,
+  backTrackCost,
+} from '../Search/Search';
 import {
   breadthFirstQueuingFunc,
   depthFirstQueuingFunc,
@@ -17,7 +21,7 @@ import { applyOperator } from './HelpR2D2SearchHelpers';
  */
 const Search = (
   grid: { grid: Array<Array<any>>, config: Object },
-  strategy: SearchStrategy = 'BF',
+  strategy: SearchStrategy = 'DF',
   visualize: boolean = false
 ): {
   sequence: Array<Operator>,
@@ -59,7 +63,7 @@ const Search = (
     },
     goalTest: (state: State) =>
       state.unPushedPads === 0 &&
-      _.isEqual(state.cell, grid.config.playerPosition),
+      _.isEqual(state.cell, grid.config.teleportalPosition),
     pathCost: (state: State, operators: Array<Operator>): number => {
       /**
        * @TODO implement proper path cost for last 2 search algorithms
@@ -118,14 +122,14 @@ const Search = (
       console.error('unknown search strategy: ', strategy);
   }
 
-  // const searchResNode = null;
-  // const expandedNodesCount = 0;
-
   const { node: searchResNode, expandedNodesCount } = generalSearch(
     problem,
     qingFunc
   );
-  const cost: number | null = searchResNode ? searchResNode.pathCost : null;
+  // const cost: number | null = searchResNode ? searchResNode.pathCost : null;
+  const cost: number | null = searchResNode
+    ? backTrackCost(searchResNode)
+    : null;
   const sequence: Array<Operator> = searchResNode
     ? backTrackOperators(searchResNode)
     : [];

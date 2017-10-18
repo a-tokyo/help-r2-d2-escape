@@ -42,3 +42,12 @@ export const generalSearch = (
  */
 export const backTrackOperators = (node: Node): Array<Operator> =>
   node.parent ? backTrackOperators(node.parent).concat(node.operator) : [];
+
+/** BackTrackCost from a node and get an overall cost from the root to reach that node.
+ *
+ * if the node has no parent -> it is the root => return 0;
+ * if the node has a parent -> backtrackOperators and and get the list of operators to the previous node
+ * => return the sum of the previous costs and the current one.
+ */
+export const backTrackCost = (node: Node): number =>
+  node.parent ? node.pathCost + backTrackCost(node.parent) : 0;
