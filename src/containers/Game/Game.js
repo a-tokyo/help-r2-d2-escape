@@ -189,7 +189,9 @@ export default class Game extends Component {
           {solution ? (
             <div>
               <h4>Solution: </h4>
-              <label>Sequence: </label>
+              <label>
+                <b>Sequence: </b>
+              </label>
               <div>
                 {solution.sequence.map(
                   (item, i) =>
@@ -198,11 +200,15 @@ export default class Game extends Component {
               </div>
               <div className="game_solution_mini-items">
                 <div>
-                  <label>Cost:</label>
+                  <label>
+                    <b>Cost:</b>
+                  </label>
                   <span> {solution.cost}</span>
                 </div>
                 <div>
-                  <label>Expanded Nodes Count:</label>
+                  <label>
+                    <b>Expanded Nodes Count:</b>
+                  </label>
                   <span> {solution.expandedNodesCount}</span>
                 </div>
               </div>
