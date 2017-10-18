@@ -51,6 +51,7 @@ export const getGridItemPos = (i: number, j: number): GridItemPos => ({
  * gets the config information of a grid
  */
 export const getGridConfig = (grid: Array<Array<any>>): GridConfigObject => {
+  // $FlowFixMe
   const config: GridConfigObject = {
     rows: grid.length,
     cols: grid.length ? grid[0].length : 0,
@@ -137,3 +138,39 @@ export const createGameElement = (
   type: GameElementType,
   name?: string = 'GameElement'
 ): GameElement => ({ type, name });
+
+/**
+ * Generates a 2D grid from the grid config object merged with the current state.
+ */
+export const generateGridFromConfigAndState = (
+  config: GridConfigObject,
+  state: State
+) => {
+  const newGrid = generateMatrix(config.rows, config.cols);
+
+  newGrid[config.teleportalPosition.row][config.teleportalPosition.col] = {
+    items: [createGameElement('teleportal')],
+  };
+  config.obstaclesPositions.forEach(position => {
+    newGrid[position.row][position.col] = {
+      items: [createGameElement('obstacle')],
+    };
+  });
+  config.pressurePadsPositions.forEach(position => {
+    newGrid[position.row][position.col] = {
+      items: [createGameElement('pressurepad')],
+    };
+  });
+
+  newGrid[state.cell.row][state.cell.col] = {
+    items: [createGameElement('player')],
+  };
+  state.rocksPositions.forEach(position => {
+    if (newGrid[position.row][position.col]) {
+      newGrid[position.row][position.col].items.push(createGameElement('rock'));
+    }
+    newGrid[position.row][position.col] = {
+      items: [createGameElement('rock')],
+    };
+  });
+};

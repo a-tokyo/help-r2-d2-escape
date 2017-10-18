@@ -57,7 +57,7 @@ export type GridConfigObject = {
   cols: number,
   availableCellsCount: number,
   playerPosition: (GridItemPos | null),
-  teleportalPosition: (GridItemPos | null),
+  teleportalPosition: GridItemPos,
   obstaclesPositions: Array<GridItemPos>,
   pressurePadsPositions: Array<GridItemPos>,
   rocksPositions: Array<GridItemPos>,
