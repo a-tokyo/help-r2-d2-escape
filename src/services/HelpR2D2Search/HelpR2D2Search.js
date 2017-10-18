@@ -37,8 +37,8 @@ const Search = (
   expandedNodesCount: number | null,
 } => {
   /** keep track of the previous state */
-  // /** The previousStates hashmap is mutated by applyOperator() */
-  // let previousStates: StatesHistoryHashMap = {};
+  /** Reset the global store */
+  Store.reset();
   /** create the search problem */
   const problem: Problem = {
     operators: ['move_north', 'move_south', 'move_east', 'move_west'],
@@ -160,6 +160,11 @@ const Search = (
   const sequence: Array<Operator> = searchResNode
     ? backTrackOperators(searchResNode)
     : [];
+
+  console.log(
+    'visualizationStatesInOrder',
+    Store.get('visualizationStatesInOrder')
+  );
 
   /** VERY IMPORTANT RESET PREVIOUS STATES */
   Store.reset('previousStates');

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 
 import { GridUI } from '../../components';
 import { generateGrid, HelpR2D2Search } from '../../services';
 import { gridMapToString } from '../../services/generateGrid/generateGridHelpers';
+
+import './Game.css';
 
 const dummyWorkingLongGrid = {
   grid: [
@@ -129,20 +132,30 @@ const dummyWorkingLongGrid = {
 
 export default class Game extends Component {
   componentDidMount() {
-    const gameGrid = generateGrid();
-    console.log('gameGrid =>', gameGrid);
-    console.log('gameGridMap ==>');
-    console.log(gridMapToString(gameGrid.grid));
-
-    // console.log('HelpR2D2Search ==>', HelpR2D2Search(gameGrid));
-    console.log('HelpR2D2Search ==>', HelpR2D2Search(dummyWorkingLongGrid));
+    // this._newGame();
   }
+
+  _newGame = () => {
+    console.info('############NEW GAME############');
+    const gameGrid = generateGrid();
+    console.info('gameGrid =>', gameGrid);
+    console.info('gameGridMap ==>');
+    console.info(gridMapToString(gameGrid.grid));
+
+    // console.info('HelpR2D2Search ==>', HelpR2D2Search(gameGrid));
+    console.info('HelpR2D2Search ==>', HelpR2D2Search(dummyWorkingLongGrid));
+  };
 
   render() {
     return (
       <div>
-        Game !!
+        <div className="game__controlers">
+          <Button color="primary" onClick={this._newGame}>
+            New Game
+          </Button>
+        </div>
         <GridUI />
+        <hr />
       </div>
     );
   }

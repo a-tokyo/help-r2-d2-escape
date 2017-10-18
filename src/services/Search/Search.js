@@ -1,6 +1,8 @@
 /* @flow */
 import _ from 'lodash';
 
+import { Store } from '../';
+
 import {
   /** generalSearch helpers */
   makeQueue,
@@ -28,6 +30,11 @@ export const generalSearch = (
   let nodes = makeQueue(makeNode(getInitialState(problem)));
   while (!_.isEmpty(nodes)) {
     const [node] = _.pullAt(nodes, [0]);
+    /** ASIDE: if visualization is turned on -> store all the states in order in the store */
+    if (Store.visualize) {
+      Store.visualizationStatesInOrder.push(node.state);
+    }
+    /** Test for the goal */
     if (getGoalTest(problem)(getState(node))) {
       return { node, expandedNodesCount };
     }
