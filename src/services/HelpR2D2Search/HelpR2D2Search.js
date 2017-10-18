@@ -1,6 +1,7 @@
 /* @flow */
 import _ from 'lodash';
 
+import { Store } from '../';
 import {
   generalSearch,
   backTrackOperators,
@@ -36,8 +37,8 @@ const Search = (
   expandedNodesCount: number | null,
 } => {
   /** keep track of the previous state */
-  /** The previousStates hashmap is mutated by applyOperator() */
-  let previousStates: StatesHistoryHashMap = {};
+  // /** The previousStates hashmap is mutated by applyOperator() */
+  // let previousStates: StatesHistoryHashMap = {};
   /** create the search problem */
   const problem: Problem = {
     operators: ['move_north', 'move_south', 'move_east', 'move_west'],
@@ -56,7 +57,7 @@ const Search = (
           operator,
           state,
           grid,
-          previousStates
+          Store.previousStates
         );
         if (newState) {
           newStateConfigs = newStateConfigs.concat({
@@ -65,7 +66,6 @@ const Search = (
           });
         }
       });
-      console.log('previousStates', previousStates);
       return newStateConfigs;
     },
     goalTest: (state: State) =>
@@ -142,7 +142,7 @@ const Search = (
         break;
       }
       /** VERY IMPORTANT RESET PREVIOUS STATES */
-      previousStates = {};
+      Store.reset('previousStates');
     }
   } else {
     /** Usual case strategies go here */
@@ -162,7 +162,7 @@ const Search = (
     : [];
 
   /** VERY IMPORTANT RESET PREVIOUS STATES */
-  previousStates = {};
+  Store.reset('previousStates');
 
   return {
     sequence,
