@@ -162,9 +162,15 @@ export const generateGridFromConfigAndState = (
     };
   });
 
-  newGrid[state.cell.row][state.cell.col] = {
-    items: [createGameElement('player')],
-  };
+  if (newGrid[state.cell.row][state.cell.col]) {
+    newGrid[state.cell.row][state.cell.col].items.push({
+      items: [createGameElement('player')],
+    });
+  } else {
+    newGrid[state.cell.row][state.cell.col] = {
+      items: [createGameElement('player')],
+    };
+  }
   state.rocksPositions.forEach(position => {
     if (newGrid[position.row][position.col]) {
       newGrid[position.row][position.col].items.push(createGameElement('rock'));

@@ -7,8 +7,10 @@ import './GridUI.css';
 
 const GridUI = ({
   gridInfo,
+  state,
 }: {
   gridInfo: { grid: Array<Array<any>>, config: GridConfigObject },
+  state?: State,
 }) => (
   <section className="grid-wrapper">
     <div className="grid">
@@ -27,9 +29,28 @@ const GridUI = ({
                     </div>
                   );
                 case 'teleportal':
+                  if (
+                    gridInfo.grid[rowIndex][colIndex].items[1] &&
+                    gridInfo.grid[rowIndex][colIndex].items[1].type === 'player'
+                  ) {
+                    return (
+                      <div
+                        className={`grid-cell ${state &&
+                        state.unPushedPads === 0
+                          ? 'opacity-05'
+                          : ''}`}
+                        key={`cell_${rowIndex}-${colIndex}`}
+                      >
+                        <Teleporter />
+                        <R2D2Player />
+                      </div>
+                    );
+                  }
                   return (
                     <div
-                      className="grid-cell"
+                      className={`grid-cell ${state && state.unPushedPads === 0
+                        ? 'opacity-05'
+                        : ''}`}
                       key={`cell_${rowIndex}-${colIndex}`}
                     >
                       <Teleporter />
@@ -55,6 +76,19 @@ const GridUI = ({
                         key={`cell_${rowIndex}-${colIndex}`}
                       >
                         <Rock />
+                      </div>
+                    );
+                  }
+                  if (
+                    gridInfo.grid[rowIndex][colIndex].items[1] &&
+                    gridInfo.grid[rowIndex][colIndex].items[1].type === 'player'
+                  ) {
+                    return (
+                      <div
+                        className="grid-cell grid-cell--pressure-pad"
+                        key={`cell_${rowIndex}-${colIndex}`}
+                      >
+                        <R2D2Player />
                       </div>
                     );
                   }
