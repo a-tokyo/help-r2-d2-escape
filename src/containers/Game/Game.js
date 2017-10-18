@@ -24,7 +24,7 @@ const searchTypes: Array<string> = [
 export default class Game extends Component {
   state = {
     gameGrid: solvableLongGrid,
-    onGoingGameGridGrid: null,
+    onGoingGameGridGrid: solvableLongGrid.grid,
     currOnGoingSearchState: null,
     searchTypeInputValue: 'BF',
   };
@@ -47,6 +47,8 @@ export default class Game extends Component {
       'HelpR2D2Search result ==>',
       HelpR2D2Search(gameGrid, this.state.searchTypeInputValue)
     );
+
+    this.setState({ gameGrid });
   };
 
   _handleChangeSearchTypeInputValue = event => {
@@ -54,7 +56,12 @@ export default class Game extends Component {
   };
 
   render() {
-    const { gameGrid, searchTypeInputValue } = this.state;
+    const {
+      gameGrid,
+      searchTypeInputValue,
+      onGoingGameGridGrid,
+      currOnGoingSearchState,
+    } = this.state;
     return (
       <article className="game">
         <header className="game__controlers">
@@ -78,7 +85,9 @@ export default class Game extends Component {
         </Col>
         <Col xs={12} lg={6} className="game__section">
           <h3>Animation of explored states</h3>
-          <GridUI gridInfo={gameGrid} />
+          <GridUI
+            gridInfo={{ grid: onGoingGameGridGrid, config: gameGrid.config }}
+          />
           <hr />
         </Col>
       </article>
