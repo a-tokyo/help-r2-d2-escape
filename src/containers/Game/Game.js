@@ -33,7 +33,7 @@ export default class Game extends Component {
   /** Set an ongoing interval to render the animated search visualization */
   _setOngoingInterval = () => {
     /** track the onGoingViews by interval */
-    const onGoingIntervalId = setInterval(this._renderNewOngoingView, 200);
+    const onGoingIntervalId = setInterval(this._renderNewOngoingView, 20);
     /* store intervalId in the state so it can be accessed later: */
     this.setState({ onGoingIntervalId });
   };
