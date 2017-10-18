@@ -9,3 +9,11 @@
   width: 100px;
   display: inline-block;
 }
+
+.game_solution_mini-items{
+  display: flex;
+  justify-content: center;
+  &>div{
+    margin-right: 10px;
+  }
+}
