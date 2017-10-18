@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Container, Button, Input, Row, Col } from 'reactstrap';
 
 import { GridUI } from '../../components';
-import { generateGrid, HelpR2D2Search } from '../../services';
+import { generateGrid, HelpR2D2Search, Store } from '../../services';
 import {
   gridMapToString,
   generateGridFromConfigAndState,
@@ -29,6 +29,7 @@ export default class Game extends Component {
     gameGrid: solvableLongGrid,
     onGoingGameGridGrid: solvableLongGrid.grid,
     currOnGoingSearchState: null,
+    currOnGoingSearchStateIndex: -1,
     searchTypeInputValue: 'BF',
     solution: null,
     onGoingIntervalId: null,
@@ -37,36 +38,62 @@ export default class Game extends Component {
   componentDidMount() {
     /** start a dummy new game */
     this._newGame();
-
-    /** track the onGoingViews by interval */
-    const onGoingIntervalId = setInterval(this._renderNewOngoingView, 1000);
-    // store intervalId in the state so it can be accessed later:
-    this.setState({ onGoingIntervalId });
   }
 
   componentWillUnmount() {
+    /** Clear the bound interval from the dom */
+    this._clearOngoingInterval();
+  }
+
+  /** Set an ongoing interval to render the animated search visualization */
+  _setOngoingInterval = () => {
+    /** track the onGoingViews by interval */
+    const onGoingIntervalId = setInterval(this._renderNewOngoingView, 20);
+    /* store intervalId in the state so it can be accessed later: */
+    this.setState({ onGoingIntervalId });
+  };
+
+  _clearOngoingInterval = () => {
     // use intervalId from the state to clear the interval
     clearInterval(this.state.onGoingIntervalId);
     this.setState({ onGoingIntervalId: null });
-  }
-
-  _renderNewOngoingView = () => {
-    console.log('NEW VIEW FRAME');
   };
 
-  _updateOnGoingState = (state: State) => {
-    const { gameGrid } = this.state;
-    const onGoingGameGridGrid = generateGridFromConfigAndState(
-      gameGrid.config,
-      state
-    );
-    this.setState({ onGoingGameGridGrid });
+  _renderNewOngoingView = () => {
+    this._updateOnGoingState();
+  };
+
+  _updateOnGoingState = () => {
+    const { gameGrid, currOnGoingSearchStateIndex } = this.state;
+    let { currOnGoingSearchState } = this.state;
+    const newCurrOnGoingSearchStateIndex = currOnGoingSearchStateIndex + 1;
+
+    if (!currOnGoingSearchState) {
+      currOnGoingSearchState = Store.visualizationStatesInOrder[0];
+    }
+
+    if (
+      newCurrOnGoingSearchStateIndex < Store.visualizationStatesInOrder.length
+    ) {
+      const onGoingGameGridGrid = generateGridFromConfigAndState(
+        gameGrid.config,
+        currOnGoingSearchState
+      );
+      this.setState({
+        onGoingGameGridGrid,
+        currOnGoingSearchStateIndex: newCurrOnGoingSearchStateIndex,
+        currOnGoingSearchState:
+          Store.visualizationStatesInOrder[newCurrOnGoingSearchStateIndex],
+      });
+    } else {
+      this._clearOngoingInterval();
+    }
   };
 
   _newGame = () => {
     console.info('############NEW GAME############');
-    // const gameGrid = generateGrid();
-    const gameGrid = solvableLongGrid;
+    const gameGrid = generateGrid();
+    // const gameGrid = solvableLongGrid;
 
     /** log initial info */
     console.info('gameGrid =>', gameGrid);
@@ -76,7 +103,15 @@ export default class Game extends Component {
     /** log search solution */
     console.info('HelpR2D2Search solution ==>', solution);
 
-    this.setState({ gameGrid, solution });
+    this.setState({
+      gameGrid,
+      solution,
+      currOnGoingSearchState: null,
+      currOnGoingSearchStateIndex: -1,
+    });
+
+    this._clearOngoingInterval();
+    this._setOngoingInterval();
   };
 
   _handleChangeSearchTypeInputValue = event => {
@@ -145,6 +180,9 @@ export default class Game extends Component {
             <hr />
           </Col>
         </Row>
+        <aside>
+          <h4>CHECK THE CONSOLE FOR DETAILED STACK TRACES.</h4>
+        </aside>
       </Container>
     );
   }

@@ -145,7 +145,7 @@ export const createGameElement = (
 export const generateGridFromConfigAndState = (
   config: GridConfigObject,
   state: State
-) => {
+): Array<Array<any>> => {
   const newGrid = generateMatrix(config.rows, config.cols);
 
   newGrid[config.teleportalPosition.row][config.teleportalPosition.col] = {
@@ -179,4 +179,5 @@ export const generateGridFromConfigAndState = (
       items: [createGameElement('rock')],
     };
   });
+  return newGrid;
 };
