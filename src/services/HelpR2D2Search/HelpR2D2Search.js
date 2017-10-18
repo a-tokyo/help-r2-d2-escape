@@ -25,10 +25,8 @@ const Search = (
   expandedNodesCount: number,
 } => {
   /** keep track of the previous state */
-  /** eslint is disabled for this line because the previousStates array is mutated by applyOperator() */
-  /* eslint-disable */
-  let previousStates: Array<State> = [];
-  /* eslint-enable */
+  /** The previousStates hashmap is mutated by applyOperator() */
+  const previousStates: StatesHashMap = {};
   /** create the search problem */
   const problem: Problem = {
     operators: ['move_north', 'move_south', 'move_east', 'move_west'],
@@ -137,17 +135,6 @@ const Search = (
     cost,
     expandedNodesCount,
   };
-};
-
-const getGridPosItemHash = (pos: GridItemPos) => `[${pos.row},${pos.col}]`;
-
-const getStateHash = (state: State): string => {
-  let stringToRet = `${getGridPosItemHash(state.cell)}|${state.unPushedPads}|[`;
-  state.rocksPositions.forEach(rockPos => {
-    stringToRet += getGridPosItemHash(rockPos);
-  });
-  stringToRet += ']';
-  return stringToRet;
 };
 
 export default Search;

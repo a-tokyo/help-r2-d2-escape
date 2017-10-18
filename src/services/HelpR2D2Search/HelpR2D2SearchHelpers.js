@@ -1,6 +1,18 @@
 /* @flow */
 import _ from 'lodash';
 
+export const getGridPosItemHash = (pos: GridItemPos) =>
+  `[${pos.row},${pos.col}]`;
+
+export const getStateHash = (state: State): string => {
+  let stringToRet = `${getGridPosItemHash(state.cell)}|${state.unPushedPads}|[`;
+  state.rocksPositions.forEach(rockPos => {
+    stringToRet += getGridPosItemHash(rockPos);
+  });
+  stringToRet += ']';
+  return stringToRet;
+};
+
 /** R2D2 state space logic */
 
 /**
@@ -46,7 +58,7 @@ const gridHasPressurepadAtPos = (gridToCheck: any, position: GridItemPos) =>
  * Generates a new NON-REPEATED state from the current information of the environment.
  */
 const getNewState = (
-  previousStates: Array<State>,
+  previousStates: StatesHashMap,
   grid: any,
   newPos: GridItemPos,
   rocksPositions: Array<GridItemPos>,
@@ -72,15 +84,13 @@ const getNewState = (
   /**
    * if the state was generated before, return null and don't generate it again.
    */
-  if (
-    previousStates.find(previousState => _.isEqual(previousState, newState))
-  ) {
+  const newStateHash = getStateHash(newState);
+  if (previousStates[newStateHash]) {
     return null;
   }
-  /* eslint-disable */
-  /** mutate the previous state array */
-  previousStates = previousStates.concat(newState);
-  /* eslint-enable */
+  /** mutate the previous state hashmap */
+  previousStates[newStateHash] = true;
+  /** return the new state */
   return newState;
 };
 
@@ -227,7 +237,7 @@ export const applyOperator = (
   operator: Operator,
   currState: State,
   grid: any,
-  previousStates: Array<State>
+  previousStates: StatesHashMap
 ): State | null => {
   const currPos = currState.cell;
   const currRocksPositions = currState.rocksPositions;
