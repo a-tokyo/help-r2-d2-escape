@@ -45,6 +45,19 @@ const GridUI = ({
                     </div>
                   );
                 case 'pressurepad':
+                  if (
+                    gridInfo.grid[rowIndex][colIndex].items[1] &&
+                    gridInfo.grid[rowIndex][colIndex].items[1].type === 'rock'
+                  ) {
+                    return (
+                      <div
+                        className="grid-cell grid-cell--pressure-pad--active"
+                        key={`cell_${rowIndex}-${colIndex}`}
+                      >
+                        <Rock />
+                      </div>
+                    );
+                  }
                   return (
                     <div
                       className="grid-cell grid-cell--pressure-pad"

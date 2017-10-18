@@ -12,6 +12,8 @@ import './Game.css';
 export default class Game extends Component {
   state = {
     gameGrid: solvableLongGrid,
+    onGoingGameGridGrid: null,
+    currOnGoingSearchState: null,
   };
 
   componentDidMount() {
