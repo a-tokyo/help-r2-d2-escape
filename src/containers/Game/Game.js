@@ -138,12 +138,13 @@ export default class Game extends Component {
     } = this.state;
     return (
       <Container fluid className="game">
-        <header>
+        <header className="game__header">
+          <Button color="primary" onClick={this._newGame}>
+            New Game
+          </Button>
           <div className="game__controlers">
             <div className="game__controlers__item">
-              <Button color="primary" onClick={this._newGame}>
-                New Game
-              </Button>
+              <label>Problem Type: </label>
               <div className="game__controlers_select">
                 <Input
                   type="select"
