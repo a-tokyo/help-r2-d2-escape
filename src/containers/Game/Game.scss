@@ -1,12 +1,14 @@
 .game__controlers{
-  max-width: 200px;
+  max-width: 320px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   margin: 20px auto;
 }
 
 .game__controlers_select{
-  width: 100px;
+  min-width: 100px;
+  width: auto;
   display: inline-block;
 }
 
@@ -16,4 +18,10 @@
   &>div{
     margin-right: 10px;
   }
+}
+
+.game__controlers__item{
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
 }

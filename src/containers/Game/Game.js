@@ -23,6 +23,7 @@ const searchTypes: Array<string> = [
   'AS1',
   'AS2',
 ];
+const problemTypes: Array<string> = ['Solvable Long Grid', 'Random Grid'];
 
 export default class Game extends Component {
   state = {
@@ -31,6 +32,7 @@ export default class Game extends Component {
     currOnGoingSearchState: null,
     currOnGoingSearchStateIndex: -1,
     searchTypeInputValue: 'BF',
+    problemTypeInputValue: 'Solvable Long Grid',
     solution: null,
     onGoingIntervalId: null,
   };
@@ -89,9 +91,19 @@ export default class Game extends Component {
   };
 
   _newGame = () => {
+    const { problemTypeInputValue } = this.state;
     console.info('############NEW GAME############');
-    // const gameGrid = generateGrid();
-    const gameGrid = solvableLongGrid;
+    let gameGrid = solvableLongGrid;
+    /** Check the desired problem type and set the grid accordingly */
+    switch (problemTypeInputValue) {
+      case 'Solvable Long Grid':
+        gameGrid = solvableLongGrid;
+        break;
+      case 'Random Grid':
+        gameGrid = generateGrid();
+        break;
+      default:
+    }
 
     /** log initial info */
     console.info('gameGrid =>', gameGrid);
@@ -116,10 +128,15 @@ export default class Game extends Component {
     this.setState({ searchTypeInputValue: event.target.value });
   };
 
+  _handleChangeProblemTypeInputValue = event => {
+    this.setState({ problemTypeInputValue: event.target.value });
+  };
+
   render() {
     const {
       gameGrid,
       searchTypeInputValue,
+      problemTypeInputValue,
       onGoingGameGridGrid,
       currOnGoingSearchState,
       solution,
@@ -128,17 +145,30 @@ export default class Game extends Component {
       <Container fluid className="game">
         <header>
           <div className="game__controlers">
-            <Button color="primary" onClick={this._newGame}>
-              New Game
-            </Button>
-            <div className="game__controlers_select">
-              <Input
-                type="select"
-                value={searchTypeInputValue}
-                onChange={this._handleChangeSearchTypeInputValue}
-              >
-                {searchTypes.map(type => <option key={type}>{type}</option>)}
-              </Input>
+            <div className="game__controlers__item">
+              <Button color="primary" onClick={this._newGame}>
+                New Game
+              </Button>
+              <div className="game__controlers_select">
+                <Input
+                  type="select"
+                  value={problemTypeInputValue}
+                  onChange={this._handleChangeProblemTypeInputValue}
+                >
+                  {problemTypes.map(type => <option key={type}>{type}</option>)}
+                </Input>
+              </div>
+            </div>
+            <div className="game__controlers__item">
+              <div className="game__controlers_select">
+                <Input
+                  type="select"
+                  value={searchTypeInputValue}
+                  onChange={this._handleChangeSearchTypeInputValue}
+                >
+                  {searchTypes.map(type => <option key={type}>{type}</option>)}
+                </Input>
+              </div>
             </div>
           </div>
           {solution ? (
