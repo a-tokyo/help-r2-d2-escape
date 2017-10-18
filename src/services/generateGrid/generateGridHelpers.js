@@ -174,10 +174,11 @@ export const generateGridFromConfigAndState = (
   state.rocksPositions.forEach(position => {
     if (newGrid[position.row][position.col]) {
       newGrid[position.row][position.col].items.push(createGameElement('rock'));
+    } else {
+      newGrid[position.row][position.col] = {
+        items: [createGameElement('rock')],
+      };
     }
-    newGrid[position.row][position.col] = {
-      items: [createGameElement('rock')],
-    };
   });
   return newGrid;
 };
