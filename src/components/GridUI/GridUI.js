@@ -14,6 +14,7 @@ const GridUI = ({
 }) => (
   <section className="grid-wrapper">
     <div className="grid">
+      {console.log(state)}
       {gridInfo.grid.map((row, rowIndex) => (
         <div className="grid-row" key={`row_${rowIndex}`}>
           {gridInfo.grid[rowIndex].map((col, colIndex) => {
@@ -35,9 +36,8 @@ const GridUI = ({
                   ) {
                     return (
                       <div
-                        className={`grid-cell opacity-05 ${(state &&
-                          state.unPushedPads === 0) ||
-                        !state
+                        className={`grid-cell opacity-05 ${state &&
+                        state.unPushedPads === 0
                           ? 'opacity-1'
                           : ''}`}
                         key={`cell_${rowIndex}-${colIndex}`}
@@ -49,9 +49,8 @@ const GridUI = ({
                   }
                   return (
                     <div
-                      className={`grid-cell opacity-05 ${(state &&
-                        state.unPushedPads === 0) ||
-                      !state
+                      className={`grid-cell opacity-05 ${state &&
+                      state.unPushedPads === 0
                         ? 'opacity-1'
                         : ''}`}
                       key={`cell_${rowIndex}-${colIndex}`}

@@ -64,8 +64,10 @@ export default class Game extends Component {
     }
 
     if (
-      newCurrOnGoingSearchStateIndex <= Store.visualizationStatesInOrder.length
+      newCurrOnGoingSearchStateIndex < Store.visualizationStatesInOrder.length
     ) {
+      currOnGoingSearchState =
+        Store.visualizationStatesInOrder[newCurrOnGoingSearchStateIndex];
       const onGoingGameGridGrid = generateGridFromConfigAndState(
         gameGrid.config,
         currOnGoingSearchState
