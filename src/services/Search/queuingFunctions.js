@@ -19,12 +19,20 @@ export const depthFirstQueuingFunc: QueuingFunction = (
 ): Array<Node> => newNodes.concat(nodes);
 
 /**
- * @TODO Uniform Cost search Queuing function enques ...
+ * Uniform Cost search Queuing function enques according to the pathCost ascendingly
+ *
+ * concat the nodes and sort by pathCost ascendingly
  */
 export const uniformCostQueuingFunc: QueuingFunction = (
   nodes: Array<Node>,
   newNodes: Array<Node>
-): Array<Node> => [];
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      ({ pathCost: pathCostA }, { pathCost: pathCostB }) =>
+        pathCostA - pathCostB
+    );
 
 /**
  * @TODO Iterative deepening search Queuing function enques ...

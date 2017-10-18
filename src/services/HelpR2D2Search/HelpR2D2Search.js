@@ -21,7 +21,7 @@ import { applyOperator } from './HelpR2D2SearchHelpers';
  */
 const Search = (
   grid: { grid: Array<Array<any>>, config: Object },
-  strategy: SearchStrategy = 'DF',
+  strategy: SearchStrategy = 'BF',
   visualize: boolean = false
 ): {
   sequence: Array<Operator>,
