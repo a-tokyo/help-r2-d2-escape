@@ -1,6 +1,6 @@
 /* @flow weak */
 import React, { Component } from 'react';
-import { Button, Input } from 'reactstrap';
+import { Button, Input, Row, Col } from 'reactstrap';
 
 import { GridUI } from '../../components';
 import { generateGrid, HelpR2D2Search } from '../../services';
@@ -56,8 +56,8 @@ export default class Game extends Component {
   render() {
     const { gameGrid, searchTypeInputValue } = this.state;
     return (
-      <div>
-        <div className="game__controlers">
+      <article className="game">
+        <header className="game__controlers">
           <Button color="primary" onClick={this._newGame}>
             New Game
           </Button>
@@ -70,11 +70,18 @@ export default class Game extends Component {
               {searchTypes.map(type => <option key={type}>{type}</option>)}
             </Input>
           </div>
-        </div>
-        <h3>Initial Grid</h3>
-        <GridUI gridInfo={gameGrid} />
-        <hr />
-      </div>
+        </header>
+        <Col xs={12} lg={6} className="game__section">
+          <h3>Initial Grid</h3>
+          <GridUI gridInfo={gameGrid} />
+          <hr />
+        </Col>
+        <Col xs={12} lg={6} className="game__section">
+          <h3>Animation of explored states</h3>
+          <GridUI gridInfo={gameGrid} />
+          <hr />
+        </Col>
+      </article>
     );
   }
 }
