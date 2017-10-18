@@ -38,6 +38,7 @@ export default class Game extends Component {
             New Game
           </Button>
         </div>
+        <h3>Initial Grid</h3>
         <GridUI gridInfo={gameGrid} />
         <hr />
       </div>
