@@ -161,6 +161,9 @@ const Search = (
     ? backTrackOperators(searchResNode)
     : [];
 
+  /** VERY IMPORTANT RESET PREVIOUS STATES */
+  previousStates = {};
+
   return {
     sequence,
     cost,
