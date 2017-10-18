@@ -13,6 +13,8 @@ import { solvableLongGrid } from '../../services/generateGrid/testGrids';
 
 import './Game.css';
 
+const updateIntervalTimes: Array<number> = [20, 50, 200];
+
 export default class Game extends Component {
   state = {
     gameGrid: null,
@@ -23,6 +25,7 @@ export default class Game extends Component {
     onGoingIntervalId: null,
     searchTypeInputValue: Store.searchTypes[0],
     problemTypeInputValue: Store.problemTypes[0],
+    updateIntervalTime: 20,
   };
 
   componentWillUnmount() {
@@ -33,7 +36,10 @@ export default class Game extends Component {
   /** Set an ongoing interval to render the animated search visualization */
   _setOngoingInterval = () => {
     /** track the onGoingViews by interval */
-    const onGoingIntervalId = setInterval(this._renderNewOngoingView, 20);
+    const onGoingIntervalId = setInterval(
+      this._renderNewOngoingView,
+      this.state.updateIntervalTime
+    );
     /* store intervalId in the state so it can be accessed later: */
     this.setState({ onGoingIntervalId });
   };
@@ -116,6 +122,10 @@ export default class Game extends Component {
     this.setState({ problemTypeInputValue: event.target.value });
   };
 
+  _handleChangeInputValue = (inputKey: string) => event => {
+    this.setState({ [inputKey]: event.target.value });
+  };
+
   render() {
     const {
       gameGrid,
@@ -124,6 +134,7 @@ export default class Game extends Component {
       onGoingGameGridGrid,
       currOnGoingSearchState,
       solution,
+      updateIntervalTime,
     } = this.state;
     return (
       <Container fluid className="game">
@@ -154,6 +165,20 @@ export default class Game extends Component {
                   onChange={this._handleChangeSearchTypeInputValue}
                 >
                   {Store.searchTypes.map(type => (
+                    <option key={type}>{type}</option>
+                  ))}
+                </Input>
+              </div>
+            </div>
+            <div className="game__controlers__item">
+              <label>Render Interval ms: </label>
+              <div className="game__controlers_select">
+                <Input
+                  type="select"
+                  value={updateIntervalTime}
+                  onChange={this._handleChangeInputValue('updateIntervalTime')}
+                >
+                  {updateIntervalTimes.map(type => (
                     <option key={type}>{type}</option>
                   ))}
                 </Input>
