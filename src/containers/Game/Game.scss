@@ -1,0 +1,44 @@
+.game__controlers{
+  max-width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px auto 20px;
+  flex-wrap: wrap;
+}
+
+.game__controlers_select{
+  width: 170px;
+  display: inline-block;
+}
+
+.game__header{
+  padding-top: 20px;
+}
+
+.game_solution_mini-items{
+  display: flex;
+  justify-content: center;
+  &>div{
+    margin-right: 10px;
+  }
+}
+
+.game__controlers__item{
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &>label{
+    margin-right: 20px;
+  }
+}
+
+.game__splash-screen{
+  background-image: url('./img/starwars_logo_black_yellow.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 306px;
+  height: 131px;
+  margin: 80px auto;
+}

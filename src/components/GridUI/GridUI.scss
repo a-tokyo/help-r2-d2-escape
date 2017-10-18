@@ -1,0 +1,30 @@
+.grid-wrapper{
+  max-width: 95%;
+  margin: auto;
+}
+
+.grid{
+  display: inline-block;
+  border: 2px solid grey;
+}
+
+.grid-row{
+  display: flex;
+}
+
+.grid-cell{
+  border: 1px solid grey;
+  display: flex;
+  flex: 1;
+  min-width: 35px;
+  min-height: 35px;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-cell--pressure-pad{
+  background-color: wheat;
+}
+.grid-cell--pressure-pad--active{
+  background-color: lightgreen;
+}

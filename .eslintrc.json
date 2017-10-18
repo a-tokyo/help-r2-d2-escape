@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended",
+    "prettier",
+    "prettier/flowtype"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true,
+    "jest": true
+  },
+  "globals": {
+    "window": true,
+    "document": true,
+    "fetch": true
+  },
+  "plugins": [
+    "flowtype",
+    "prettier"
+  ],
+  "rules": {
+    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-max-props-per-line": 0,
+    "react/jsx-filename-extension": "off"
+  }
+}
