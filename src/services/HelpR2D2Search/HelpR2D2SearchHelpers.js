@@ -68,7 +68,7 @@ const gridHasPressurepadAtPos = (gridToCheck: any, position: GridItemPos) =>
  * Author: Tokyo
  */
 const getNewState = (
-  previousStates: StatesHashMap,
+  previousStates: StatesHistoryHashMap,
   grid: any,
   newPos: GridItemPos,
   rocksPositions: Array<GridItemPos>,
@@ -256,7 +256,7 @@ export const applyOperator = (
   operator: Operator,
   currState: State,
   grid: any,
-  previousStates: StatesHashMap
+  previousStates: StatesHistoryHashMap
 ): State | null => {
   const currPos = currState.cell;
   const currRocksPositions = currState.rocksPositions;

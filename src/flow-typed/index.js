@@ -17,7 +17,7 @@ export type Operator = 'move_north' | 'move_south' | 'move_east' | 'move_west';
 
 export type GridItemPos = { row: number, col: number };
 
-export type StatesHashMap = { [string]: boolean };
+export type StatesHistoryHashMap = { [string]: boolean };
 
 export type State = {
   cell: GridItemPos,

@@ -37,7 +37,7 @@ const Search = (
 } => {
   /** keep track of the previous state */
   /** The previousStates hashmap is mutated by applyOperator() */
-  let previousStates: StatesHashMap = {};
+  let previousStates: StatesHistoryHashMap = {};
   /** create the search problem */
   const problem: Problem = {
     operators: ['move_north', 'move_south', 'move_east', 'move_west'],
