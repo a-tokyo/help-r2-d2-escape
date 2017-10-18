@@ -37,10 +37,12 @@ export default class Game extends Component {
     console.info('############NEW GAME############');
     // const gameGrid = generateGrid();
     const gameGrid = solvableLongGrid;
-    console.info('gameGrid =>', gameGrid);
-    console.info('gameGridMap ==>');
-    console.info(gridMapToString(gameGrid.grid));
 
+    /** log initial info */
+    console.info('gameGrid =>', gameGrid);
+    console.info('gameGridMap ==>\n', gridMapToString(gameGrid.grid));
+
+    /** log search solution */
     console.info(
       'HelpR2D2Search result ==>',
       HelpR2D2Search(gameGrid, this.state.searchTypeInputValue)
