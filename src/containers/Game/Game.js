@@ -1,6 +1,6 @@
 /* @flow weak */
 import React, { Component } from 'react';
-import { Button, Input, Row, Col } from 'reactstrap';
+import { Container, Button, Input, Row, Col } from 'reactstrap';
 
 import { GridUI } from '../../components';
 import { generateGrid, HelpR2D2Search } from '../../services';
@@ -30,10 +30,11 @@ export default class Game extends Component {
     onGoingGameGridGrid: solvableLongGrid.grid,
     currOnGoingSearchState: null,
     searchTypeInputValue: 'BF',
+    solution: null,
   };
 
   componentDidMount() {
-    // this._newGame();
+    this._newGame();
   }
 
   _updateOnGoingState = (state: State) => {
@@ -54,13 +55,11 @@ export default class Game extends Component {
     console.info('gameGrid =>', gameGrid);
     console.info('gameGridMap ==>\n', gridMapToString(gameGrid.grid));
 
+    const solution = HelpR2D2Search(gameGrid, this.state.searchTypeInputValue);
     /** log search solution */
-    console.info(
-      'HelpR2D2Search result ==>',
-      HelpR2D2Search(gameGrid, this.state.searchTypeInputValue)
-    );
+    console.info('HelpR2D2Search solution ==>', solution);
 
-    this.setState({ gameGrid });
+    this.setState({ gameGrid, solution });
   };
 
   _handleChangeSearchTypeInputValue = event => {
@@ -73,36 +72,50 @@ export default class Game extends Component {
       searchTypeInputValue,
       onGoingGameGridGrid,
       currOnGoingSearchState,
+      solution,
     } = this.state;
     return (
-      <article className="game">
-        <header className="game__controlers">
-          <Button color="primary" onClick={this._newGame}>
-            New Game
-          </Button>
-          <div className="game__controlers_select">
-            <Input
-              type="select"
-              value={searchTypeInputValue}
-              onChange={this._handleChangeSearchTypeInputValue}
-            >
-              {searchTypes.map(type => <option key={type}>{type}</option>)}
-            </Input>
+      <Container fluid className="game">
+        <header>
+          <div className="game__controlers">
+            <Button color="primary" onClick={this._newGame}>
+              New Game
+            </Button>
+            <div className="game__controlers_select">
+              <Input
+                type="select"
+                value={searchTypeInputValue}
+                onChange={this._handleChangeSearchTypeInputValue}
+              >
+                {searchTypes.map(type => <option key={type}>{type}</option>)}
+              </Input>
+            </div>
           </div>
+          {solution ? (
+            <div>
+              <h4>Solution: </h4>
+              <label>Sequence: </label>
+              <div>{solution.sequence.map(item => `${item}, `)}</div>
+              <label>Cost:</label>
+              <span> {solution.cost}</span>
+            </div>
+          ) : null}
         </header>
-        <Col xs={12} lg={6} className="game__section">
-          <h3>Initial Grid</h3>
-          <GridUI gridInfo={gameGrid} />
-          <hr />
-        </Col>
-        <Col xs={12} lg={6} className="game__section">
-          <h3>Animation of explored states</h3>
-          <GridUI
-            gridInfo={{ grid: onGoingGameGridGrid, config: gameGrid.config }}
-          />
-          <hr />
-        </Col>
-      </article>
+        <Row>
+          <Col xs={12} lg={6} className="game__section">
+            <h3>Initial Grid</h3>
+            <GridUI gridInfo={gameGrid} />
+            <hr />
+          </Col>
+          <Col xs={12} lg={6} className="game__section">
+            <h3>Animation of explored states</h3>
+            <GridUI
+              gridInfo={{ grid: onGoingGameGridGrid, config: gameGrid.config }}
+            />
+            <hr />
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
