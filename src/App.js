@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './r2d2_icon.png';
 import './App.css';
 
 import { Game } from './containers';
-import { generateGrid } from './services';
 
 const App = () => (
   <div className="App">
