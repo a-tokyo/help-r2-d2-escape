@@ -35,9 +35,10 @@ const GridUI = ({
                   ) {
                     return (
                       <div
-                        className={`grid-cell ${state &&
-                        state.unPushedPads === 0
-                          ? 'opacity-05'
+                        className={`grid-cell opacity-05 ${(state &&
+                          state.unPushedPads === 0) ||
+                        !state
+                          ? 'opacity-1'
                           : ''}`}
                         key={`cell_${rowIndex}-${colIndex}`}
                       >
@@ -48,8 +49,10 @@ const GridUI = ({
                   }
                   return (
                     <div
-                      className={`grid-cell ${state && state.unPushedPads === 0
-                        ? 'opacity-05'
+                      className={`grid-cell opacity-05 ${(state &&
+                        state.unPushedPads === 0) ||
+                      !state
+                        ? 'opacity-1'
                         : ''}`}
                       key={`cell_${rowIndex}-${colIndex}`}
                     >

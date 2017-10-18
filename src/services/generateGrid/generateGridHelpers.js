@@ -163,9 +163,9 @@ export const generateGridFromConfigAndState = (
   });
 
   if (newGrid[state.cell.row][state.cell.col]) {
-    newGrid[state.cell.row][state.cell.col].items.push({
-      items: [createGameElement('player')],
-    });
+    newGrid[state.cell.row][state.cell.col].items.push(
+      createGameElement('player')
+    );
   } else {
     newGrid[state.cell.row][state.cell.col] = {
       items: [createGameElement('player')],

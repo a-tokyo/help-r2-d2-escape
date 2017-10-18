@@ -73,7 +73,7 @@ export default class Game extends Component {
     }
 
     if (
-      newCurrOnGoingSearchStateIndex < Store.visualizationStatesInOrder.length
+      newCurrOnGoingSearchStateIndex <= Store.visualizationStatesInOrder.length
     ) {
       const onGoingGameGridGrid = generateGridFromConfigAndState(
         gameGrid.config,
@@ -85,15 +85,13 @@ export default class Game extends Component {
         currOnGoingSearchState:
           Store.visualizationStatesInOrder[newCurrOnGoingSearchStateIndex],
       });
-    } else {
-      this._clearOngoingInterval();
     }
   };
 
   _newGame = () => {
     console.info('############NEW GAME############');
-    const gameGrid = generateGrid();
-    // const gameGrid = solvableLongGrid;
+    // const gameGrid = generateGrid();
+    const gameGrid = solvableLongGrid;
 
     /** log initial info */
     console.info('gameGrid =>', gameGrid);
@@ -176,6 +174,7 @@ export default class Game extends Component {
             <h3>Animation of explored states</h3>
             <GridUI
               gridInfo={{ grid: onGoingGameGridGrid, config: gameGrid.config }}
+              state={currOnGoingSearchState}
             />
             <hr />
           </Col>
