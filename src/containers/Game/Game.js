@@ -31,11 +31,28 @@ export default class Game extends Component {
     currOnGoingSearchState: null,
     searchTypeInputValue: 'BF',
     solution: null,
+    onGoingIntervalId: null,
   };
 
   componentDidMount() {
+    /** start a dummy new game */
     this._newGame();
+
+    /** track the onGoingViews by interval */
+    const onGoingIntervalId = setInterval(this._renderNewOngoingView, 1000);
+    // store intervalId in the state so it can be accessed later:
+    this.setState({ onGoingIntervalId });
   }
+
+  componentWillUnmount() {
+    // use intervalId from the state to clear the interval
+    clearInterval(this.state.onGoingIntervalId);
+    this.setState({ onGoingIntervalId: null });
+  }
+
+  _renderNewOngoingView = () => {
+    console.log('NEW VIEW FRAME');
+  };
 
   _updateOnGoingState = (state: State) => {
     const { gameGrid } = this.state;
