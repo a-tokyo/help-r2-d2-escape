@@ -182,6 +182,8 @@ export default class Game extends Component {
         </Row>
         <aside>
           <h4>CHECK THE CONSOLE FOR DETAILED STACK TRACES.</h4>
+
+          <span>Caution: Iterative deepening exhausts the memory.</span>
         </aside>
       </Container>
     );
