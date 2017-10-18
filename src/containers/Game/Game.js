@@ -4,7 +4,10 @@ import { Button, Input, Row, Col } from 'reactstrap';
 
 import { GridUI } from '../../components';
 import { generateGrid, HelpR2D2Search } from '../../services';
-import { gridMapToString } from '../../services/generateGrid/generateGridHelpers';
+import {
+  gridMapToString,
+  generateGridFromConfigAndState,
+} from '../../services/generateGrid/generateGridHelpers';
 
 import { solvableLongGrid } from '../../services/generateGrid/testGrids';
 
@@ -32,6 +35,15 @@ export default class Game extends Component {
   componentDidMount() {
     // this._newGame();
   }
+
+  _updateOnGoingState = (state: State) => {
+    const { gameGrid } = this.state;
+    const onGoingGameGridGrid = generateGridFromConfigAndState(
+      gameGrid.config,
+      state
+    );
+    this.setState({ onGoingGameGridGrid });
+  };
 
   _newGame = () => {
     console.info('############NEW GAME############');
