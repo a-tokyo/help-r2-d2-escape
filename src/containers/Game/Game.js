@@ -160,6 +160,7 @@ export default class Game extends Component {
               </div>
             </div>
             <div className="game__controlers__item">
+              <label>Search Type: </label>
               <div className="game__controlers_select">
                 <Input
                   type="select"
