@@ -15,6 +15,9 @@ Using `Search` the application formulates a plan that R2-D2 can follow to escape
 - Greedy search with at least two heuristics.
 - A∗ search with at least two admissible heuristics.
 
+## Demo
+Checkout the live demo on [help-r2-d2-escape.herokuapp.com](https://help-r2-d2-escape.herokuapp.com/) and check the console for useful logs about the search logic.
+
 ## Getting Started
 - go to the application directory:
   ```
