@@ -46,7 +46,7 @@ export const getState = (node: Node): State => node.state;
  * Author: Tokyo
  */
 export const expand = (node: Node, problem: Problem): Array<Node> => {
-  console.log('expanding', node);
+  console.info('expanding', node);
   const newStateConfigs: Array<StateConfig> = problem.stateSpace(
     node.state,
     problem.operators
