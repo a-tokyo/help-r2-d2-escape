@@ -11,7 +11,7 @@ import {
 
 import './Game.css';
 
-const updateIntervalTimes: Array<number> = [20, 50, 200];
+const updateIntervalTimes: Array<number> = [10, 20, 50, 200, 500, 1000];
 
 export default class Game extends Component {
   state = {
@@ -23,7 +23,7 @@ export default class Game extends Component {
     onGoingIntervalId: null,
     searchTypeInputValue: Store.searchTypes[0],
     problemTypeInputValue: Store.problemTypes[0],
-    updateIntervalTime: 20,
+    updateIntervalTime: updateIntervalTimes[0],
 
     MIN_GRID_ROWS: Store.get('gridBasicEnv').MIN_GRID_ROWS,
     MIN_GRID_COLS: Store.get('gridBasicEnv').MIN_GRID_COLS,
