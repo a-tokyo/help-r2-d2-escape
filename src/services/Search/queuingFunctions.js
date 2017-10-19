@@ -58,5 +58,38 @@ export const iterativeDeepeningQueuingFunc: Function = (
     newNodes.filter(newNode => newNode.depth <= maxDepth)
   );
 
-/** @TODO Greedy, 2 heuristics */
-/** @TODO A*, 2 heuristics */
+/**
+ * Greedy search Queuing function enques according to the heuristicCost ascendingly
+ *
+ * concat the nodes and sort by heuristicCost ascendingly
+ *
+ * Author: Basel
+ */
+// export const greedyQueuingFunc: QueuingFunction = (
+//   nodes: Array<Node>,
+//   newNodes: Array<Node>
+// ): Array<Node> =>
+//   nodes
+//     .concat(newNodes)
+//     .sort(
+//       ({ heuristicCost: heuristicCostA }, { heuristicCost: heuristicCostB }) =>
+//         heuristicCostA - heuristicCostB
+//     );
+
+/**
+ * A* search Queuing function enques according to the pathCost+heuristicCost ascendingly
+ *
+ * concat the nodes and sort by pathCost+heuristicCost ascendingly
+ *
+ * Author: Basel
+ */
+// export const aStarQueuingFunc: QueuingFunction = (
+//   nodes: Array<Node>,
+//   newNodes: Array<Node>
+// ): Array<Node> =>
+//   nodes
+//     .concat(newNodes)
+//     .sort(
+//       ({ pathCost: pathCostA }, { pathCost: pathCostB }, { heuristicCost: heuristicCostA }, { heuristicCost: heuristicCostB }) =>
+//         (pathCostA+heuristicCostA) - (pathCostB+heuristicCostB)
+//     );

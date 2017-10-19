@@ -12,6 +12,8 @@ import {
   depthFirstQueuingFunc,
   uniformCostQueuingFunc,
   iterativeDeepeningQueuingFunc,
+  // greedyQueuingFunc,
+  // aStarQueuingFunc,
 } from '../Search/queuingFunctions';
 
 import { applyOperator } from './HelpR2D2SearchHelpers';
@@ -71,25 +73,20 @@ const Search = (
     goalTest: (state: State) =>
       state.unPushedPads === 0 &&
       _.isEqual(state.cell, grid.config.teleportalPosition),
-    pathCost: (state: State, operators: Array<Operator>): number => {
-      /**
-       * @TODO implement proper path cost for last 2 search algorithms
-       *
-      // switch (strategy) {
-      //   case 'GR1':
-      //     return operators.length;
-      //   case 'GR2':
-      //     return operators.length;
-      //   case 'AS1':
-      //     return operators.length;
-      //   case 'AS2':
-      //     return operators.length;
-      //   default:
-      // }
-       *
-       */
-      return operators.length;
-    },
+    pathCost: (state: State, operators: Array<Operator>): number =>
+      operators.length,
+    heuristicCostA: (
+      currState: State,
+      operators: Array<Operator>,
+      newState: State,
+      gridConfig: GridConfigObject
+    ): number => 0,
+    heuristicCostB: (
+      currState: State,
+      operators: Array<Operator>,
+      newState: State,
+      gridConfig: GridConfigObject
+    ): number => 0,
   };
 
   /** set the propper queuing function */
@@ -108,17 +105,17 @@ const Search = (
     case 'ID':
       qingFunc = iterativeDeepeningQueuingFunc(ID_MAX_DEPTH);
       break;
-    // case 'GR1':
-    //   qingFunc = ...;
-    //   break;
+    //  case 'GR1':
+    //    qingFunc = greedyQueuingFunc;
+    //    break;
     // case 'GR2':
-    //   qingFunc = ...;
+    //   qingFunc = greedyQueuingFunc;
     //   break;
     // case 'AS1':
-    //   qingFunc = ...;
+    //   qingFunc = aStarQueuingFunc;
     //   break;
     // case 'AS2':
-    //   qingFunc = ...;
+    //   qingFunc = aStarQueuingFunc;
     //   break;
     default:
       console.error('unknown search strategy: ', strategy);
