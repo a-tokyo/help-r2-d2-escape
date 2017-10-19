@@ -1,6 +1,10 @@
 /* @flow */
 /* eslint no-undef: 1 */
 
+declare var jest;
+declare var it;
+declare var test;
+
 export type GameElementType =
   | 'player'
   | 'teleportal'
