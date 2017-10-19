@@ -27,13 +27,13 @@
 }
 
 .grid-cell-teleportal{
-  &>i{
+  &>.teleporter-svg{
     opacity: 0.5;
   }
 }
 
 .grid-cell-teleportal--active{
-  &>i{
+  &>.teleporter-svg{
     opacity: 1;
   }
 }
