@@ -339,7 +339,7 @@ export default class Game extends Component {
             while avoiding the stormtroopers then head to the teleportal.
           </p>
           <h4>CHECK THE CONSOLE FOR DETAILED STACK TRACES.</h4>
-          <span>Caution: Iterative deepening exhausts the memory.</span>
+          <span>Caution: Iterative deepening search exhausts the memory.</span>
         </aside>
       </Container>
     );
