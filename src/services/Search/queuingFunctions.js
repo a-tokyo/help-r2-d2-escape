@@ -119,7 +119,7 @@ export const aStarQueuingFuncA: QueuingFunction = (
 /**
  * A* search Queuing function enques according to the pathCost+heuristicCostB ascendingly
  *
- * concat the nodes and sort by pathCost+heuristicCostA ascendingly
+ * concat the nodes and sort by pathCost+heuristicCostB ascendingly
  *
  * Author: Basel
  */
