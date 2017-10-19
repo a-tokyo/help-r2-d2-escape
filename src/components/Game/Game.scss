@@ -52,7 +52,7 @@
   flex-direction: row;
   justify-content: space-between;
   flex-grow: 1;
-  margin-top: 10px;
+  flex-wrap: wrap;
   &>.game__controlers_select{
     margin-top: 5px;
     width: 60px;
@@ -60,7 +60,7 @@
 }
 .game__controlers__item-grid-control-item{
   // flex: 1;
-  margin: 0 10px;
+  margin: 10px;
 }
 
 .btn{
