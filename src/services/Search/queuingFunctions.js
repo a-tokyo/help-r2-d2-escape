@@ -67,16 +67,18 @@ export const iterativeDeepeningQueuingFunc: Function = (
  *
  * Author: Basel
  */
-// export const greedyQueuingFunc: QueuingFunction = (
-//   nodes: Array<Node>,
-//   newNodes: Array<Node>
-// ): Array<Node> =>
-//   nodes
-//     .concat(newNodes)
-//     .sort(
-//       ({ heuristicCost: heuristicCostA }, { heuristicCost: heuristicCostB }) =>
-//         heuristicCostA - heuristicCostB
-//     );
+export const greedyQueuingFunc: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      (
+        { heuristicCostA: heuristicCostAa },
+        { heuristicCostA: heuristicCostAb }
+      ) => heuristicCostAa - heuristicCostAb
+    );
 
 /**
  * A* search Queuing function enques according to the pathCost+heuristicCost ascendingly
