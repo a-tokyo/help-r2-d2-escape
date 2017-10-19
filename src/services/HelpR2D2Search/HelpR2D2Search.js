@@ -2,11 +2,7 @@
 import _ from 'lodash';
 
 import { Store } from '../';
-import {
-  generalSearch,
-  backTrackOperators,
-  backTrackCost,
-} from '../Search/Search';
+import { generalSearch, backTrackOperators } from '../Search/Search';
 import {
   breadthFirstQueuingFunc,
   depthFirstQueuingFunc,
@@ -93,11 +89,14 @@ const Search = (
       const { config: gridConfig } = grid;
       const { row: currRow, col: currCol } = currState.cell;
       const { row: nextRow, col: nextCol } = newState.cell;
-
-      const teleportalRow = gridConfig.teleportalPosition.row;
-      const teleportalCol = gridConfig.teleportalPosition.col;
+      const {
+        row: teleportalRow,
+        col: teleportalCol,
+      } = gridConfig.teleportalPosition;
       // If neew state is the teleportal then return 0
-      if (nextRow === teleportalRow && nextCol === teleportalCol) return 0;
+      if (_.isEqual(newState.cell, gridConfig.teleportalPosition)) {
+        return 0;
+      }
       // Check if in the nextState the teleportal will be activated and this move will make the player get
       // near it then it returns 1
       if (newState.unPushedPads === 0) {
@@ -105,7 +104,7 @@ const Search = (
           currRow - teleportalRow + (currCol - teleportalCol);
         const distanceFromNew =
           nextRow - teleportalRow + (nextCol - teleportalCol);
-        if (distanceFromNew < distanceFromCurrent) return 1;
+        return distanceFromNew < distanceFromCurrent ? 1 : 10;
       }
       // Get nearstRock to current position and nearst distance
       let nearstRock = gridConfig.rocksPositions[0];
@@ -113,13 +112,11 @@ const Search = (
         currRow -
         gridConfig.rocksPositions[0].row +
         (currCol - gridConfig.rocksPositions[0].col);
-      gridConfig.rocksPositions.forEach(element => {
-        const rockRow = element.row;
-        const rockCol = element.col;
-        const newDeltaDistance = currRow - rockRow + (currCol - rockCol);
+      gridConfig.rocksPositions.forEach(rock => {
+        const newDeltaDistance = currRow - rock.row + (currCol - rock.col);
         if (newDeltaDistance < deltaDistance) {
           deltaDistance = newDeltaDistance;
-          nearstRock = element;
+          nearstRock = rock;
         }
       });
 
@@ -146,11 +143,14 @@ const Search = (
       const { config: gridConfig } = grid;
       const { row: currRow, col: currCol } = currState.cell;
       const { row: nextRow, col: nextCol } = newState.cell;
-
-      const teleportalRow = gridConfig.teleportalPosition.row;
-      const teleportalCol = gridConfig.teleportalPosition.col;
+      const {
+        row: teleportalRow,
+        col: teleportalCol,
+      } = gridConfig.teleportalPosition;
       // If neew state is the teleportal then return 0
-      if (nextRow === teleportalRow && nextCol === teleportalCol) return 0;
+      if (_.isEqual(newState.cell, gridConfig.teleportalPosition)) {
+        return 0;
+      }
       // Check if in the nextState the teleportal will be activated and this move will make the player get
       // near it then it returns 1
       if (newState.unPushedPads === 0) {
@@ -160,7 +160,7 @@ const Search = (
         const distanceFromNew = Math.sqrt(
           (nextRow - teleportalRow) ** 2 + (nextCol - teleportalCol) ** 2
         );
-        if (distanceFromNew < distanceFromCurrent) return 1;
+        return distanceFromNew < distanceFromCurrent ? 1 : 10;
       }
       // Get nearstRock to current position and nearst distance
       let nearstRock = gridConfig.rocksPositions[0];
@@ -168,18 +168,15 @@ const Search = (
         (currRow - gridConfig.rocksPositions[0].row) ** 2 +
           (currCol - gridConfig.rocksPositions[0].col) ** 2
       );
-      gridConfig.rocksPositions.forEach(element => {
-        const rockRow = element.row;
-        const rockCol = element.col;
+      gridConfig.rocksPositions.forEach(rock => {
         const newDeltaDistance = Math.sqrt(
-          (currRow - rockRow) ** 2 + (currCol - rockCol) ** 2
+          (currRow - rock.row) ** 2 + (currCol - rock.col) ** 2
         );
         if (newDeltaDistance < deltaDistance) {
           deltaDistance = newDeltaDistance;
-          nearstRock = element;
+          nearstRock = rock;
         }
       });
-
       // Compare the distance between the nearest rock and the current and next state
       // If it's the same then the heuristic cost is the same as every cell which is 10, else it is 1
       const distanceFromNext = Math.sqrt(
@@ -251,14 +248,12 @@ const Search = (
     expandedNodesCount = currExpandedNodesCount;
   }
 
-  const cost: number | null = searchResNode
-    ? backTrackCost(searchResNode)
-    : null;
+  const cost: number | null = searchResNode ? searchResNode.pathCost : null;
   const sequence: Array<Operator> = searchResNode
     ? backTrackOperators(searchResNode)
     : [];
 
-  console.log(
+  console.info(
     'visualizationStatesInOrder',
     Store.get('visualizationStatesInOrder')
   );
