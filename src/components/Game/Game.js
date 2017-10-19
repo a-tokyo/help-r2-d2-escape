@@ -9,8 +9,6 @@ import {
   generateGridFromConfigAndState,
 } from '../../services/generateGrid/generateGridHelpers';
 
-import { solvableLongGrid } from '../../services/generateGrid/testGrids';
-
 import './Game.css';
 
 const updateIntervalTimes: Array<number> = [20, 50, 200];
@@ -84,11 +82,11 @@ export default class Game extends Component {
   _newGame = () => {
     const { problemTypeInputValue } = this.state;
     console.info('############NEW GAME############');
-    let gameGrid = solvableLongGrid;
+    let gameGrid = Store.gameGrids.solvableLongGrid;
     /** Check the desired problem type and set the grid accordingly */
     switch (problemTypeInputValue) {
       case 'Solvable Long Grid':
-        gameGrid = solvableLongGrid;
+        gameGrid = Store.gameGrids.solvableLongGrid;
         break;
       case 'Random Grid':
         gameGrid = generateGrid();

@@ -1,4 +1,5 @@
 /* @flow */
+import { solvableLongGrid } from './testGrids';
 
 /**
  * A simple mutatable store used accross the app.
@@ -29,6 +30,12 @@ class Store {
   ];
 
   problemTypes: Array<string> = ['Solvable Long Grid', 'Random Grid'];
+
+  gameGrids: {
+    [string]: { grid: Array<Array<any>>, config: GridConfigObject },
+  } = {
+    solvableLongGrid,
+  };
 
   reset(key?: string) {
     switch (key) {

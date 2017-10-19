@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import GridUI from './GridUI';
-import { solvableLongGrid } from '../../services/generateGrid/testGrids';
+import { Store } from '../../services';
 
 it('renders without crashing', () => {
-  shallow(<GridUI gridInfo={solvableLongGrid} />);
+  shallow(<GridUI gridInfo={Store.gameGrids.solvableLongGrid} />);
 });
