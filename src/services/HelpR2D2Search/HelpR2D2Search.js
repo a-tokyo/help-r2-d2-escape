@@ -80,13 +80,23 @@ const Search = (
       operators: Array<Operator>,
       newState: State,
       gridConfig: GridConfigObject
-    ): number => 0,
+    ): number => {
+      /**
+       * @TODO CODE heuristicCostA
+       */
+      return 0;
+    },
     heuristicCostB: (
       currState: State,
       operators: Array<Operator>,
       newState: State,
       gridConfig: GridConfigObject
-    ): number => 0,
+    ): number => {
+      /**
+       * @TODO CODE heuristicCostB
+       */
+      return 0;
+    },
   };
 
   /** set the propper queuing function */

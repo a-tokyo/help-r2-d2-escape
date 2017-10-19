@@ -58,6 +58,8 @@ export const iterativeDeepeningQueuingFunc: Function = (
     newNodes.filter(newNode => newNode.depth <= maxDepth)
   );
 
+// @TODO: proper queuing heuristicCost funcs,
+
 /**
  * Greedy search Queuing function enques according to the heuristicCost ascendingly
  *
