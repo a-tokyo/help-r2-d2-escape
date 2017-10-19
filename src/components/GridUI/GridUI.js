@@ -46,6 +46,23 @@ const GridUI = ({
                       </div>
                     );
                   }
+                  if (
+                    gridInfo.grid[rowIndex][colIndex].items[1] &&
+                    gridInfo.grid[rowIndex][colIndex].items[1].type === 'rock'
+                  ) {
+                    return (
+                      <div
+                        className={`grid-cell opacity-05 ${state &&
+                        state.unPushedPads === 0
+                          ? 'opacity-1'
+                          : ''}`}
+                        key={`cell_${rowIndex}-${colIndex}`}
+                      >
+                        <Teleporter />
+                        <Rock />
+                      </div>
+                    );
+                  }
                   return (
                     <div
                       className={`grid-cell opacity-05 ${state &&
