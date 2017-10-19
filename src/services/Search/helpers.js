@@ -57,9 +57,17 @@ export const expand = (node: Node, problem: Problem): Array<Node> => {
       node,
       stateConfig.operator,
       node.depth + 1,
-      node.pathCost + problem.pathCost(node.state, [stateConfig.operator])
-      // @TODO: pass heuristicCostA,
-      // @TODO: pass heuristicCostB,
+      node.pathCost + problem.pathCost(node.state, [stateConfig.operator]),
+      problem.heuristicCostA(
+        node.state,
+        [stateConfig.operator],
+        stateConfig.state
+      ),
+      problem.heuristicCostB(
+        node.state,
+        [stateConfig.operator],
+        stateConfig.state
+      )
     )
   );
 };
