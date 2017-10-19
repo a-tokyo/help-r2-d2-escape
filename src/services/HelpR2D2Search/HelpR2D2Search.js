@@ -12,8 +12,10 @@ import {
   depthFirstQueuingFunc,
   uniformCostQueuingFunc,
   iterativeDeepeningQueuingFunc,
-  // greedyQueuingFunc,
-  // aStarQueuingFunc,
+  greedyQueuingFuncA,
+  greedyQueuingFuncB,
+  aStarQueuingFuncA,
+  aStarQueuingFuncB,
 } from '../Search/queuingFunctions';
 
 import { applyOperator } from './HelpR2D2SearchHelpers';
@@ -115,18 +117,18 @@ const Search = (
     case 'ID':
       qingFunc = iterativeDeepeningQueuingFunc(ID_MAX_DEPTH);
       break;
-    //  case 'GR1':
-    //    qingFunc = greedyQueuingFunc;
-    //    break;
-    // case 'GR2':
-    //   qingFunc = greedyQueuingFunc;
-    //   break;
-    // case 'AS1':
-    //   qingFunc = aStarQueuingFunc;
-    //   break;
-    // case 'AS2':
-    //   qingFunc = aStarQueuingFunc;
-    //   break;
+    case 'GR1':
+      qingFunc = greedyQueuingFuncA;
+      break;
+    case 'GR2':
+      qingFunc = greedyQueuingFuncB;
+      break;
+    case 'AS1':
+      qingFunc = aStarQueuingFuncA;
+      break;
+    case 'AS2':
+      qingFunc = aStarQueuingFuncB;
+      break;
     default:
       console.error('unknown search strategy: ', strategy);
   }

@@ -58,16 +58,14 @@ export const iterativeDeepeningQueuingFunc: Function = (
     newNodes.filter(newNode => newNode.depth <= maxDepth)
   );
 
-// @TODO: proper queuing heuristicCost funcs,
-
 /**
  * Greedy search Queuing function enques according to the heuristicCost ascendingly
  *
- * concat the nodes and sort by heuristicCost ascendingly
+ * concat the nodes and sort by heuristicCostA ascendingly
  *
  * Author: Basel
  */
-export const greedyQueuingFunc: QueuingFunction = (
+export const greedyQueuingFuncA: QueuingFunction = (
   nodes: Array<Node>,
   newNodes: Array<Node>
 ): Array<Node> =>
@@ -79,21 +77,61 @@ export const greedyQueuingFunc: QueuingFunction = (
         { heuristicCostA: heuristicCostAb }
       ) => heuristicCostAa - heuristicCostAb
     );
-
 /**
- * A* search Queuing function enques according to the pathCost+heuristicCost ascendingly
+ * Greedy search Queuing function enques according to the heuristicCost ascendingly
  *
- * concat the nodes and sort by pathCost+heuristicCost ascendingly
+ * concat the nodes and sort by heuristicCostB ascendingly
  *
  * Author: Basel
  */
-// export const aStarQueuingFunc: QueuingFunction = (
-//   nodes: Array<Node>,
-//   newNodes: Array<Node>
-// ): Array<Node> =>
-//   nodes
-//     .concat(newNodes)
-//     .sort(
-//       ({ pathCost: pathCostA }, { pathCost: pathCostB }, { heuristicCost: heuristicCostA }, { heuristicCost: heuristicCostB }) =>
-//         (pathCostA+heuristicCostA) - (pathCostB+heuristicCostB)
-//     );
+export const greedyQueuingFuncB: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      (
+        { heuristicCostB: heuristicCostAa },
+        { heuristicCostB: heuristicCostAb }
+      ) => heuristicCostAa - heuristicCostAb
+    );
+
+/**
+ * A* search Queuing function enques according to the pathCost+heuristicCostA ascendingly
+ *
+ * concat the nodes and sort by pathCost+heuristicCostA ascendingly
+ *
+ * Author: Basel
+ */
+export const aStarQueuingFuncA: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      (
+        { pathCost: pathCostA, heuristicCostA: heuristicCostAa },
+        { pathCost: pathCostB, heuristicCostA: heuristicCostAb }
+      ) => pathCostA + heuristicCostAa - (pathCostB + heuristicCostAb)
+    );
+/**
+ * A* search Queuing function enques according to the pathCost+heuristicCostB ascendingly
+ *
+ * concat the nodes and sort by pathCost+heuristicCostA ascendingly
+ *
+ * Author: Basel
+ */
+export const aStarQueuingFuncB: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      (
+        { pathCost: pathCostA, heuristicCostB: heuristicCostAa },
+        { pathCost: pathCostB, heuristicCostB: heuristicCostAb }
+      ) => pathCostA + heuristicCostAa - (pathCostB + heuristicCostAb)
+    );
