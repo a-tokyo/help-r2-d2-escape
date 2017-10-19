@@ -35,9 +35,9 @@ const GridUI = ({
                   ) {
                     return (
                       <div
-                        className={`grid-cell opacity-05 ${state &&
+                        className={`grid-cell grid-cell-teleportal ${state &&
                         state.unPushedPads === 0
-                          ? 'opacity-1'
+                          ? 'grid-cell-teleportal--active'
                           : ''}`}
                         key={`cell_${rowIndex}-${colIndex}`}
                       >
@@ -52,9 +52,9 @@ const GridUI = ({
                   ) {
                     return (
                       <div
-                        className={`grid-cell opacity-05 ${state &&
+                        className={`grid-cell grid-cell-teleportal ${state &&
                         state.unPushedPads === 0
-                          ? 'opacity-1'
+                          ? 'grid-cell-teleportal--active'
                           : ''}`}
                         key={`cell_${rowIndex}-${colIndex}`}
                       >
@@ -65,9 +65,9 @@ const GridUI = ({
                   }
                   return (
                     <div
-                      className={`grid-cell opacity-05 ${state &&
+                      className={`grid-cell grid-cell-teleportal ${state &&
                       state.unPushedPads === 0
-                        ? 'opacity-1'
+                        ? 'grid-cell-teleportal--active'
                         : ''}`}
                       key={`cell_${rowIndex}-${colIndex}`}
                     >
