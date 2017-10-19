@@ -12,8 +12,10 @@ import {
   depthFirstQueuingFunc,
   uniformCostQueuingFunc,
   iterativeDeepeningQueuingFunc,
-  // greedyQueuingFunc,
-  // aStarQueuingFunc,
+  greedyQueuingFuncA,
+  greedyQueuingFuncB,
+  aStarQueuingFuncA,
+  aStarQueuingFuncB,
 } from '../Search/queuingFunctions';
 
 import { applyOperator } from './HelpR2D2SearchHelpers';
@@ -78,24 +80,125 @@ const Search = (
     heuristicCostA: (
       currState: State,
       operators: Array<Operator>,
-      newState: State,
-      gridConfig: GridConfigObject
+      newState: State
+      // gridConfig: GridConfigObject
     ): number => {
       /**
-       * @TODO CODE heuristicCostA
+       * Here is where to calculate the heuristicCostA. Where the heuristicCost is either 1 to motivate the
+       * player to go to it (it will make it nearer to the rock) or 10 which is the same for any random cell
+       * which isn't beneficial in reaching the goal.
+       *
+       * Delta distance is calculated by = adding the difference of rows with the difference of coloumns
        */
-      return 0;
+
+      const gridConfig: GridConfigObject = grid.config;
+
+      const currRow = currState.cell.row;
+      const currCol = currState.cell.col;
+      const nextRow = newState.cell.row;
+      const nextCol = newState.cell.col;
+      const teleportalRow = gridConfig.teleportalPosition.row;
+      const teleportalCol = gridConfig.teleportalPosition.col;
+      // If neew state is the teleportal then return 0
+      if (nextRow === teleportalRow && nextCol === teleportalCol) return 0;
+      // Check if in the nextState the teleportal will be activated and this move will make the player get
+      // near it then it returns 1
+      if (newState.unPushedPads === 0) {
+        const distanceFromCurrent =
+          currRow - teleportalRow + (currCol - teleportalCol);
+        const distanceFromNew =
+          nextRow - teleportalRow + (nextCol - teleportalCol);
+        if (distanceFromNew < distanceFromCurrent) return 1;
+      }
+      // Get nearstRock to current position and nearst distance
+      let nearstRock = gridConfig.rocksPositions[0];
+      let deltaDistance =
+        currRow -
+        gridConfig.rocksPositions[0].row +
+        (currCol - gridConfig.rocksPositions[0].col);
+      gridConfig.rocksPositions.forEach(function(element) {
+        const rockRow = element.row;
+        const rockCol = element.col;
+        const newDeltaDistance = currRow - rockRow + (currCol - rockCol);
+        if (newDeltaDistance < deltaDistance) {
+          deltaDistance = newDeltaDistance;
+          nearstRock = element;
+        }
+      }, this);
+
+      // Compare the distance between the nearest rock and the current and next state
+      // If it's the same then the heuristic cost is the same as every cell which is 10, else it is 1
+      const distanceFromNext =
+        nextRow - nearstRock.row + (nextCol - nearstRock.col);
+      if (distanceFromNext < deltaDistance) {
+        return 1;
+      }
+
+      return 10;
     },
     heuristicCostB: (
       currState: State,
       operators: Array<Operator>,
-      newState: State,
-      gridConfig: GridConfigObject
+      newState: State
+      // gridConfig: GridConfigObject
     ): number => {
       /**
-       * @TODO CODE heuristicCostB
+       * Here is where to calculate the heuristicCostA. Where the heuristicCost is either 1 to motivate the
+       * player to go to it (it will make it nearer to the rock) or 10 which is the same for any random cell
+       * which isn't beneficial in reaching the goal.
+       *
+       * Delta distance is the  Euclidean distance.
+       * dist((x, y), (a, b)) = √(x - a)² + (y - b)²
        */
-      return 0;
+      const gridConfig: GridConfigObject = grid.config;
+
+      const currRow = currState.cell.row;
+      const currCol = currState.cell.col;
+      const nextRow = newState.cell.row;
+      const nextCol = newState.cell.col;
+      const teleportalRow = gridConfig.teleportalPosition.row;
+      const teleportalCol = gridConfig.teleportalPosition.col;
+      // If neew state is the teleportal then return 0
+      if (nextRow === teleportalRow && nextCol === teleportalCol) return 0;
+      // Check if in the nextState the teleportal will be activated and this move will make the player get
+      // near it then it returns 1
+      if (newState.unPushedPads === 0) {
+        const distanceFromCurrent = Math.sqrt(
+          (currRow - teleportalRow) ** 2 + (currCol - teleportalCol) ** 2
+        );
+        const distanceFromNew = Math.sqrt(
+          (nextRow - teleportalRow) ** 2 + (nextCol - teleportalCol) ** 2
+        );
+        if (distanceFromNew < distanceFromCurrent) return 1;
+      }
+      // Get nearstRock to current position and nearst distance
+      let nearstRock = gridConfig.rocksPositions[0];
+      let deltaDistance = Math.sqrt(
+        (currRow - gridConfig.rocksPositions[0].row) ** 2 +
+          (currCol - gridConfig.rocksPositions[0].col) ** 2
+      );
+      gridConfig.rocksPositions.forEach(function(element) {
+        const rockRow = element.row;
+        const rockCol = element.col;
+        const newDeltaDistance = Math.sqrt(
+          (currRow - rockRow) ** 2 + (currCol - rockCol) ** 2
+        );
+        if (newDeltaDistance < deltaDistance) {
+          deltaDistance = newDeltaDistance;
+          nearstRock = element;
+        }
+      }, this);
+
+      // Compare the distance between the nearest rock and the current and next state
+      // If it's the same then the heuristic cost is the same as every cell which is 10, else it is 1
+      const distanceFromNext = Math.sqrt(
+        (nextRow - nearstRock.row) ** 2 + (nextCol - nearstRock.col) ** 2
+      );
+      if (distanceFromNext < deltaDistance) {
+        return 1;
+      }
+
+      return 10;
     },
   };
 
@@ -115,18 +218,18 @@ const Search = (
     case 'ID':
       qingFunc = iterativeDeepeningQueuingFunc(ID_MAX_DEPTH);
       break;
-    //  case 'GR1':
-    //    qingFunc = greedyQueuingFunc;
-    //    break;
-    // case 'GR2':
-    //   qingFunc = greedyQueuingFunc;
-    //   break;
-    // case 'AS1':
-    //   qingFunc = aStarQueuingFunc;
-    //   break;
-    // case 'AS2':
-    //   qingFunc = aStarQueuingFunc;
-    //   break;
+    case 'GR1':
+      qingFunc = greedyQueuingFuncA;
+      break;
+    case 'GR2':
+      qingFunc = greedyQueuingFuncB;
+      break;
+    case 'AS1':
+      qingFunc = aStarQueuingFuncA;
+      break;
+    case 'AS2':
+      qingFunc = aStarQueuingFuncB;
+      break;
     default:
       console.error('unknown search strategy: ', strategy);
   }
