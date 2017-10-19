@@ -90,13 +90,10 @@ const Search = (
        *
        * Delta distance is calculated by = adding the difference of rows with the difference of coloumns
        */
+      const { config: gridConfig } = grid;
+      const { row: currRow, col: currCol } = currState.cell;
+      const { row: nextRow, col: nextCol } = newState.cell;
 
-      const gridConfig: GridConfigObject = grid.config;
-
-      const currRow = currState.cell.row;
-      const currCol = currState.cell.col;
-      const nextRow = newState.cell.row;
-      const nextCol = newState.cell.col;
       const teleportalRow = gridConfig.teleportalPosition.row;
       const teleportalCol = gridConfig.teleportalPosition.col;
       // If neew state is the teleportal then return 0
@@ -116,7 +113,7 @@ const Search = (
         currRow -
         gridConfig.rocksPositions[0].row +
         (currCol - gridConfig.rocksPositions[0].col);
-      gridConfig.rocksPositions.forEach(function(element) {
+      gridConfig.rocksPositions.forEach(element => {
         const rockRow = element.row;
         const rockCol = element.col;
         const newDeltaDistance = currRow - rockRow + (currCol - rockCol);
@@ -124,17 +121,13 @@ const Search = (
           deltaDistance = newDeltaDistance;
           nearstRock = element;
         }
-      }, this);
+      });
 
       // Compare the distance between the nearest rock and the current and next state
       // If it's the same then the heuristic cost is the same as every cell which is 10, else it is 1
       const distanceFromNext =
         nextRow - nearstRock.row + (nextCol - nearstRock.col);
-      if (distanceFromNext < deltaDistance) {
-        return 1;
-      }
-
-      return 10;
+      return distanceFromNext < deltaDistance ? 1 : 10;
     },
     heuristicCostB: (
       currState: State,
@@ -150,12 +143,10 @@ const Search = (
        * Delta distance is the  Euclidean distance.
        * dist((x, y), (a, b)) = √(x - a)² + (y - b)²
        */
-      const gridConfig: GridConfigObject = grid.config;
+      const { config: gridConfig } = grid;
+      const { row: currRow, col: currCol } = currState.cell;
+      const { row: nextRow, col: nextCol } = newState.cell;
 
-      const currRow = currState.cell.row;
-      const currCol = currState.cell.col;
-      const nextRow = newState.cell.row;
-      const nextCol = newState.cell.col;
       const teleportalRow = gridConfig.teleportalPosition.row;
       const teleportalCol = gridConfig.teleportalPosition.col;
       // If neew state is the teleportal then return 0
@@ -177,7 +168,7 @@ const Search = (
         (currRow - gridConfig.rocksPositions[0].row) ** 2 +
           (currCol - gridConfig.rocksPositions[0].col) ** 2
       );
-      gridConfig.rocksPositions.forEach(function(element) {
+      gridConfig.rocksPositions.forEach(element => {
         const rockRow = element.row;
         const rockCol = element.col;
         const newDeltaDistance = Math.sqrt(
@@ -187,18 +178,14 @@ const Search = (
           deltaDistance = newDeltaDistance;
           nearstRock = element;
         }
-      }, this);
+      });
 
       // Compare the distance between the nearest rock and the current and next state
       // If it's the same then the heuristic cost is the same as every cell which is 10, else it is 1
       const distanceFromNext = Math.sqrt(
         (nextRow - nearstRock.row) ** 2 + (nextCol - nearstRock.col) ** 2
       );
-      if (distanceFromNext < deltaDistance) {
-        return 1;
-      }
-
-      return 10;
+      return distanceFromNext < deltaDistance ? 1 : 10;
     },
   };
 
