@@ -94,6 +94,19 @@ const Search = (
       const currCol = currState.cell.col;
       const nextRow = newState.cell.row;
       const nextCol = newState.cell.col;
+      const teleportalRow = gridConfig.teleportalPosition.row;
+      const teleportalCol = gridConfig.teleportalPosition.col;
+      // If neew state is the teleportal then return 0
+      if (nextRow === teleportalRow && nextCol === teleportalCol) return 0;
+      // Check if in the nextState the teleportal will be activated and this move will make the player get
+      // near it then it returns 1
+      if (newState.unPushedPads === 0) {
+        const distanceFromCurrent =
+          currRow - teleportalRow + (currCol - teleportalCol);
+        const distanceFromNew =
+          nextRow - teleportalRow + (nextCol - teleportalCol);
+        if (distanceFromNew < distanceFromCurrent) return 1;
+      }
       // Get nearstRock to current position and nearst distance
       let nearstRock = gridConfig.rocksPositions[0];
       let deltaDistance =
@@ -104,7 +117,6 @@ const Search = (
         const rockRow = element.row;
         const rockCol = element.col;
         const newDeltaDistance = currRow - rockRow + (currCol - rockCol);
-
         if (newDeltaDistance < deltaDistance) {
           deltaDistance = newDeltaDistance;
           nearstRock = element;
@@ -128,10 +140,60 @@ const Search = (
       gridConfig: GridConfigObject
     ): number => {
       /**
-       * @TODO CODE heuristicCostB
+       * Here is where to calculate the heuristicCostA. Where the heuristicCost is either 1 to motivate the
+       * player to go to it (it will make it nearer to the rock) or 10 which is the same for any random cell
+       * which isn't beneficial in reaching the goal.
+       * 
+       * Delta distance is the  Euclidean distance.
+       * dist((x, y), (a, b)) = √(x - a)² + (y - b)²
        */
+      const currRow = currState.cell.row;
+      const currCol = currState.cell.col;
+      const nextRow = newState.cell.row;
+      const nextCol = newState.cell.col;
+      const teleportalRow = gridConfig.teleportalPosition.row;
+      const teleportalCol = gridConfig.teleportalPosition.col;
+      // If neew state is the teleportal then return 0
+      if (nextRow === teleportalRow && nextCol === teleportalCol) return 0;
+      // Check if in the nextState the teleportal will be activated and this move will make the player get
+      // near it then it returns 1
+      if (newState.unPushedPads === 0) {
+        const distanceFromCurrent = Math.sqrt(
+          (currRow - teleportalRow) ** 2 + (currCol - teleportalCol) ** 2
+        );
+        const distanceFromNew = Math.sqrt(
+          (nextRow - teleportalRow) ** 2 + (nextCol - teleportalCol) ** 2
+        );
+        if (distanceFromNew < distanceFromCurrent) return 1;
+      }
+      // Get nearstRock to current position and nearst distance
+      let nearstRock = gridConfig.rocksPositions[0];
+      let deltaDistance = Math.sqrt(
+        (currRow - gridConfig.rocksPositions[0].row) ** 2 +
+          (currCol - gridConfig.rocksPositions[0].col) ** 2
+      );
+      gridConfig.rocksPositions.forEach(function(element) {
+        const rockRow = element.row;
+        const rockCol = element.col;
+        const newDeltaDistance = Math.sqrt(
+          (currRow - rockRow) ** 2 + (currCol - rockCol) ** 2
+        );
+        if (newDeltaDistance < deltaDistance) {
+          deltaDistance = newDeltaDistance;
+          nearstRock = element;
+        }
+      }, this);
 
-      return 0;
+      // Compare the distance between the nearest rock and the current and next state
+      // If it's the same then the heuristic cost is the same as every cell which is 10, else it is 1
+      const distanceFromNext = Math.sqrt(
+        (nextRow - nearstRock.row) ** 2 + (nextCol - nearstRock.col) ** 2
+      );
+      if (distanceFromNext < deltaDistance) {
+        return 1;
+      }
+
+      return 10;
     },
   };
 
