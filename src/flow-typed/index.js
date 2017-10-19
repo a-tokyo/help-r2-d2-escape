@@ -49,7 +49,7 @@ export type StateConfig = {
   operator: Operator,
 };
 
-export type heuristicCostFunc = (State, Array<Operator>, State, GridConfigObject) => number;
+export type heuristicCostFunc = (State, Array<Operator>, State) => number;
 
 export type Problem = {
   operators: Array<Operator>,

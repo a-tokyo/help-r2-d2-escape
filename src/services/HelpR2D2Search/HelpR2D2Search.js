@@ -80,16 +80,19 @@ const Search = (
     heuristicCostA: (
       currState: State,
       operators: Array<Operator>,
-      newState: State,
-      gridConfig: GridConfigObject
+      newState: State
+      // gridConfig: GridConfigObject
     ): number => {
       /**
        * Here is where to calculate the heuristicCostA. Where the heuristicCost is either 1 to motivate the
        * player to go to it (it will make it nearer to the rock) or 10 which is the same for any random cell
        * which isn't beneficial in reaching the goal.
-       * 
+       *
        * Delta distance is calculated by = adding the difference of rows with the difference of coloumns
        */
+
+      const gridConfig: GridConfigObject = grid.config;
+
       const currRow = currState.cell.row;
       const currCol = currState.cell.col;
       const nextRow = newState.cell.row;
@@ -136,17 +139,19 @@ const Search = (
     heuristicCostB: (
       currState: State,
       operators: Array<Operator>,
-      newState: State,
-      gridConfig: GridConfigObject
+      newState: State
+      // gridConfig: GridConfigObject
     ): number => {
       /**
        * Here is where to calculate the heuristicCostA. Where the heuristicCost is either 1 to motivate the
        * player to go to it (it will make it nearer to the rock) or 10 which is the same for any random cell
        * which isn't beneficial in reaching the goal.
-       * 
+       *
        * Delta distance is the  Euclidean distance.
        * dist((x, y), (a, b)) = √(x - a)² + (y - b)²
        */
+      const gridConfig: GridConfigObject = grid.config;
+
       const currRow = currState.cell.row;
       const currCol = currState.cell.col;
       const nextRow = newState.cell.row;
