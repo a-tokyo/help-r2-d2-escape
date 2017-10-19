@@ -10,19 +10,20 @@ import {
 
 import { Store } from '../';
 
-const {
-  MIN_GRID_ROWS,
-  MIN_GRID_COLS,
-  MAX_GRID_ROWS,
-  MAX_GRID_COLS,
-  MAX_ROCKS_PADS_TOGETHER,
-  MAX_OBSTACLES,
-} = Store.gridBasicEnv;
-
 /**
  * Generates a a 2D grid of a random game scenario and scans it for the configurations.
  */
 const genGrid = (): { grid: Array<Array<any>>, config: Object } => {
+  /** Get the env variables */
+  const {
+    MIN_GRID_ROWS,
+    MIN_GRID_COLS,
+    MAX_GRID_ROWS,
+    MAX_GRID_COLS,
+    MAX_ROCKS_PADS_TOGETHER,
+    MAX_OBSTACLES,
+  } = Store.gridBasicEnv;
+
   /** Grid dimenstions */
   const matrixRowsCount: number = _.random(MIN_GRID_ROWS, MAX_GRID_ROWS);
   const matrixColsCount: number = _.random(MIN_GRID_COLS, MAX_GRID_COLS);

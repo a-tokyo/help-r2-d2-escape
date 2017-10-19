@@ -1,6 +1,13 @@
 /* @flow */
 /* eslint no-undef: 1 */
 
+/** Jest testing agent */
+declare var jest;
+declare var it;
+declare var test;
+declare var describe;
+/** End Jest testing agent */
+
 export type GameElementType =
   | 'player'
   | 'teleportal'

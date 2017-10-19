@@ -64,8 +64,10 @@ export default class Game extends Component {
     }
 
     if (
-      newCurrOnGoingSearchStateIndex <= Store.visualizationStatesInOrder.length
+      newCurrOnGoingSearchStateIndex < Store.visualizationStatesInOrder.length
     ) {
+      currOnGoingSearchState =
+        Store.visualizationStatesInOrder[newCurrOnGoingSearchStateIndex];
       const onGoingGameGridGrid = generateGridFromConfigAndState(
         gameGrid.config,
         currOnGoingSearchState
@@ -193,17 +195,21 @@ export default class Game extends Component {
                 <b>Sequence: </b>
               </label>
               <div>
-                {solution.sequence.map(
-                  (item, i) =>
-                    `${item}${i === solution.sequence.length - 1 ? '' : ', '}`
-                )}
+                {solution.sequence.length > 0
+                  ? solution.sequence.map(
+                      (item, i) =>
+                        `${item}${i === solution.sequence.length - 1
+                          ? ''
+                          : ', '}`
+                    )
+                  : 'NA'}
               </div>
               <div className="game_solution_mini-items">
                 <div>
                   <label>
                     <b>Cost:</b>
                   </label>
-                  <span> {solution.cost}</span>
+                  <span> {solution.cost || 'NA'}</span>
                 </div>
                 <div>
                   <label>
@@ -238,8 +244,11 @@ export default class Game extends Component {
           <div className="game__splash-screen" />
         )}
         <aside>
+          <p>
+            The Goal is for R2-D2 to place the lightsabers on the pressure pads
+            while avoiding the storm troopers then head to the teleportal.
+          </p>
           <h4>CHECK THE CONSOLE FOR DETAILED STACK TRACES.</h4>
-
           <span>Caution: Iterative deepening exhausts the memory.</span>
         </aside>
       </Container>

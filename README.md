@@ -1,6 +1,8 @@
 # help-R2-D2-escape
 An informative visualization of the different search types used by AI agents.
 
+[![CircleCI](https://circleci.com/gh/A-Tokyo/help-r2-d2-escape.svg?style=svg&circle-token=b3c33d87b5484c5b5834878c5b57aed670591db1)](https://circleci.com/gh/A-Tokyo/help-r2-d2-escape)
+
 ## Overview
 The galaxy is in the midst of a civil war. Spies for the Rebel Alliance have stolen plans from the Death Star; a heavily armed space station capable of destroying an entire planet. Unfortunately, the rebels’ ship was soon captured by the Death Star’s imperial forces guarding the Death Star. Before the rebels were captured, they were able to hide the plans in the memory of a droid called R2-D2. It is R2-D2’s mission to try escaping its prison in the Death Star and deliver the stolen plans to the rebels’ planet to help destroy the Death Star once and for all.
 

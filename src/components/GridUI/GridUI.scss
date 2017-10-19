@@ -20,6 +20,22 @@
   min-height: 35px;
   justify-content: center;
   align-items: center;
+  position: relative;
+  &>i{
+    position: absolute !important;
+  }
+}
+
+.grid-cell-teleportal{
+  &>i{
+    opacity: 0.5;
+  }
+}
+
+.grid-cell-teleportal--active{
+  &>i{
+    opacity: 1;
+  }
 }
 
 .grid-cell--pressure-pad{

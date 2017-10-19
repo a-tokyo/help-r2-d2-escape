@@ -35,10 +35,9 @@ const GridUI = ({
                   ) {
                     return (
                       <div
-                        className={`grid-cell opacity-05 ${(state &&
-                          state.unPushedPads === 0) ||
-                        !state
-                          ? 'opacity-1'
+                        className={`grid-cell grid-cell-teleportal ${state &&
+                        state.unPushedPads === 0
+                          ? 'grid-cell-teleportal--active'
                           : ''}`}
                         key={`cell_${rowIndex}-${colIndex}`}
                       >
@@ -47,12 +46,28 @@ const GridUI = ({
                       </div>
                     );
                   }
+                  if (
+                    gridInfo.grid[rowIndex][colIndex].items[1] &&
+                    gridInfo.grid[rowIndex][colIndex].items[1].type === 'rock'
+                  ) {
+                    return (
+                      <div
+                        className={`grid-cell grid-cell-teleportal ${state &&
+                        state.unPushedPads === 0
+                          ? 'grid-cell-teleportal--active'
+                          : ''}`}
+                        key={`cell_${rowIndex}-${colIndex}`}
+                      >
+                        <Teleporter />
+                        <Rock />
+                      </div>
+                    );
+                  }
                   return (
                     <div
-                      className={`grid-cell opacity-05 ${(state &&
-                        state.unPushedPads === 0) ||
-                      !state
-                        ? 'opacity-1'
+                      className={`grid-cell grid-cell-teleportal ${state &&
+                      state.unPushedPads === 0
+                        ? 'grid-cell-teleportal--active'
                         : ''}`}
                       key={`cell_${rowIndex}-${colIndex}`}
                     >
