@@ -62,6 +62,11 @@ class Store {
     }
   };
 
+  /**
+   * get a value from the store
+   *
+   * $FlowFixme
+   */
   get = (key: string): any => {
     switch (key) {
       case 'previousStates':
@@ -70,6 +75,14 @@ class Store {
         return this.visualizationStatesInOrder;
       case 'visualize':
         return this.visualize;
+      case 'gridBasicEnv':
+        return this.gridBasicEnv;
+      case 'searchTypes':
+        return this.searchTypes;
+      case 'problemTypes':
+        return this.problemTypes;
+      case 'gameGrids':
+        return this.gameGrids;
       default:
         return undefined;
     }
