@@ -38,6 +38,8 @@ export type Node = {
   operator: (Operator | null),
   depth: number,
   pathCost: number,
+  heuristicCostA: number,
+  heuristicCostB: number,
 };
 
 export type GoalTestFunc = State => boolean;
@@ -47,12 +49,16 @@ export type StateConfig = {
   operator: Operator,
 };
 
+export type heuristicCostFunc = (State, Array<Operator>, State) => number;
+
 export type Problem = {
   operators: Array<Operator>,
   initialState: State,
   stateSpace: (State, Array<Operator>) => Array<StateConfig>,
   goalTest: GoalTestFunc,
   pathCost: (State, Array<Operator>) => number,
+  heuristicCostA: heuristicCostFunc,
+  heuristicCostB: heuristicCostFunc,
 };
 
 export type MakeNodeFucntion = State => Array<Node>;

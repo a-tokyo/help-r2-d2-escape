@@ -58,5 +58,80 @@ export const iterativeDeepeningQueuingFunc: Function = (
     newNodes.filter(newNode => newNode.depth <= maxDepth)
   );
 
-/** @TODO Greedy, 2 heuristics */
-/** @TODO A*, 2 heuristics */
+/**
+ * Greedy search Queuing function enques according to the heuristicCost ascendingly
+ *
+ * concat the nodes and sort by heuristicCostA ascendingly
+ *
+ * Author: Basel
+ */
+export const greedyQueuingFuncA: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      (
+        { heuristicCostA: heuristicCostAa },
+        { heuristicCostA: heuristicCostAb }
+      ) => heuristicCostAa - heuristicCostAb
+    );
+/**
+ * Greedy search Queuing function enques according to the heuristicCost ascendingly
+ *
+ * concat the nodes and sort by heuristicCostB ascendingly
+ *
+ * Author: Basel
+ */
+export const greedyQueuingFuncB: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      (
+        { heuristicCostB: heuristicCostAa },
+        { heuristicCostB: heuristicCostAb }
+      ) => heuristicCostAa - heuristicCostAb
+    );
+
+/**
+ * A* search Queuing function enques according to the pathCost+heuristicCostA ascendingly
+ *
+ * concat the nodes and sort by pathCost+heuristicCostA ascendingly
+ *
+ * Author: Basel
+ */
+export const aStarQueuingFuncA: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      (
+        { pathCost: pathCostA, heuristicCostA: heuristicCostAa },
+        { pathCost: pathCostB, heuristicCostA: heuristicCostAb }
+      ) => pathCostA + heuristicCostAa - (pathCostB + heuristicCostAb)
+    );
+/**
+ * A* search Queuing function enques according to the pathCost+heuristicCostB ascendingly
+ *
+ * concat the nodes and sort by pathCost+heuristicCostB ascendingly
+ *
+ * Author: Basel
+ */
+export const aStarQueuingFuncB: QueuingFunction = (
+  nodes: Array<Node>,
+  newNodes: Array<Node>
+): Array<Node> =>
+  nodes
+    .concat(newNodes)
+    .sort(
+      (
+        { pathCost: pathCostA, heuristicCostB: heuristicCostAa },
+        { pathCost: pathCostB, heuristicCostB: heuristicCostAb }
+      ) => pathCostA + heuristicCostAa - (pathCostB + heuristicCostAb)
+    );

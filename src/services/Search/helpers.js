@@ -10,13 +10,17 @@ export const makeNode = (
   parent?: Node | null = null,
   operator?: Operator | null = null,
   depth?: number = 0,
-  pathCost?: number = 0
+  pathCost?: number = 0,
+  heuristicCostA?: number = 0,
+  heuristicCostB?: number = 0
 ): Node => ({
   state,
   parent,
   operator,
   depth,
   pathCost,
+  heuristicCostA,
+  heuristicCostB,
 });
 
 /** Problem helpers */
@@ -42,7 +46,7 @@ export const getState = (node: Node): State => node.state;
  * Author: Tokyo
  */
 export const expand = (node: Node, problem: Problem): Array<Node> => {
-  console.log('expanding', node);
+  console.info('expanding', node);
   const newStateConfigs: Array<StateConfig> = problem.stateSpace(
     node.state,
     problem.operators
@@ -53,7 +57,17 @@ export const expand = (node: Node, problem: Problem): Array<Node> => {
       node,
       stateConfig.operator,
       node.depth + 1,
-      problem.pathCost(node.state, [stateConfig.operator])
+      node.pathCost + problem.pathCost(node.state, [stateConfig.operator]),
+      problem.heuristicCostA(
+        node.state,
+        [stateConfig.operator],
+        stateConfig.state
+      ),
+      problem.heuristicCostB(
+        node.state,
+        [stateConfig.operator],
+        stateConfig.state
+      )
     )
   );
 };
