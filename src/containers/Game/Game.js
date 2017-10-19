@@ -195,17 +195,21 @@ export default class Game extends Component {
                 <b>Sequence: </b>
               </label>
               <div>
-                {solution.sequence.map(
-                  (item, i) =>
-                    `${item}${i === solution.sequence.length - 1 ? '' : ', '}`
-                )}
+                {solution.sequence.length > 0
+                  ? solution.sequence.map(
+                      (item, i) =>
+                        `${item}${i === solution.sequence.length - 1
+                          ? ''
+                          : ', '}`
+                    )
+                  : 'NA'}
               </div>
               <div className="game_solution_mini-items">
                 <div>
                   <label>
                     <b>Cost:</b>
                   </label>
-                  <span> {solution.cost}</span>
+                  <span> {solution.cost || 'NA'}</span>
                 </div>
                 <div>
                   <label>
