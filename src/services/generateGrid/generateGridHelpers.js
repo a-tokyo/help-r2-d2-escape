@@ -9,7 +9,7 @@ export const generateMatrix = (
   columns: number,
   defaultValue: any = null
 ): Array<Array<any>> =>
-  new Array(rows).fill().map(() => new Array(columns).fill(defaultValue));
+  _.fill(new Array(rows)).map(() => _.fill(new Array(columns), defaultValue));
 
 /**
  * adds elements to a grid in random positions
