@@ -244,8 +244,11 @@ export default class Game extends Component {
           <div className="game__splash-screen" />
         )}
         <aside>
+          <p>
+            The Goal is for R2-D2 to place the lightsabers on the pressure pads
+            while avoiding the storm troopers then head to the teleportal.
+          </p>
           <h4>CHECK THE CONSOLE FOR DETAILED STACK TRACES.</h4>
-
           <span>Caution: Iterative deepening exhausts the memory.</span>
         </aside>
       </Container>
