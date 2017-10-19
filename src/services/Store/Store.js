@@ -1,4 +1,5 @@
 /* @flow */
+import { solvableLongGrid } from './testGrids';
 
 /**
  * A simple mutatable store used accross the app.
@@ -8,7 +9,14 @@ class Store {
   visualizationStatesInOrder: Array<State> = [];
   visualize: boolean = true;
 
-  gridBasicEnv: { [string]: number } = {
+  gridBasicEnv: {
+    MIN_GRID_ROWS: number,
+    MIN_GRID_COLS: number,
+    MAX_GRID_ROWS: number,
+    MAX_GRID_COLS: number,
+    MAX_ROCKS_PADS_TOGETHER: number,
+    MAX_OBSTACLES: number,
+  } = {
     MIN_GRID_ROWS: 5,
     MIN_GRID_COLS: 5,
     MAX_GRID_ROWS: 5,
@@ -30,7 +38,13 @@ class Store {
 
   problemTypes: Array<string> = ['Solvable Long Grid', 'Random Grid'];
 
-  reset(key?: string) {
+  gameGrids: {
+    [string]: { grid: Array<Array<any>>, config: GridConfigObject },
+  } = {
+    solvableLongGrid,
+  };
+
+  reset = (key?: string) => {
     switch (key) {
       case 'previousStates':
         this.previousStates = {};
@@ -46,9 +60,14 @@ class Store {
         this.visualizationStatesInOrder = [];
         this.visualize = true;
     }
-  }
+  };
 
-  get(key: string): any {
+  /**
+   * get a value from the store
+   *
+   * $FlowFixme
+   */
+  get = (key: string): any => {
     switch (key) {
       case 'previousStates':
         return this.previousStates;
@@ -56,10 +75,29 @@ class Store {
         return this.visualizationStatesInOrder;
       case 'visualize':
         return this.visualize;
+      case 'gridBasicEnv':
+        return this.gridBasicEnv;
+      case 'searchTypes':
+        return this.searchTypes;
+      case 'problemTypes':
+        return this.problemTypes;
+      case 'gameGrids':
+        return this.gameGrids;
       default:
         return undefined;
     }
-  }
+  };
+
+  setGridBasicEnv = (newGirdEnvItems: {
+    MIN_GRID_ROWS?: number,
+    MIN_GRID_COLS?: number,
+    MAX_GRID_ROWS?: number,
+    MAX_GRID_COLS?: number,
+    MAX_ROCKS_PADS_TOGETHER?: number,
+    MAX_OBSTACLES?: number,
+  }) => {
+    this.gridBasicEnv = { ...this.gridBasicEnv, ...newGirdEnvItems };
+  };
 }
 
 export default new Store();

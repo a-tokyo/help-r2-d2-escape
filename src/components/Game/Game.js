@@ -9,11 +9,9 @@ import {
   generateGridFromConfigAndState,
 } from '../../services/generateGrid/generateGridHelpers';
 
-import { solvableLongGrid } from '../../services/generateGrid/testGrids';
-
 import './Game.css';
 
-const updateIntervalTimes: Array<number> = [20, 50, 200];
+const updateIntervalTimes: Array<number> = [10, 20, 50, 200, 500, 1000];
 
 export default class Game extends Component {
   state = {
@@ -25,7 +23,14 @@ export default class Game extends Component {
     onGoingIntervalId: null,
     searchTypeInputValue: Store.searchTypes[0],
     problemTypeInputValue: Store.problemTypes[0],
-    updateIntervalTime: 20,
+    updateIntervalTime: updateIntervalTimes[0],
+
+    MIN_GRID_ROWS: Store.get('gridBasicEnv').MIN_GRID_ROWS,
+    MIN_GRID_COLS: Store.get('gridBasicEnv').MIN_GRID_COLS,
+    MAX_GRID_ROWS: Store.get('gridBasicEnv').MAX_GRID_ROWS,
+    MAX_GRID_COLS: Store.get('gridBasicEnv').MAX_GRID_COLS,
+    MAX_ROCKS_PADS_TOGETHER: Store.get('gridBasicEnv').MAX_ROCKS_PADS_TOGETHER,
+    MAX_OBSTACLES: Store.get('gridBasicEnv').MAX_OBSTACLES,
   };
 
   componentWillUnmount() {
@@ -84,11 +89,11 @@ export default class Game extends Component {
   _newGame = () => {
     const { problemTypeInputValue } = this.state;
     console.info('############NEW GAME############');
-    let gameGrid = solvableLongGrid;
+    let gameGrid = Store.gameGrids.solvableLongGrid;
     /** Check the desired problem type and set the grid accordingly */
     switch (problemTypeInputValue) {
       case 'Solvable Long Grid':
-        gameGrid = solvableLongGrid;
+        gameGrid = Store.gameGrids.solvableLongGrid;
         break;
       case 'Random Grid':
         gameGrid = generateGrid();
@@ -124,6 +129,13 @@ export default class Game extends Component {
     this.setState({ problemTypeInputValue: event.target.value });
   };
 
+  _handleChangeGridBasicEnvValue = (event, key) => {
+    Store.setGridBasicEnv({
+      [key]: event.target.value,
+    });
+    this.setState({ [key]: event.target.value });
+  };
+
   _handleChangeInputValue = (inputKey: string) => event => {
     this.setState({ [inputKey]: event.target.value });
   };
@@ -137,11 +149,18 @@ export default class Game extends Component {
       currOnGoingSearchState,
       solution,
       updateIntervalTime,
+
+      MIN_GRID_ROWS,
+      MIN_GRID_COLS,
+      MAX_GRID_ROWS,
+      MAX_GRID_COLS,
+      MAX_ROCKS_PADS_TOGETHER,
+      MAX_OBSTACLES,
     } = this.state;
     return (
       <Container fluid className="game">
         <header className="game__header">
-          <Button color="primary" onClick={this._newGame}>
+          <Button color="primary" size="lg" onClick={this._newGame}>
             New Game
           </Button>
           <div className="game__controlers">
@@ -185,6 +204,77 @@ export default class Game extends Component {
                     <option key={type}>{type}</option>
                   ))}
                 </Input>
+              </div>
+            </div>
+            <div className="game__controlers__item game__controlers__item-grid-control">
+              <div className="game__controlers__item-grid-control-item">
+                <span>Min # of rows: </span>
+                <Input
+                  type="number"
+                  min="2"
+                  max="10"
+                  value={MIN_GRID_ROWS}
+                  onChange={event =>
+                    this._handleChangeGridBasicEnvValue(event, 'MIN_GRID_ROWS')}
+                />
+              </div>
+              <div className="game__controlers__item-grid-control-item">
+                <span>Min # of cols: </span>
+                <Input
+                  type="number"
+                  min="2"
+                  max="10"
+                  value={MIN_GRID_COLS}
+                  onChange={event =>
+                    this._handleChangeGridBasicEnvValue(event, 'MIN_GRID_COLS')}
+                />
+              </div>
+              <div className="game__controlers__item-grid-control-item">
+                <span>Max # of rows: </span>
+                <Input
+                  type="number"
+                  min="2"
+                  max="10"
+                  value={MAX_GRID_ROWS}
+                  onChange={event =>
+                    this._handleChangeGridBasicEnvValue(event, 'MAX_GRID_ROWS')}
+                />
+              </div>
+              <div className="game__controlers__item-grid-control-item">
+                <span>Max # of cols: </span>
+                <Input
+                  type="number"
+                  min="2"
+                  max="10"
+                  value={MAX_GRID_COLS}
+                  onChange={event =>
+                    this._handleChangeGridBasicEnvValue(event, 'MAX_GRID_COLS')}
+                />
+              </div>
+              <div className="game__controlers__item-grid-control-item">
+                <span>Max # of light sabers and pads: </span>
+                <Input
+                  type="number"
+                  min="0"
+                  max="10"
+                  value={MAX_ROCKS_PADS_TOGETHER}
+                  onChange={event =>
+                    this._handleChangeGridBasicEnvValue(
+                      event,
+                      'MAX_ROCKS_PADS_TOGETHER'
+                    )}
+                />
+              </div>
+              <div className="game__controlers__item-grid-control-item">
+                <span>Max # of stormtroopers: </span>
+                <Input
+                  type="number"
+                  min="0"
+                  max="10"
+                  value={MAX_OBSTACLES}
+                  onChange={event =>
+                    this._handleChangeGridBasicEnvValue(event, 'MAX_OBSTACLES')}
+                />
               </div>
             </div>
           </div>
@@ -246,7 +336,7 @@ export default class Game extends Component {
         <aside>
           <p>
             The Goal is for R2-D2 to place the lightsabers on the pressure pads
-            while avoiding the storm troopers then head to the teleportal.
+            while avoiding the stormtroopers then head to the teleportal.
           </p>
           <h4>CHECK THE CONSOLE FOR DETAILED STACK TRACES.</h4>
           <span>Caution: Iterative deepening exhausts the memory.</span>

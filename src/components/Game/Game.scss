@@ -46,3 +46,23 @@
   height: 131px;
   margin: 80px auto;
 }
+
+.game__controlers__item-grid-control{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-top: 10px;
+  &>.game__controlers_select{
+    margin-top: 5px;
+    width: 60px;
+  }
+}
+.game__controlers__item-grid-control-item{
+  // flex: 1;
+  margin: 0 10px;
+}
+
+.btn{
+  cursor: pointer;
+}
