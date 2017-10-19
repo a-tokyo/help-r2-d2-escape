@@ -84,9 +84,42 @@ const Search = (
       gridConfig: GridConfigObject
     ): number => {
       /**
-       * @TODO CODE heuristicCostA
+       * Here is where to calculate the heuristicCostA. Where the heuristicCost is either 1 to motivate the
+       * player to go to it (it will make it nearer to the rock) or 10 which is the same for any random cell
+       * which isn't beneficial in reaching the goal.
+       * 
+       * Delta distance is calculated by = adding the difference of rows with the difference of coloumns
        */
-      return 0;
+      const currRow = currState.cell.row;
+      const currCol = currState.cell.col;
+      const nextRow = newState.cell.row;
+      const nextCol = newState.cell.col;
+      // Get nearstRock to current position and nearst distance
+      let nearstRock = gridConfig.rocksPositions[0];
+      let deltaDistance =
+        currRow -
+        gridConfig.rocksPositions[0].row +
+        (currCol - gridConfig.rocksPositions[0].col);
+      gridConfig.rocksPositions.forEach(function(element) {
+        const rockRow = element.row;
+        const rockCol = element.col;
+        const newDeltaDistance = currRow - rockRow + (currCol - rockCol);
+
+        if (newDeltaDistance < deltaDistance) {
+          deltaDistance = newDeltaDistance;
+          nearstRock = element;
+        }
+      }, this);
+
+      // Compare the distance between the nearest rock and the current and next state
+      // If it's the same then the heuristic cost is the same as every cell which is 10, else it is 1
+      const distanceFromNext =
+        nextRow - nearstRock.row + (nextCol - nearstRock.col);
+      if (distanceFromNext < deltaDistance) {
+        return 1;
+      }
+
+      return 10;
     },
     heuristicCostB: (
       currState: State,
@@ -97,6 +130,7 @@ const Search = (
       /**
        * @TODO CODE heuristicCostB
        */
+
       return 0;
     },
   };
